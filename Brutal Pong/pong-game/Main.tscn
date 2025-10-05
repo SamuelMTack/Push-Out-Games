@@ -1,0 +1,93 @@
+[gd_scene load_steps=10 format=3 uid="uid://qpdg8uq7ol6o"]
+
+[ext_resource type="Script" uid="uid://cpqvsialp5hex" path="res://scripts/Main.gd" id="1_glv2v"]
+[ext_resource type="Script" uid="uid://bvssynl3yl2kw" path="res://scripts/Paddle.gd" id="2_uu6xs"]
+[ext_resource type="Script" uid="uid://bx42sc58bpy57" path="res://scripts/AI.gd" id="3_r0du0"]
+[ext_resource type="Script" uid="uid://yrfmy8eeuots" path="res://scripts/Ball.gd" id="4_cm0pq"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rxg2q"]
+size = Vector2(20, 100)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_glv2v"]
+size = Vector2(20, 100)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_rxg2q"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_uu6xs"]
+size = Vector2(1000, 10)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_r0du0"]
+size = Vector2(1000, 10)
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_glv2v")
+
+[node name="Background" type="ColorRect" parent="."]
+color = Color(0.101961, 0.101961, 0.101961, 1)
+
+[node name="Player1" type="CharacterBody2D" parent="."]
+position = Vector2(50, 300)
+script = ExtResource("2_uu6xs")
+move_up_action = "ui_w"
+move_down_action = "ui_s"
+
+[node name="Player1Collision" type="CollisionShape2D" parent="Player1"]
+position = Vector2(9, 48)
+shape = SubResource("RectangleShape2D_rxg2q")
+
+[node name="Player1Visual" type="ColorRect" parent="Player1"]
+offset_right = 20.0
+offset_bottom = 100.0
+
+[node name="Player2" type="CharacterBody2D" parent="."]
+position = Vector2(950, 300)
+script = ExtResource("3_r0du0")
+
+[node name="Player2Collision" type="CollisionShape2D" parent="Player2"]
+position = Vector2(9, 47)
+shape = SubResource("RectangleShape2D_glv2v")
+
+[node name="Player2Visual" type="ColorRect" parent="Player2"]
+offset_right = 20.0
+offset_bottom = 100.0
+
+[node name="Ball" type="CharacterBody2D" parent="."]
+position = Vector2(500, 300)
+script = ExtResource("4_cm0pq")
+
+[node name="BallCollision" type="CollisionShape2D" parent="Ball"]
+position = Vector2(13, 12)
+shape = SubResource("CircleShape2D_rxg2q")
+
+[node name="BallVisual" type="ColorRect" parent="Ball"]
+offset_right = 20.0
+offset_bottom = 20.0
+
+[node name="Score1" type="Label" parent="."]
+offset_left = 200.0
+offset_top = 50.0
+offset_right = 200.0
+offset_bottom = 50.0
+text = "0.0"
+
+[node name="Score2" type="Label" parent="."]
+offset_left = 800.0
+offset_top = 50.0
+offset_right = 800.0
+offset_bottom = 50.0
+text = "0.0"
+
+[node name="Camera" type="Camera2D" parent="."]
+position = Vector2(515, 300)
+
+[node name="Ceiling" type="StaticBody2D" parent="."]
+position = Vector2(500, -5)
+
+[node name="CeilingCollision" type="CollisionShape2D" parent="Ceiling"]
+shape = SubResource("RectangleShape2D_uu6xs")
+
+[node name="Floor" type="StaticBody2D" parent="."]
+position = Vector2(500, 605)
+
+[node name="FloorCollision" type="CollisionShape2D" parent="Floor"]
+shape = SubResource("RectangleShape2D_r0du0")
