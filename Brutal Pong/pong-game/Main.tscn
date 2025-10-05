@@ -23,7 +23,15 @@ size = Vector2(1000, 10)
 script = ExtResource("1_glv2v")
 
 [node name="Background" type="ColorRect" parent="."]
+offset_right = 1000.0
+offset_bottom = 600.0
 color = Color(0.101961, 0.101961, 0.101961, 1)
+
+[node name="MiddleLine" type="ColorRect" parent="."]
+offset_left = 498.0
+offset_right = 502.0
+offset_bottom = 600.0
+color = Color(1, 1, 1, 0.3)
 
 [node name="Player1" type="CharacterBody2D" parent="."]
 position = Vector2(50, 300)
@@ -42,6 +50,7 @@ offset_bottom = 100.0
 [node name="Player2" type="CharacterBody2D" parent="."]
 position = Vector2(950, 300)
 script = ExtResource("3_r0du0")
+ball_path = NodePath("../Ball")
 
 [node name="Player2Collision" type="CollisionShape2D" parent="Player2"]
 position = Vector2(9, 47)
