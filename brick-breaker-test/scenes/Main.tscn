@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3]
+
+[node name="Main" type="Node2D"]
+
+[node name="Paddle" parent="."]
+instance = "res://scenes/Paddle.tscn"
+
+[node name="Ball" parent="."]
+instance = "res://scenes/Ball.tscn"
+
+[node name="Bricks" type="Node2D" parent="."]
+
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="ScoreLabel" type="Label" parent=".HUD"]
+text = "Score: 0"
+position = Vector2(8, 8)
+
+[ext_resource path="res://scripts/main.gd" type="Script" id=1]
+
+[node name="Main" type="Node2D"]
+script = ExtResource( 1 )

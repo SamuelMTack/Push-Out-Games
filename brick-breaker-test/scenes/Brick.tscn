@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3]
+
+[node name="Brick" type="Area2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = RectangleShape2D.new()
+shape.extents = Vector2(32, 12)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = null
+
+[ext_resource path="res://scripts/brick.gd" type="Script" id=1]
+
+[node name="Brick" type="Area2D"]
+script = ExtResource( 1 )
