@@ -14,3 +14,11 @@ config/name="Brick Breaker"
 run/main_scene="res://node_2d.tscn"
 config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="res://icon.svg"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/claude_3.5_sonnet_chat_api/plugin.cfg")
+
+[plugins]
+
+claude_api/api_key="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"

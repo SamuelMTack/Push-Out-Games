@@ -123,13 +123,15 @@ func _process(delta):
 	for brick in bricks_container.get_children():
 		var brick_rect = Rect2(brick.position, brick.size)
 		if ball_rect.intersects(brick_rect):
+			# Remove the brick and bounce the ball
 			brick.queue_free()
 			ball_velocity.y = -ball_velocity.y
 			score += 10
 			score_label.text = "Score: " + str(score)
 			
 			# Check win condition
-			if bricks_container.get_child_count() == 1:  # 1 because we just freed one
+			# If there are no bricks left, player wins
+			if bricks_container.get_child_count() == 0:
 				win_game()
 			break
 
@@ -147,7 +149,7 @@ func lose_life():
 func game_over():
 	ball_velocity = Vector2.ZERO
 	var game_over_label = Label.new()
-	game_over_label.text = "GAME OVER\nPress R to Restart"
+	game_over_label.text = "GAME OVER\nPress ESC to Restart"
 	game_over_label.position = Vector2(screen_size.x / 2 - 100, screen_size.y / 2)
 	game_over_label.add_theme_font_size_override("font_size", 32)
 	add_child(game_over_label)
@@ -156,12 +158,13 @@ func game_over():
 func win_game():
 	ball_velocity = Vector2.ZERO
 	var win_label = Label.new()
-	win_label.text = "YOU WIN!\nPress R to Restart"
+	win_label.text = "YOU WIN!\nPress ESC to Restart"
 	win_label.position = Vector2(screen_size.x / 2 - 100, screen_size.y / 2)
 	win_label.add_theme_font_size_override("font_size", 32)
 	add_child(win_label)
 	set_process(false)
 
 func _input(event):
+	# Reload scene when the user presses the UI cancel action (typically Escape)
 	if event.is_action_pressed("ui_cancel"):
 		get_tree().reload_current_scene()
