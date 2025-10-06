@@ -1,0 +1,13 @@
+63f7b34db8d8cdea90c76aacccf841ec
+::res://::1759730783
+icon.svg::CompressedTexture2D::3863932361010582719::1759729620::1759729625::1::::<><><>0<>0<>7e8dad2a750206aa30e77b718173f347<>res://.godot/imported/icon.svg-218a8f2b3041327d8a5756f3a245f83b.ctex::
+node_2d.gd::GDScript::6806871254965249829::1759730380::0::1::::<>Node2D<><>0<>0<><>::
+node_2d.tscn::PackedScene::5816372252703739821::1759729700::0::1::::<><><>0<>0<><>::uid://c38kf7ncjkw02::::res://node_2d.gd
+README.md::TextFile::-1::1759730385::0::1::::<><><>0<>0<><>::
+::res://addons/::1759730783
+::res://addons/claude_3.5_sonnet_chat_api/::1759730783
+Claude symbol - Ivory.png::CompressedTexture2D::8359861479026415144::1759730783::1759730784::1::::<><><>0<>0<>669581d2c2f796eecd4cb01484c2f8d5<>res://.godot/imported/Claude symbol - Ivory.png-fdf525248c9c011fe4c60c369e4516bb.ctex::
+dock_window.gd::GDScript::1577869934705328558::1759730783::0::1::::<>Control<><>0<>1<><>::
+dock_window.tscn::PackedScene::2805335286659892580::1759730783::0::1::::<><><>0<>0<><>::res://addons/claude_3.5_sonnet_chat_api/dock_window.gd
+plugin.cfg::TextFile::-1::1759730783::0::1::::<><><>0<>0<><>::
+plugin.gd::GDScript::6267542890570356918::1759730783::0::1::::<>EditorPlugin<><>0<>1<><>::
