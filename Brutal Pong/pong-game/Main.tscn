@@ -1,9 +1,12 @@
-[gd_scene load_steps=10 format=3 uid="uid://qpdg8uq7ol6o"]
+[gd_scene load_steps=19 format=3 uid="uid://qpdg8uq7ol6o"]
 
 [ext_resource type="Script" uid="uid://cpqvsialp5hex" path="res://scripts/Main.gd" id="1_glv2v"]
 [ext_resource type="Script" uid="uid://bvssynl3yl2kw" path="res://scripts/Paddle.gd" id="2_uu6xs"]
 [ext_resource type="Script" uid="uid://bx42sc58bpy57" path="res://scripts/AI.gd" id="3_r0du0"]
 [ext_resource type="Script" uid="uid://yrfmy8eeuots" path="res://scripts/Ball.gd" id="4_cm0pq"]
+[ext_resource type="Script" path="res://scripts/Spike.gd" id="5_spike"]
+[ext_resource type="Script" path="res://scripts/WallTrap.gd" id="6_walltrap"]
+[ext_resource type="Script" path="res://scripts/Coin.gd" id="7_coin"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rxg2q"]
 size = Vector2(20, 100)
@@ -18,6 +21,18 @@ size = Vector2(1000, 10)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_r0du0"]
 size = Vector2(1000, 10)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_spike"]
+size = Vector2(30, 30)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_spike_damage"]
+radius = 20.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_walltrap"]
+size = Vector2(40, 40)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_coin"]
+radius = 15.0
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_glv2v")
@@ -100,3 +115,57 @@ position = Vector2(500, 605)
 
 [node name="FloorCollision" type="CollisionShape2D" parent="Floor"]
 shape = SubResource("RectangleShape2D_r0du0")
+
+[node name="Spike" type="StaticBody2D" parent="."]
+visible = false
+position = Vector2(-100, -100)
+script = ExtResource("5_spike")
+
+[node name="SpikeCollision" type="CollisionShape2D" parent="Spike"]
+shape = SubResource("RectangleShape2D_spike")
+
+[node name="SpikeDamageArea" type="Area2D" parent="Spike"]
+
+[node name="SpikeDamageCollision" type="CollisionShape2D" parent="Spike/SpikeDamageArea"]
+shape = SubResource("CircleShape2D_spike_damage")
+
+[node name="SpikeVisual" type="ColorRect" parent="Spike"]
+offset_left = -15.0
+offset_top = -15.0
+offset_right = 15.0
+offset_bottom = 15.0
+color = Color(1, 0, 0, 1)
+
+[node name="WallTrap" type="Area2D" parent="."]
+visible = false
+position = Vector2(-100, -100)
+script = ExtResource("6_walltrap")
+collision_layer = 0
+collision_mask = 1
+
+[node name="WallTrapCollision" type="CollisionShape2D" parent="WallTrap"]
+shape = SubResource("RectangleShape2D_walltrap")
+
+[node name="WallTrapVisual" type="ColorRect" parent="WallTrap"]
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+color = Color(1, 0.5, 0, 0.8)
+
+[node name="Coin" type="Area2D" parent="."]
+visible = false
+position = Vector2(-100, -100)
+script = ExtResource("7_coin")
+collision_layer = 0
+collision_mask = 1
+
+[node name="CoinCollision" type="CollisionShape2D" parent="Coin"]
+shape = SubResource("CircleShape2D_coin")
+
+[node name="CoinVisual" type="ColorRect" parent="Coin"]
+offset_left = -10.0
+offset_top = -10.0
+offset_right = 10.0
+offset_bottom = 10.0
+color = Color(1, 1, 0, 1)

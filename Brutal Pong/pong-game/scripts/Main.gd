@@ -6,13 +6,21 @@ extends Node2D
 @onready var score1 := $Score1
 @onready var score2 := $Score2
 
+# Scene nodes
+@onready var spike_node := $Spike
+@onready var wall_trap_node := $WallTrap
+@onready var coin_node := $Coin
+
 # Game state variables
 var player_lives := 3
 var round_time := 60.0
 var current_round_time := 60.0
 var game_state := "playing"  # "playing", "shop", "game_over"
+var current_round := 1
 var spikes := []
 var wall_traps := []
+
+# Scene nodes will be referenced via @onready vars
 
 # Scoreboard variables
 var player_score := 0
@@ -76,10 +84,12 @@ func handle_round_timer(delta):
 		end_round()
 
 func handle_spike_spawning(delta):
-	spike_spawn_timer += delta
-	if spike_spawn_timer >= spike_spawn_interval:
-		spawn_spike()
-		spike_spawn_timer = 0.0
+	# Only spawn spikes starting from round 2
+	if current_round > 1:
+		spike_spawn_timer += delta
+		if spike_spawn_timer >= spike_spawn_interval:
+			spawn_spike()
+			spike_spawn_timer = 0.0
 
 func handle_wall_traps(delta):
 	wall_trap_timer += delta
@@ -142,35 +152,12 @@ func spawn_spike():
 
 	# Create mirrored spikes
 	for side in range(2):  # 0=left, 1=right (mirrored)
-		var spike = StaticBody2D.new()
+		var spike = spike_node.duplicate()
 		spike.name = "Spike_" + str(spikes.size())
+		spike.visible = true
 
-		# Add collision shape - square like paddle
-		var collision = CollisionShape2D.new()
-		var shape = RectangleShape2D.new()
-		shape.size = Vector2(30, 30)  # Match the visual size
-		collision.shape = shape
-		spike.add_child(collision)
-
-		# Add Area2D for player damage detection
-		var damage_area = Area2D.new()
-		damage_area.name = "DamageArea"
-		var damage_collision = CollisionShape2D.new()
-		var damage_shape = CircleShape2D.new()
-		damage_shape.radius = 20  # Slightly larger for player damage
-		damage_collision.shape = damage_shape
-		damage_area.add_child(damage_collision)
-		spike.add_child(damage_area)
-
-		# Connect player damage
-		damage_area.body_entered.connect(func(body): spike_hit_player(body))
-
-		# Add visual - create a circle-like appearance
-		var visual = ColorRect.new()
-		visual.size = Vector2(30, 30)
-		visual.position = Vector2(-15, -15)
-		visual.color = Color.RED
-		spike.add_child(visual)
+		# Connect player damage signal
+		spike.player_hit.connect(func(): lose_life("Hit by spike!"))
 
 		# Set position - mirror across center line (x=500)
 		if side == 0:  # Left side (original)
@@ -186,81 +173,54 @@ func spawn_spike():
 
 func spawn_wall_trap():
 	# Random wall type and position
-	var wall_side = randi() % 2  # 0=vertical, 1=horizontal
+	var wall_type = randi() % 2  # 0=vertical, 1=horizontal
 
-	match wall_side:
+	match wall_type:
 		0:  # Vertical walls - create mirrored left and right
 			for side in range(2):  # 0=left, 1=right
-				var trap = Area2D.new()
+				var trap = wall_trap_node.duplicate()
 				trap.name = "WallTrap_" + str(wall_traps.size())
+				trap.visible = true
 
-				# Add collision - only for player detection, not ball
-				var collision = CollisionShape2D.new()
-				var shape = RectangleShape2D.new()
-				collision.shape = shape
-				trap.add_child(collision)
-
-				# Set collision layers so only player can be detected, not ball
-				trap.collision_layer = 0  # Don't be detected by others
-				trap.collision_mask = 1   # Only detect layer 1 (player)
-
-				# Add visual (flame effect)
-				var visual = ColorRect.new()
-				visual.color = Color(1, 0.5, 0, 0.8)  # Orange flame color
-				trap.add_child(visual)
-
-				if side == 0:  # Left wall
-					trap.position = Vector2(20, 300)
-				else:  # Right wall (mirrored)
-					trap.position = Vector2(980, 300)
-
-				shape.size = Vector2(40, 600)  # Full screen height
-				visual.size = Vector2(40, 600)
-				visual.position = Vector2(-20, -300)
+				# Set wall type and side
+				trap.wall_type = "vertical"
+				trap.wall_side = "left" if side == 0 else "right"
 
 				add_child(trap)
 				wall_traps.append(trap)
 
-				# Connect to player collision
-				trap.body_entered.connect(func(body): player_hit_by_wall_trap(body))
+				# Set up the wall after adding to scene
+				trap.call_deferred("setup_wall")
+
+				# Connect player hit signal
+				trap.player_hit.connect(func(): lose_life("Hit by wall trap!"))
+
+				add_child(trap)
+				wall_traps.append(trap)
 
 				# Remove after some time
 				get_tree().create_timer(3.0).timeout.connect(remove_wall_trap.bind(trap))
 
 		1:  # Horizontal walls - single wall only
-			var trap = Area2D.new()
+			var trap = wall_trap_node.duplicate()
 			trap.name = "WallTrap_" + str(wall_traps.size())
+			trap.visible = true
 
-			# Add collision - only for player detection, not ball
-			var collision = CollisionShape2D.new()
-			var shape = RectangleShape2D.new()
-			collision.shape = shape
-			trap.add_child(collision)
-
-			# Set collision layers so only player can be detected, not ball
-			trap.collision_layer = 0  # Don't be detected by others
-			trap.collision_mask = 1   # Only detect layer 1 (player)
-
-			# Add visual (flame effect)
-			var visual = ColorRect.new()
-			visual.color = Color(1, 0.5, 0, 0.8)  # Orange flame color
-			trap.add_child(visual)
-
-			# Random top or bottom
-			if randf() > 0.5:  # Top wall
-				trap.position = Vector2(500, 20)
-			else:  # Bottom wall
-				trap.position = Vector2(500, 580)
-
-			shape.size = Vector2(1000, 40)  # Full screen width
-			visual.size = Vector2(1000, 40)
-			visual.position = Vector2(-500, -20)
+			# Set wall type and side
+			trap.wall_type = "horizontal"
+			trap.wall_side = "top" if randf() > 0.5 else "bottom"
 
 			add_child(trap)
 			wall_traps.append(trap)
 
-			# Connect to player collision
-			trap.body_entered.connect(func(body): player_hit_by_wall_trap(body))
+			# Set up the wall after adding to scene
+			trap.call_deferred("setup_wall")
+
+			# Connect player hit signal
+			trap.player_hit.connect(func(): lose_life("Hit by wall trap!"))
+
+			add_child(trap)
+			wall_traps.append(trap)
 
 			# Remove after some time
 			get_tree().create_timer(3.0).timeout.connect(remove_wall_trap.bind(trap))
@@ -301,46 +261,26 @@ func spawn_coin():
 	if attempts >= 20:
 		return
 
-	# Create single coin at center line
-	var coin = Area2D.new()
+	# Create coin instance
+	var coin = coin_node.duplicate()
 	coin.name = "Coin_" + str(coins.size())
-
-	# Add collision for player collection only
-	var collision = CollisionShape2D.new()
-	var shape = CircleShape2D.new()
-	shape.radius = 15  # Coin collection radius
-	collision.shape = shape
-	coin.add_child(collision)
-
-	# Set collision layers so only player can collect
-	coin.collision_layer = 0  # Don't be detected by others
-	coin.collision_mask = 1   # Only detect layer 1 (player)
-
-	# Add visual - yellow circle
-	var visual = ColorRect.new()
-	visual.size = Vector2(20, 20)
-	visual.position = Vector2(-10, -10)
-	visual.color = Color.YELLOW
-	coin.add_child(visual)
-
-	# Position at center line
 	coin.position = coin_pos
+	coin.visible = true
+
+	# Connect collection signal
+	coin.collected.connect(func(value):
+		player_currency += value
+		if currency_label:
+			currency_label.text = "Coins: " + str(player_currency)
+		coins.erase(coin)
+	)
 
 	add_child(coin)
 	coins.append(coin)
 
-	# Connect collection
-	coin.body_entered.connect(func(body): collect_coin(body, coin))
-
 	# Remove after some time
 	get_tree().create_timer(12.0).timeout.connect(remove_coin.bind(coin))
 
-func collect_coin(body, coin):
-	if body == player1:
-		player_currency += 5
-		if currency_label:
-			currency_label.text = "Coins: " + str(player_currency)
-		remove_coin(coin)
 
 func remove_coin(coin):
 	if coin and is_instance_valid(coin):
@@ -360,13 +300,7 @@ func remove_wall_trap(trap):
 func player_hit_by_spike():
 	lose_life("Hit by spike!")
 
-func spike_hit_player(body):
-	if body == player1:
-		lose_life("Hit by spike!")
 
-func player_hit_by_wall_trap(body):
-	if body == player1:
-		lose_life("Hit by wall trap!")
 
 func lose_life(_reason: String):
 	# Check if shield is active
@@ -438,7 +372,16 @@ func close_shop_and_continue():
 	get_tree().paused = false
 	# Reset timer only when starting a new round after shop
 	current_round_time = round_time
+	# Increment round counter
+	current_round += 1
+	# Increase AI difficulty
+	increase_ai_difficulty()
 	start_round()
+
+func increase_ai_difficulty():
+	# Increase AI speed by 10% each round, capped at 2x original speed
+	var speed_increase = min(1.0 + (current_round - 1) * 0.1, 2.0)
+	player2.speed = 300.0 * speed_increase
 
 # Shop item effects
 func add_life():
