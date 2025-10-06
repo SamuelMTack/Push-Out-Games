@@ -21,7 +21,7 @@ func _ready():
 	else:
 		print("AI: Found ball at ", ball.position)
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	# Always try to find ball if we don't have it
 	if not ball:
 		ball = get_parent().get_node_or_null("Ball")

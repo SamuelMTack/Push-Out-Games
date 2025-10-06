@@ -12,7 +12,7 @@ var middle_line := 500.0
 var attack_range := 100.0
 var attack_force := 300.0
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	var direction := Vector2.ZERO
 
 	# Vertical movement

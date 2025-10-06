@@ -47,7 +47,6 @@ func _physics_process(delta):
 		if collider is CharacterBody2D and collider.name.contains("Player"):
 			# Handle both Player1 (left) and Player2 (right) paddles correctly
 			var paddle_center = collider.position
-			var ball_to_paddle = position - paddle_center
 
 			# Determine which paddle and bounce accordingly
 			if collider.name == "Player1":
