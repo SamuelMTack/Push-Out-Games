@@ -1,6 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://qnpanxt6i7xw"]
+[gd_scene load_steps=8 format=3 uid="uid://qnpanxt6i7xw"]
 
 [ext_resource type="Texture2D" uid="uid://b1ckbp3higuis" path="res://Assets/Enemy/Zahnbat.png" id="1_7htsm"]
+[ext_resource type="Script" uid="uid://cbraam4akeqes" path="res://Scripts/zahnbat.gd" id="1_yvwe8"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_vk34h"]
 atlas = ExtResource("1_7htsm")
@@ -35,6 +36,7 @@ animations = [{
 radius = 17.1172
 
 [node name="Zahnbat" type="Area2D"]
+script = ExtResource("1_yvwe8")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(-7, -27)
@@ -45,3 +47,5 @@ frame_progress = 0.492766
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -8)
 shape = SubResource("CircleShape2D_8hisv")
+
+[connection signal="body_shape_entered" from="." to="." method="_on_body_shape_entered"]

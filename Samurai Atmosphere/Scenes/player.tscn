@@ -1,12 +1,12 @@
 [gd_scene load_steps=55 format=3 uid="uid://bdptl46wkpl54"]
 
-[ext_resource type="Script" path="res://Scripts/Player.gd" id="1_xolnj"]
+[ext_resource type="Script" uid="uid://basabsqx5kllp" path="res://Scripts/Player.gd" id="1_xolnj"]
 [ext_resource type="Texture2D" uid="uid://bgimu0kkub8yp" path="res://Assets/Player/Idle_SpriteSheet.png" id="2_510hs"]
 [ext_resource type="Texture2D" uid="uid://dubcloxqlp64" path="res://Assets/Player/jump_SpriteSheet.png" id="3_l88lt"]
 [ext_resource type="Texture2D" uid="uid://sq8fdl77ueg4" path="res://Assets/Player/Attack_SpriteSheet.png" id="4_jilxl"]
 [ext_resource type="Texture2D" uid="uid://c5587nlooda0r" path="res://Assets/Player/land_SpriteSheet.png" id="4_npkg0"]
 [ext_resource type="Texture2D" uid="uid://y36y8toet4vp" path="res://Assets/Player/run_SpriteSheet.png" id="5_5uybx"]
-[ext_resource type="Script" path="res://Scripts/Hitbox.gd" id="7_iycji"]
+[ext_resource type="Script" uid="uid://j3xdvw5kmp6b" path="res://Scripts/Hitbox.gd" id="7_iycji"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_132gm"]
 atlas = ExtResource("4_jilxl")

@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://brr5e7ugup36" path="res://Scenes/world.tscn" id="1_p3ue4"]
 [ext_resource type="PackedScene" uid="uid://qnpanxt6i7xw" path="res://Scenes/zahnbat.tscn" id="3_0h5v6"]
-[ext_resource type="Script" path="res://Scripts/Enemy_Respawn.gd" id="3_ia1ie"]
+[ext_resource type="Script" uid="uid://bpenwnwflsuo6" path="res://Scripts/Enemy_Respawn.gd" id="3_ia1ie"]
 [ext_resource type="PackedScene" uid="uid://bdptl46wkpl54" path="res://Scenes/player.tscn" id="4_nsa77"]
 
 [node name="Game" type="Node2D"]
@@ -29,9 +29,10 @@ script = ExtResource("3_ia1ie")
 position = Vector2(99, 26)
 scale = Vector2(0.325, 0.325)
 
-[node name="Timer" type="Timer" parent="Enemy_Respawn"]
+[node name="Timer" type="Timer" parent="Enemy_Respawn/Zahnbat"]
 wait_time = 3.0
 one_shot = true
+script = ExtResource("3_ia1ie")
 
 [connection signal="area_shape_entered" from="Enemy_Respawn/Zahnbat" to="Enemy_Respawn" method="_on_zahnbat_area_shape_entered"]
-[connection signal="timeout" from="Enemy_Respawn/Timer" to="Enemy_Respawn" method="_on_timer_timeout"]
+[connection signal="timeout" from="Enemy_Respawn/Zahnbat/Timer" to="Enemy_Respawn" method="_on_timer_timeout"]
