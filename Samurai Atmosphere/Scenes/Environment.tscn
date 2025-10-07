@@ -1,0 +1,175 @@
+[gd_scene load_steps=2 format=3 uid="uid://yxd443k2fdsa"]
+
+[ext_resource type="PackedScene" uid="uid://bhxlk5roh3dm3" path="res://Scenes/grass.tscn" id="1_fqe7t"]
+
+[node name="Evironment" type="Node2D"]
+position = Vector2(16, 0)
+
+[node name="AnimatedSprite2D5" parent="." instance=ExtResource("1_fqe7t")]
+position = Vector2(-9.444, -7)
+frame = 8
+frame_progress = 0.798727
+speed_scale = -0.725
+flip_h = true
+
+[node name="AnimatedSprite2D6" parent="." instance=ExtResource("1_fqe7t")]
+position = Vector2(12.556, -7)
+frame = 6
+frame_progress = 0.0
+flip_h = true
+
+[node name="AnimatedSprite2D7" parent="." instance=ExtResource("1_fqe7t")]
+position = Vector2(-11.444, -7)
+frame = 22
+frame_progress = 0.0
+flip_h = true
+
+[node name="AnimatedSprite2D8" parent="." instance=ExtResource("1_fqe7t")]
+position = Vector2(12.556, -5)
+scale = Vector2(0.90625, 0.625)
+frame = 15
+frame_progress = 0.0
+speed_scale = 0.9
+flip_h = true
+
+[node name="AnimatedSprite2D9" parent="." instance=ExtResource("1_fqe7t")]
+position = Vector2(36.556, -7)
+frame = 8
+frame_progress = 0.798727
+speed_scale = -0.725
+
+[node name="AnimatedSprite2D10" parent="." instance=ExtResource("1_fqe7t")]
+position = Vector2(58.556, -7)
+frame = 6
+frame_progress = 0.0
+
+[node name="AnimatedSprite2D11" parent="." instance=ExtResource("1_fqe7t")]
+position = Vector2(34.556, -7)
+frame = 22
+frame_progress = 0.0
+flip_h = true
+
+[node name="AnimatedSprite2D12" parent="." instance=ExtResource("1_fqe7t")]
+position = Vector2(58.556, -5)
+scale = Vector2(0.90625, 0.625)
+frame = 15
+frame_progress = 0.0
+speed_scale = 0.9
+flip_h = true
+
+[node name="AnimatedSprite2D" parent="." instance=ExtResource("1_fqe7t")]
+position = Vector2(81.556, -7)
+frame = 8
+frame_progress = 0.798727
+speed_scale = -0.725
+
+[node name="AnimatedSprite2D2" parent="." instance=ExtResource("1_fqe7t")]
+position = Vector2(103.556, -7)
+frame = 6
+frame_progress = 0.0
+
+[node name="AnimatedSprite2D3" parent="." instance=ExtResource("1_fqe7t")]
+position = Vector2(79.556, -7)
+frame = 22
+frame_progress = 0.0
+flip_h = true
+
+[node name="AnimatedSprite2D4" parent="." instance=ExtResource("1_fqe7t")]
+position = Vector2(103.556, -5)
+scale = Vector2(0.90625, 0.625)
+frame = 15
+frame_progress = 0.0
+speed_scale = 0.9
+flip_h = true
+
+[node name="AnimatedSprite2D13" parent="." instance=ExtResource("1_fqe7t")]
+position = Vector2(-127.132, -5)
+scale = Vector2(1.066, 0.508)
+frame = 8
+frame_progress = 0.798727
+speed_scale = -0.725
+flip_h = true
+
+[node name="AnimatedSprite2D14" parent="." instance=ExtResource("1_fqe7t")]
+position = Vector2(-107.194, -5)
+scale = Vector2(1.066, 0.508)
+frame = 6
+frame_progress = 0.0
+flip_h = true
+
+[node name="AnimatedSprite2D15" parent="." instance=ExtResource("1_fqe7t")]
+position = Vector2(-128.944, -5)
+scale = Vector2(1.066, 0.508)
+frame = 22
+frame_progress = 0.0
+flip_h = true
+
+[node name="AnimatedSprite2D16" parent="." instance=ExtResource("1_fqe7t")]
+position = Vector2(-107.194, -3.75)
+scale = Vector2(1.066, 0.508)
+frame = 15
+frame_progress = 0.0
+speed_scale = 0.9
+flip_h = true
+
+[node name="AnimatedSprite2D17" parent="." instance=ExtResource("1_fqe7t")]
+position = Vector2(-85.444, -5)
+scale = Vector2(1.066, 0.508)
+frame = 8
+frame_progress = 0.798727
+speed_scale = -0.725
+
+[node name="AnimatedSprite2D18" parent="." instance=ExtResource("1_fqe7t")]
+position = Vector2(-65.5065, -5)
+scale = Vector2(1.066, 0.508)
+frame = 6
+frame_progress = 0.0
+
+[node name="AnimatedSprite2D19" parent="." instance=ExtResource("1_fqe7t")]
+position = Vector2(-87.2565, -5)
+scale = Vector2(1.066, 0.508)
+frame = 22
+frame_progress = 0.0
+flip_h = true
+
+[node name="AnimatedSprite2D20" parent="." instance=ExtResource("1_fqe7t")]
+position = Vector2(-65.5065, -3.75)
+scale = Vector2(1.066, 0.508)
+frame = 15
+frame_progress = 0.0
+speed_scale = 0.9
+flip_h = true
+
+[node name="AnimatedSprite2D21" parent="." instance=ExtResource("1_fqe7t")]
+position = Vector2(-44.6628, -5)
+scale = Vector2(0.90625, 0.625)
+frame = 8
+frame_progress = 0.798727
+speed_scale = -0.725
+
+[node name="AnimatedSprite2D22" parent="." instance=ExtResource("1_fqe7t")]
+position = Vector2(-24.7253, -5)
+scale = Vector2(0.90625, 0.625)
+frame = 6
+frame_progress = 0.0
+
+[node name="AnimatedSprite2D23" parent="." instance=ExtResource("1_fqe7t")]
+position = Vector2(-46.4753, -5)
+scale = Vector2(0.90625, 0.625)
+frame = 22
+frame_progress = 0.0
+flip_h = true
+
+[node name="AnimatedSprite2D24" parent="." instance=ExtResource("1_fqe7t")]
+position = Vector2(-24.7253, -3.75)
+scale = Vector2(0.821289, 0.390625)
+frame = 15
+frame_progress = 0.0
+speed_scale = 0.9
+flip_h = true
+
+[node name="AnimatedSprite2D25" parent="." instance=ExtResource("1_fqe7t")]
+position = Vector2(-116.444, -7)
+frame = 22
+frame_progress = 0.0
+flip_h = true
