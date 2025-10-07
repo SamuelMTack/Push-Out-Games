@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://boycwgpu048yy"]
+[gd_scene load_steps=3 format=3 uid="uid://boycwgpu048yy"]
 
 [ext_resource type="Script" uid="uid://q7ri5gs0vl3l" path="res://node_2d.gd" id="1_wtcfe"]
+[ext_resource type="Texture2D" uid="uid://bqfwdwhkhne8x" path="res://icon.svg" id="2_0e48y"]
 
 [node name="Node2D" type="Control"]
 layout_mode = 3
@@ -29,6 +30,11 @@ layout_mode = 2
 
 [node name="ClickButton" type="Button" parent="VBoxContainer"]
 layout_mode = 2
+
+[node name="Button Sprite" type="Sprite2D" parent="VBoxContainer/ClickButton"]
+position = Vector2(58, 3.999999)
+scale = Vector2(0.92187506, 0.062499985)
+texture = ExtResource("2_0e48y")
 
 [node name="ShopPanel" type="Panel" parent="."]
 layout_mode = 0
