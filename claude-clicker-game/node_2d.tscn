@@ -56,40 +56,121 @@ layout_mode = 2
 
 [node name="ShopPanel" type="Panel" parent="."]
 layout_mode = 0
-offset_left = -63.154087
+offset_left = -81.0
 offset_top = 190.1626
-offset_right = -23.154087
-offset_bottom = 230.1626
+offset_right = 360.0
+offset_bottom = 625.0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="ShopPanel"]
+[node name="ShopScroll" type="ScrollContainer" parent="ShopPanel"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = -0.32500002
-anchor_right = 3.0500002
-anchor_bottom = 2.6000001
-offset_top = -7.0
-offset_right = -63.751434
-offset_bottom = -49.000008
+anchor_right = 0.004
+anchor_bottom = 0.08800001
+offset_left = 1.1540871
+offset_top = -2.1625977
+offset_right = 307.91345
+offset_bottom = 326.9877
 
-[node name="Label" type="Label" parent="ShopPanel/VBoxContainer"]
-layout_mode = 2
-text = "
-"
-
-[node name="ClickersOwnedLabel" type="Label" parent="ShopPanel/VBoxContainer"]
+[node name="ShopItems" type="VBoxContainer" parent="ShopPanel/ShopScroll"]
 layout_mode = 2
 
-[node name="BuyClickerButton" type="Button" parent="ShopPanel/VBoxContainer"]
+[node name="Shop" type="Label" parent="ShopPanel/ShopScroll/ShopItems"]
+layout_mode = 2
+text = "Shop"
+
+[node name="BuyClickerButton" type="Button" parent="ShopPanel/ShopScroll/ShopItems"]
 layout_mode = 2
 text = "Buy Auto Clicker"
 
-[node name="PriceLabel" type="Label" parent="ShopPanel/VBoxContainer/BuyClickerButton"]
+[node name="PriceLabel" type="Label" parent="ShopPanel/ShopScroll/ShopItems/BuyClickerButton"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 1.1340001
 anchor_right = 2.512
 anchor_bottom = 2.059
-offset_left = -6.9359283
-offset_top = -8.162598
-offset_right = 0.034057617
-offset_bottom = 0.008399963
+offset_left = -11.090012
+offset_top = 6.0
+offset_right = -142.36209
+offset_bottom = -31.829002
+
+[node name="ClickersOwnedLabel" type="Label" parent="ShopPanel/ShopScroll/ShopItems"]
+layout_mode = 2
+text = "ClickersOwnedLabel"
+
+[node name="HSeparator" type="HSeparator" parent="ShopPanel/ShopScroll/ShopItems"]
+layout_mode = 2
+
+[node name="BuyClickMultiplierButton" type="Button" parent="ShopPanel/ShopScroll/ShopItems"]
+layout_mode = 2
+text = "Buy Click Power"
+
+[node name="PriceLabel" type="Label" parent="ShopPanel/ShopScroll/ShopItems/BuyClickMultiplierButton"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.1340001
+anchor_right = 2.512
+anchor_bottom = 2.059
+offset_left = -15.810089
+offset_top = 1.0
+offset_right = -139.36209
+offset_bottom = -36.829002
+
+[node name="ClickMultiplierLevel" type="Label" parent="ShopPanel/ShopScroll/ShopItems"]
+layout_mode = 2
+text = "ClickMultiplierLevel"
+
+[node name="HSeparator2" type="HSeparator" parent="ShopPanel/ShopScroll/ShopItems"]
+layout_mode = 2
+
+[node name="AutoClickerLevel" type="Label" parent="ShopPanel/ShopScroll/ShopItems"]
+layout_mode = 2
+text = "AutoClickerLevel"
+
+[node name="BuyAutoClickerButton" type="Button" parent="ShopPanel/ShopScroll/ShopItems"]
+layout_mode = 2
+text = "Buy Super Auto Clicker"
+
+[node name="PriceLabel" type="Label" parent="ShopPanel/ShopScroll/ShopItems/BuyAutoClickerButton"]
+layout_mode = 0
+offset_left = 196.84592
+offset_top = 6.0
+offset_right = 321.84592
+offset_bottom = 29.0
+
+[node name="HSeparator3" type="HSeparator" parent="ShopPanel/ShopScroll/ShopItems"]
+layout_mode = 2
+
+[node name="GoldenTouchLevel" type="Label" parent="ShopPanel/ShopScroll/ShopItems"]
+layout_mode = 2
+text = "GoldenTouchLevel"
+
+[node name="BuyGoldenTouchButton" type="Button" parent="ShopPanel/ShopScroll/ShopItems"]
+layout_mode = 2
+text = "Buy Golden Touch"
+
+[node name="PriceLabel" type="Label" parent="ShopPanel/ShopScroll/ShopItems/BuyGoldenTouchButton"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.0
+anchor_right = 1.7390001
+anchor_bottom = 0.74200004
+offset_left = 4.8459167
+offset_top = 2.0
+offset_right = -1.1300964
+offset_bottom = 3.9979992
+
+[node name="HSeparator4" type="HSeparator" parent="ShopPanel/ShopScroll/ShopItems"]
+layout_mode = 2
+
+[node name="MegaFactoryLevel" type="Label" parent="ShopPanel/ShopScroll/ShopItems"]
+layout_mode = 2
+text = "MegaFactoryLevel"
+
+[node name="BuyMegaFactoryButton" type="Button" parent="ShopPanel/ShopScroll/ShopItems"]
+layout_mode = 2
+text = "Buy MegaFactory Button"
+
+[node name="PriceLabel" type="Label" parent="ShopPanel/ShopScroll/ShopItems/BuyMegaFactoryButton"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
