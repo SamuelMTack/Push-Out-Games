@@ -5,14 +5,15 @@
 
 [node name="Node2D" type="Control"]
 layout_mode = 3
-anchor_left = -0.063
-anchor_top = -0.023000002
-anchor_right = 0.113000005
-anchor_bottom = 0.124000005
-offset_left = 153.576
-offset_top = 24.904001
-offset_right = -49.17601
-offset_bottom = -70.352005
+anchor_top = 0.015000001
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 81.0
+offset_top = 11.28
+offset_right = -1071.0
+offset_bottom = -627.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
 script = ExtResource("1_wtcfe")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
@@ -61,11 +62,14 @@ offset_right = -23.154087
 offset_bottom = 230.1626
 
 [node name="VBoxContainer" type="VBoxContainer" parent="ShopPanel"]
-layout_mode = 0
-offset_left = -12.999992
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.32500002
+anchor_right = 3.0500002
+anchor_bottom = 2.6000001
 offset_top = -7.0
-offset_right = 58.248573
-offset_bottom = 55.0
+offset_right = -63.751434
+offset_bottom = -49.000008
 
 [node name="Label" type="Label" parent="ShopPanel/VBoxContainer"]
 layout_mode = 2
@@ -82,11 +86,10 @@ text = "Buy Auto Clicker"
 [node name="PriceLabel" type="Label" parent="ShopPanel/VBoxContainer/BuyClickerButton"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 1.488
-anchor_top = 1.0
-anchor_right = 2.6490002
-anchor_bottom = 5.6720004
-offset_left = -0.025901794
-offset_top = -0.6253967
-offset_right = -6.456909
-offset_bottom = -0.0014152527
+anchor_left = 1.1340001
+anchor_right = 2.512
+anchor_bottom = 2.059
+offset_left = -6.9359283
+offset_top = -8.162598
+offset_right = 0.034057617
+offset_bottom = 0.008399963
