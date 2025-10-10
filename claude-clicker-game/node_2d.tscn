@@ -1,10 +1,32 @@
-[gd_scene load_steps=7 format=3 uid="uid://boycwgpu048yy"]
+[gd_scene load_steps=10 format=3 uid="uid://boycwgpu048yy"]
 
 [ext_resource type="Script" uid="uid://q7ri5gs0vl3l" path="res://Scripts/node_2d.gd" id="1_6whob"]
 [ext_resource type="Texture2D" uid="uid://5wyxn05cdg7p" path="res://Sprites/coin_01.png" id="2_u7krg"]
 [ext_resource type="AudioStream" uid="uid://c32f2ctcqoyid" path="res://FX/coin1.wav" id="3_tx0tn"]
+[ext_resource type="Texture2D" uid="uid://q0bfflw4ldqh" path="res://Sprites/Full Coins.png" id="4_kdubu"]
 [ext_resource type="Theme" uid="uid://b26pfekpoe4fs" path="res://Themes/UI_Theme.tres" id="4_q6r6c"]
 [ext_resource type="AudioStream" uid="uid://cq1jp1xi0i1dc" path="res://Music/jacksontorreal_-_rest_(for_a_bit).mp3" id="4_wjtap"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_d21ai"]
+particles_animation = true
+particles_anim_h_frames = 8
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_rj586"]
+particle_flag_disable_z = true
+emission_shape_offset = Vector3(0.22, 0, 0)
+emission_shape_scale = Vector3(1.455, 1, 1)
+emission_shape = 1
+emission_sphere_radius = 20.46
+angle_min = -543.0
+angle_max = 518.80005
+angular_velocity_min = -625.46
+angular_velocity_max = -518.79
+gravity = Vector3(0, 98, 0)
+scale_max = 2.0
+anim_speed_min = 4.42
+anim_speed_max = 5.49
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_q6r6c"]
 
@@ -17,6 +39,18 @@ grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("1_6whob")
+points = 1000
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+unique_name_in_owner = true
+material = SubResource("CanvasItemMaterial_d21ai")
+position = Vector2(315, -63.99997)
+scale = Vector2(6.92, 6.92)
+amount = 1500
+amount_ratio = 0.0
+texture = ExtResource("4_kdubu")
+lifetime = 7.0
+process_material = SubResource("ParticleProcessMaterial_rj586")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
@@ -209,10 +243,10 @@ parameters/looping = true
 [node name="ClickButton" type="TextureButton" parent="."]
 unique_name_in_owner = true
 layout_mode = 0
-offset_left = 293.0
-offset_top = 300.0
-offset_right = 338.0
-offset_bottom = 348.0
+offset_left = 295.0
+offset_top = 285.0
+offset_right = 340.0
+offset_bottom = 333.0
 scale = Vector2(6, 6)
 pivot_offset = Vector2(22.92, 24.785)
 texture_normal = ExtResource("2_u7krg")

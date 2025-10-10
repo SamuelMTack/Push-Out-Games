@@ -1,7 +1,7 @@
 extends Control
 
 # Game variables
-var points = 0
+@export var points = 0
 var points_per_click = 1
 var idle_clickers = 0
 var idle_click_rate = 1.0 # Points per second per clicker
@@ -41,6 +41,8 @@ const SAVE_PATH = "user://clicker_save.json"
 @onready var save_button = %SaveButton
 @onready var load_button = %LoadButton
 @onready var save_status_label = %SaveStatusLabel
+@onready var gpu_particles_2d: GPUParticles2D = %GPUParticles2D
+
 
 func _ready():
 	# Connect signals
@@ -70,6 +72,8 @@ func _on_click_button_pressed():
 	var click_value = points_per_click * click_multiplier_bonus * golden_touch_bonus
 	points += click_value
 	button_click_sfx_coin_button.play()
+	gpu_particles_2d.amount_ratio += (1 - gpu_particles_2d.amount_ratio)*0.005
+	print(str(gpu_particles_2d.amount_ratio))
 	update_ui()
 	
 	# Add animation effect
