@@ -17,3 +17,7 @@ boot_splash/bg_color=Color(1, 1, 1, 1)
 boot_splash/image="uid://lxau3gv5324y"
 config/icon="uid://5wyxn05cdg7p"
 boot_splash/minimum_display_time=3000
+
+[display]
+
+mouse_cursor/custom_image="uid://cr0ms0006tinh"
