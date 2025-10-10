@@ -1,4 +1,4 @@
-extends Node2D
+extends Control
 
 # Game variables
 var points = 0
@@ -75,7 +75,7 @@ func _on_click_button_pressed():
 	# Add animation effect
 	click_button.scale = Vector2(0.95, 0.95)
 	var tween = create_tween()
-	tween.tween_property(click_button, "scale", Vector2(2.5, 2.5), 0.1)
+	tween.tween_property(click_button, "scale", Vector2(6, 6), 0.1)
 
 func _on_buy_clicker_pressed():
 	if points >= clicker_price:

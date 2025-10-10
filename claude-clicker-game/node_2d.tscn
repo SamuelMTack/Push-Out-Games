@@ -8,10 +8,18 @@
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_q6r6c"]
 
-[node name="Node2D" type="Node2D"]
+[node name="Node2D" type="Control"]
+layout_mode = 3
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 script = ExtResource("1_6whob")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
 offset_right = 622.0
 offset_bottom = 643.0
 
@@ -62,6 +70,7 @@ text = "Load Game
 
 [node name="ShopPanel" type="Panel" parent="."]
 material = SubResource("CanvasItemMaterial_q6r6c")
+layout_mode = 0
 offset_left = 672.0
 offset_top = 30.0
 offset_right = 1113.0
@@ -199,11 +208,13 @@ parameters/looping = true
 
 [node name="ClickButton" type="TextureButton" parent="."]
 unique_name_in_owner = true
-offset_left = 439.99997
-offset_top = 250.99998
-offset_right = 484.99997
-offset_bottom = 299.0
-scale = Vector2(2.5, 2.5)
+layout_mode = 0
+offset_left = 293.0
+offset_top = 300.0
+offset_right = 338.0
+offset_bottom = 348.0
+scale = Vector2(6, 6)
+pivot_offset = Vector2(22.92, 24.785)
 texture_normal = ExtResource("2_u7krg")
 stretch_mode = 0
 
