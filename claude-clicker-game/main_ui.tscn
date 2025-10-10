@@ -1,19 +1,10 @@
-[gd_scene load_steps=20 format=3 uid="uid://bn7bcymv1b1dm"]
+[gd_scene load_steps=18 format=3 uid="uid://bn7bcymv1b1dm"]
 
 [ext_resource type="Script" uid="uid://11o42lhqb5tm" path="res://Scripts/main_ui.gd" id="1_4uoxc"]
 [ext_resource type="Texture2D" uid="uid://dyaktjn5d1c7p" path="res://Sprites/Falling_Egg_Sprite.png" id="2_4uoxc"]
 [ext_resource type="Script" uid="uid://b4s8j5r0tjtj4" path="res://Scripts/button_click_me.gd" id="2_llbac"]
+[ext_resource type="Theme" uid="uid://b26pfekpoe4fs" path="res://Themes/UI_Theme.tres" id="2_n1q3t"]
 [ext_resource type="Texture2D" uid="uid://cvqltc5pc1mn5" path="res://Sprites/Chicken_Sprite.png" id="3_llbac"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dcbcb"]
-bg_color = Color(0.318856, 0.49854326, 0.3505717, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4uoxc"]
-bg_color = Color(0.39607844, 0.6, 0.43137255, 1)
-
-[sub_resource type="Theme" id="Theme_llbac"]
-Button/styles/hover = SubResource("StyleBoxFlat_dcbcb")
-Button/styles/normal = SubResource("StyleBoxFlat_4uoxc")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_n1q3t"]
 atlas = ExtResource("2_4uoxc")
@@ -133,7 +124,7 @@ theme_override_constants/separation = 24
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 size_flags_vertical = 3
-theme = SubResource("Theme_llbac")
+theme = ExtResource("2_n1q3t")
 text = "Start Game"
 script = ExtResource("2_llbac")
 

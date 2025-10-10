@@ -1,88 +1,72 @@
-[gd_scene load_steps=5 format=3 uid="uid://boycwgpu048yy"]
+[gd_scene load_steps=7 format=3 uid="uid://boycwgpu048yy"]
 
 [ext_resource type="Script" uid="uid://q7ri5gs0vl3l" path="res://Scripts/node_2d.gd" id="1_6whob"]
 [ext_resource type="Texture2D" uid="uid://5wyxn05cdg7p" path="res://Sprites/coin_01.png" id="2_u7krg"]
 [ext_resource type="AudioStream" uid="uid://c32f2ctcqoyid" path="res://FX/coin1.wav" id="3_tx0tn"]
+[ext_resource type="Theme" uid="uid://b26pfekpoe4fs" path="res://Themes/UI_Theme.tres" id="4_q6r6c"]
 [ext_resource type="AudioStream" uid="uid://cq1jp1xi0i1dc" path="res://Music/jacksontorreal_-_rest_(for_a_bit).mp3" id="4_wjtap"]
 
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_q6r6c"]
+
 [node name="Node2D" type="Node2D"]
-position = Vector2(82, -1)
 script = ExtResource("1_6whob")
 
-[node name="VBoxContainer" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 0
-offset_left = -78.20662
-offset_top = 25.0
-offset_right = 115.79338
-offset_bottom = 189.0
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+offset_right = 622.0
+offset_bottom = 643.0
 
 [node name="PointsLabel" type="Label" parent="VBoxContainer"]
-layout_mode = 1
-anchors_preset = -1
-anchor_right = 1.0
-anchor_bottom = 0.14
-offset_bottom = 0.03999901
+unique_name_in_owner = true
+layout_mode = 2
+text = "Points:"
+vertical_alignment = 1
 
-[node name="PointsPerSecLabel" type="Label" parent="VBoxContainer"]
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/PointsLabel"]
 layout_mode = 1
-anchors_preset = -1
-anchor_top = 0.165
-anchor_right = 1.0
-anchor_bottom = 0.305
-offset_top = -0.060001373
-offset_bottom = -0.020000458
-
-[node name="ClickButton" type="TextureButton" parent="VBoxContainer"]
-layout_mode = 1
-anchors_preset = -1
-anchor_top = -0.098000005
-anchor_right = 2.269
-anchor_bottom = 1.0
-offset_left = 210.20662
-offset_top = 0.0720005
-offset_right = 0.020599365
-texture_normal = ExtResource("2_u7krg")
-stretch_mode = 0
-
-[node name="ButtonClickSFXCoinButton" type="AudioStreamPlayer2D" parent="VBoxContainer/ClickButton"]
-stream = ExtResource("3_tx0tn")
-
-[node name="SaveLoadButtons" type="HBoxContainer" parent="VBoxContainer"]
-layout_mode = 1
-anchors_preset = -1
-anchor_top = 0.646
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = 0.055992126
-offset_bottom = -27.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="SaveButton" type="Button" parent="VBoxContainer/SaveLoadButtons"]
+[node name="PointsPerSecLabel" type="Label" parent="VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
+text = "Per sec:"
+vertical_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 10
+
+[node name="SaveStatusLabel" type="Label" parent="VBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="SaveLoadButtons" type="HBoxContainer" parent="VBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 19
+
+[node name="SaveButton" type="Button" parent="VBoxContainer/VBoxContainer/SaveLoadButtons"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
 text = "Save Game"
 
-[node name="LoadButton" type="Button" parent="VBoxContainer/SaveLoadButtons"]
+[node name="LoadButton" type="Button" parent="VBoxContainer/VBoxContainer/SaveLoadButtons"]
+unique_name_in_owner = true
 layout_mode = 2
+size_flags_horizontal = 3
 text = "Load Game
 "
 
-[node name="SaveStatusLabel" type="Label" parent="VBoxContainer"]
-layout_mode = 1
-anchors_preset = -1
-anchor_top = 0.64900005
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = 34.563995
-grow_horizontal = 2
-grow_vertical = 2
-
 [node name="ShopPanel" type="Panel" parent="."]
-offset_left = -76.0
-offset_top = 190.0
-offset_right = 365.0
-offset_bottom = 624.8374
+material = SubResource("CanvasItemMaterial_q6r6c")
+offset_left = 672.0
+offset_top = 30.0
+offset_right = 1113.0
+offset_bottom = 617.0
+theme = ExtResource("4_q6r6c")
 
 [node name="ShopScroll" type="ScrollContainer" parent="ShopPanel"]
 layout_mode = 1
@@ -212,3 +196,17 @@ position = Vector2(-76, 19)
 stream = ExtResource("4_wjtap")
 autoplay = true
 parameters/looping = true
+
+[node name="ClickButton" type="TextureButton" parent="."]
+unique_name_in_owner = true
+offset_left = 439.99997
+offset_top = 250.99998
+offset_right = 484.99997
+offset_bottom = 299.0
+scale = Vector2(2.5, 2.5)
+texture_normal = ExtResource("2_u7krg")
+stretch_mode = 0
+
+[node name="ButtonClickSFXCoinButton" type="AudioStreamPlayer2D" parent="ClickButton"]
+unique_name_in_owner = true
+stream = ExtResource("3_tx0tn")

@@ -31,16 +31,16 @@ var mega_factory_multiplier = 1.0
 const SAVE_PATH = "user://clicker_save.json"
 
 # UI References
-@onready var button_click_sfx_coin_button: AudioStreamPlayer2D = $VBoxContainer/ClickButton/ButtonClickSFXCoinButton
-@onready var points_label = $VBoxContainer/PointsLabel
-@onready var click_button = $VBoxContainer/ClickButton
+@onready var button_click_sfx_coin_button: AudioStreamPlayer2D = %ButtonClickSFXCoinButton
+@onready var points_label = %PointsLabel
+@onready var click_button = %ClickButton
 @onready var shop_panel = $ShopPanel
 @onready var clicker_price_label = $ShopPanel/ShopScroll/ShopItems/BuyClickerButton/PriceLabel
 @onready var clickers_owned_label = $ShopPanel/ShopScroll/ShopItems/ClickersOwnedLabel
-@onready var points_per_sec_label = $VBoxContainer/PointsPerSecLabel
-@onready var save_button = $VBoxContainer/SaveLoadButtons/SaveButton
-@onready var load_button = $VBoxContainer/SaveLoadButtons/LoadButton
-@onready var save_status_label = $VBoxContainer/SaveStatusLabel
+@onready var points_per_sec_label = %PointsPerSecLabel
+@onready var save_button = %SaveButton
+@onready var load_button = %LoadButton
+@onready var save_status_label = %SaveStatusLabel
 
 func _ready():
 	# Connect signals
@@ -75,7 +75,7 @@ func _on_click_button_pressed():
 	# Add animation effect
 	click_button.scale = Vector2(0.95, 0.95)
 	var tween = create_tween()
-	tween.tween_property(click_button, "scale", Vector2(1.0, 1.0), 0.1)
+	tween.tween_property(click_button, "scale", Vector2(2.5, 2.5), 0.1)
 
 func _on_buy_clicker_pressed():
 	if points >= clicker_price:

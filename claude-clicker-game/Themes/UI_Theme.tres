@@ -1,0 +1,38 @@
+[gd_resource type="Theme" load_steps=7 format=3 uid="uid://b26pfekpoe4fs"]
+
+[ext_resource type="Texture2D" uid="uid://bwovvyebaplcc" path="res://Themes/Input/boxNormal.png" id="1_3l8vs"]
+[ext_resource type="Texture2D" uid="uid://djrxh5r5us4wu" path="res://Themes/Input/boxSelect.png" id="2_nt3vr"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_vjnto"]
+texture = ExtResource("1_3l8vs")
+texture_margin_left = 32.0
+texture_margin_top = 27.0
+texture_margin_right = 32.0
+texture_margin_bottom = 37.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_hixn6"]
+texture = ExtResource("2_nt3vr")
+texture_margin_left = 32.0
+texture_margin_top = 37.0
+texture_margin_right = 32.0
+texture_margin_bottom = 37.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_nt3vr"]
+texture = ExtResource("1_3l8vs")
+texture_margin_left = 32.0
+texture_margin_top = 37.0
+texture_margin_right = 32.0
+texture_margin_bottom = 37.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_cqiu8"]
+texture = ExtResource("2_nt3vr")
+texture_margin_left = 32.0
+texture_margin_top = 37.0
+texture_margin_right = 32.0
+texture_margin_bottom = 37.0
+
+[resource]
+Button/styles/disabled = SubResource("StyleBoxTexture_vjnto")
+Button/styles/hover = SubResource("StyleBoxTexture_hixn6")
+Button/styles/normal = SubResource("StyleBoxTexture_nt3vr")
+Button/styles/pressed = SubResource("StyleBoxTexture_cqiu8")
