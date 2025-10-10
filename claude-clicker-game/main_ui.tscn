@@ -39,6 +39,9 @@ region = Rect2(896, 0, 128, 128)
 [sub_resource type="SpriteFrames" id="SpriteFrames_sd2ej"]
 animations = [{
 "frames": [{
+"duration": 0.01,
+"texture": null
+}, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_n1q3t")
 }, {
@@ -63,8 +66,8 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_mcdcf")
 }],
-"loop": true,
-"name": &"Eggs",
+"loop": false,
+"name": &"Falling_eggs",
 "speed": 11.0
 }]
 
@@ -85,8 +88,8 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_ilgax")
 }],
-"loop": true,
-"name": &"default",
+"loop": false,
+"name": &"Chicken_poop",
 "speed": 7.0
 }]
 
@@ -216,16 +219,20 @@ size_flags_vertical = 3
 text = "Buy"
 
 [node name="Eggs" type="AnimatedSprite2D" parent="."]
-position = Vector2(922.56, 496.56)
+position = Vector2(942.56, 498.56)
 scale = Vector2(2.29, 2.29)
 sprite_frames = SubResource("SpriteFrames_sd2ej")
-animation = &"Eggs"
-frame_progress = 0.51007307
+animation = &"Falling_eggs"
+frame = 8
+frame_progress = 1.0
 
 [node name="Chicken" type="AnimatedSprite2D" parent="."]
-position = Vector2(913.00006, 472.00003)
+position = Vector2(935, 466.00003)
 scale = Vector2(2.29, 2.29)
 sprite_frames = SubResource("SpriteFrames_yubjs")
-frame_progress = 0.4665684
+animation = &"Chicken_poop"
 
+[connection signal="button_down" from="VBoxContainer/Button_ClickMe" to="VBoxContainer/Button_ClickMe" method="_on_button_down"]
+[connection signal="button_up" from="VBoxContainer/Button_ClickMe" to="VBoxContainer/Button_ClickMe" method="_on_button_up"]
 [connection signal="pressed" from="VBoxContainer/Button_ClickMe" to="VBoxContainer/Button_ClickMe" method="_on_pressed"]
+[connection signal="animation_finished" from="Eggs" to="VBoxContainer/Button_ClickMe" method="_on_eggs_animation_finished"]
