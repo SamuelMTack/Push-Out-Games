@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Claude Clicker Game"
-run/main_scene="res://node_2d.tscn"
+run/main_scene="uid://bn7bcymv1b1dm"
 config/features=PackedStringArray("4.5", "Forward Plus")
 boot_splash/bg_color=Color(1, 1, 1, 1)
 boot_splash/image="uid://lxau3gv5324y"
