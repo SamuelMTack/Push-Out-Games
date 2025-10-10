@@ -47,6 +47,7 @@ stretch_mode = 0
 
 [node name="ButtonClickSFXCoinButton" type="AudioStreamPlayer2D" parent="VBoxContainer/ClickButton"]
 stream = ExtResource("3_0hol4")
+volume_db = -20.194
 
 [node name="SaveLoadButtons" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 1
@@ -210,5 +211,6 @@ offset_bottom = 7.0
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 position = Vector2(-76, 19)
 stream = ExtResource("10_k73cj")
+volume_db = -8.077
 autoplay = true
 parameters/looping = true
