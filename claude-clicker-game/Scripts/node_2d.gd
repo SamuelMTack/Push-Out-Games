@@ -27,6 +27,8 @@ var mega_factory_level = 0
 var mega_factory_price = 500
 var mega_factory_multiplier = 1.0
 
+var current_background_tier = 0
+
 # Save file path
 const SAVE_PATH = "user://clicker_save.json"
 
@@ -41,7 +43,7 @@ const SAVE_PATH = "user://clicker_save.json"
 @onready var save_button = %SaveButton
 @onready var load_button = %LoadButton
 @onready var save_status_label = %SaveStatusLabel
-
+@onready var background_sprite = $BackgroundSprite
 
 #GPU Particles Handling
 @onready var gpu_particles_2d: GPUParticles2D = %GPUParticles2D
@@ -74,6 +76,7 @@ func _ready():
 		load_game()
 	
 	update_ui()
+	update_background()
 
 func _on_click_button_pressed():
 	var click_value = points_per_click * click_multiplier_bonus * golden_touch_bonus
@@ -83,6 +86,7 @@ func _on_click_button_pressed():
 	gpu_particles_2d.amount_ratio += (1 - gpu_particles_2d.amount_ratio)*0.001
 	print(str(gpu_particles_2d.amount_ratio))
 	update_ui()
+	update_background()
 	# Add animation effect
 	click_button.scale = Vector2(3.2, 3.2)
 	var tween = create_tween()
@@ -138,7 +142,68 @@ func _on_idle_timer_timeout():
 		var idle_points = ((idle_clickers * idle_click_rate) + auto_clicker_bonus) * mega_factory_multiplier
 		points += idle_points / 10.0
 		update_ui()
+		update_background()
+		
+		
+func update_background():
+	var new_tier = get_background_tier()
+	if new_tier != current_background_tier:
+		current_background_tier = new_tier
+		var background_path = get_background_path(current_background_tier)
+		
+		# Try to load the background image
+		if ResourceLoader.exists(background_path):
+			var texture = load(background_path)
+			background_sprite.texture = texture
+			
+			# Fade in animation
+			background_sprite.modulate.a = 0.0
+			var tween = create_tween()
+			tween.tween_property(background_sprite, "modulate:a", 1.0, 1.0)
+		else:
+			# Fallback to colored backgrounds if images don't exist
+			set_fallback_background(current_background_tier)
 
+func get_background_tier() -> int:
+	if points >= 10000:
+		return 6  # Galaxy/Space theme
+	elif points >= 5000:
+		return 5  # Golden palace theme
+	elif points >= 2000:
+		return 4  # City skyline theme
+	elif points >= 1000:
+		return 3  # Mountain landscape theme
+	elif points >= 500:
+		return 2  # Forest theme
+	elif points >= 100:
+		return 1  # Sunny field theme
+	else:
+		return 0  # Simple starting theme
+
+func get_background_path(tier: int) -> String:
+	match tier:
+		0: return "res://backgrounds/background_0.png"
+		1: return "res://backgrounds/background_1.png"
+		2: return "res://backgrounds/background_2.png"
+		3: return "res://backgrounds/background_3.png"
+		4: return "res://backgrounds/background_4.png"
+		_: return ""
+
+
+func set_fallback_background(tier: int):
+	# Create a colored rectangle as fallback
+	var color: Color
+	match tier:
+		0: color = Color(0.7, 0.8, 0.9)  # Light blue
+		1: color = Color(0.8, 0.9, 0.6)  # Light green
+		2: color = Color(0.4, 0.7, 0.4)  # Forest green
+		3: color = Color(0.6, 0.7, 0.8)  # Mountain gray-blue
+		4: color = Color(0.5, 0.5, 0.6)  # City gray
+		5: color = Color(0.9, 0.8, 0.4)  # Golden yellow
+		6: color = Color(0.1, 0.1, 0.3)  # Dark space blue
+		_: color = Color.WHITE
+	
+	background_sprite.modulate = color
 func _on_save_button_pressed():
 	save_game()
 

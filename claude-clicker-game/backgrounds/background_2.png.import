@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://beskr3j3s4fsw"
-path="res://.godot/imported/A Little.png-aecbdbfdd1c2828daf2a13df36a39443.ctex"
+path="res://.godot/imported/background_2.png-c9230ec24d8a94728638797dd6139423.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/A Little.png"
-dest_files=["res://.godot/imported/A Little.png-aecbdbfdd1c2828daf2a13df36a39443.ctex"]
+source_file="res://backgrounds/background_2.png"
+dest_files=["res://.godot/imported/background_2.png-c9230ec24d8a94728638797dd6139423.ctex"]
 
 [params]
 

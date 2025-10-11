@@ -1,6 +1,7 @@
-[gd_scene load_steps=10 format=3 uid="uid://boycwgpu048yy"]
+[gd_scene load_steps=11 format=3 uid="uid://boycwgpu048yy"]
 
 [ext_resource type="Script" uid="uid://q7ri5gs0vl3l" path="res://Scripts/node_2d.gd" id="1_6whob"]
+[ext_resource type="Texture2D" uid="uid://dedbanhpvsmlv" path="res://backgrounds/background_0.png" id="2_d21ai"]
 [ext_resource type="Texture2D" uid="uid://5wyxn05cdg7p" path="res://Sprites/coin_01.png" id="2_u7krg"]
 [ext_resource type="AudioStream" uid="uid://c32f2ctcqoyid" path="res://FX/coin1.wav" id="3_tx0tn"]
 [ext_resource type="Texture2D" uid="uid://q0bfflw4ldqh" path="res://Sprites/Full Coins.png" id="4_kdubu"]
@@ -41,6 +42,11 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 script = ExtResource("1_6whob")
 points = 1000
+
+[node name="BackgroundSprite" type="Sprite2D" parent="."]
+position = Vector2(294, 323.50003)
+scale = Vector2(0.26302084, 0.5007716)
+texture = ExtResource("2_d21ai")
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 position = Vector2(-76, 19)

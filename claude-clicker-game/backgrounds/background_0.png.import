@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bbpnjnsbto7bg"
-path="res://.godot/imported/A Decent Amount.png-18bacd4ed129ef33065aba613412f085.ctex"
+uid="uid://dedbanhpvsmlv"
+path="res://.godot/imported/background_0.png-bb28b2e545821dcc348e4e28ca2beaf6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/A Decent Amount.png"
-dest_files=["res://.godot/imported/A Decent Amount.png-18bacd4ed129ef33065aba613412f085.ctex"]
+source_file="res://backgrounds/background_0.png"
+dest_files=["res://.godot/imported/background_0.png-bb28b2e545821dcc348e4e28ca2beaf6.ctex"]
 
 [params]
 
