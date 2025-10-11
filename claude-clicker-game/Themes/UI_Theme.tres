@@ -34,7 +34,7 @@ texture_margin_bottom = 37.0
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_o7y8o"]
 texture = ExtResource("3_vjnto")
-region_rect = Rect2(344.69995, 177.07526, 1706.3396, 990.7779)
+region_rect = Rect2(344.7, 177.075, 1706.34, 990.778)
 
 [resource]
 Button/styles/disabled = SubResource("StyleBoxTexture_vjnto")

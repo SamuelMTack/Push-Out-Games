@@ -163,7 +163,7 @@ frame = 8
 frame_progress = 1.0
 
 [node name="Chicken" type="AnimatedSprite2D" parent="."]
-position = Vector2(935, 466.00003)
+position = Vector2(935, 466)
 scale = Vector2(2.29, 2.29)
 sprite_frames = SubResource("SpriteFrames_yubjs")
 animation = &"Chicken_poop"
