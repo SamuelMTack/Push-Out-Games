@@ -44,6 +44,7 @@ script = ExtResource("1_6whob")
 points = 1000
 
 [node name="BackgroundSprite" type="Sprite2D" parent="."]
+z_index = -11
 position = Vector2(294, 323.50003)
 scale = Vector2(0.26302084, 0.5007716)
 texture = ExtResource("2_d21ai")
