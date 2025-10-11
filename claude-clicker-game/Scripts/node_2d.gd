@@ -43,7 +43,9 @@ const SAVE_PATH = "user://clicker_save.json"
 @onready var save_button = %SaveButton
 @onready var load_button = %LoadButton
 @onready var save_status_label = %SaveStatusLabel
-@onready var background_sprite = $BackgroundSprite
+@onready var background_sprite = %BackgroundSprite
+@onready var backgroundarea: TextureRect = %Backgroundarea
+
 
 #GPU Particles Handling
 @onready var gpu_particles_2d: GPUParticles2D = %GPUParticles2D
@@ -154,12 +156,13 @@ func update_background():
 		# Try to load the background image
 		if ResourceLoader.exists(background_path):
 			var texture = load(background_path)
-			background_sprite.texture = texture
+			backgroundarea.texture = texture
 			
+
 			# Fade in animation
-			background_sprite.modulate.a = 0.0
+			backgroundarea.modulate.a = 0.0
 			var tween = create_tween()
-			tween.tween_property(background_sprite, "modulate:a", 1.0, 1.0)
+			tween.tween_property(backgroundarea, "modulate:a", 1.0, 1.0)
 		else:
 			# Fallback to colored backgrounds if images don't exist
 			set_fallback_background(current_background_tier)
@@ -203,7 +206,7 @@ func set_fallback_background(tier: int):
 		6: color = Color(0.1, 0.1, 0.3)  # Dark space blue
 		_: color = Color.WHITE
 	
-	background_sprite.modulate = color
+	backgroundarea.modulate = color
 func _on_save_button_pressed():
 	save_game()
 
