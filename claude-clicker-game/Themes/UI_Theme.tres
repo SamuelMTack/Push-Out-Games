@@ -1,7 +1,8 @@
-[gd_resource type="Theme" load_steps=7 format=3 uid="uid://b26pfekpoe4fs"]
+[gd_resource type="Theme" load_steps=9 format=3 uid="uid://b26pfekpoe4fs"]
 
 [ext_resource type="Texture2D" uid="uid://bwovvyebaplcc" path="res://Themes/Input/boxNormal.png" id="1_3l8vs"]
 [ext_resource type="Texture2D" uid="uid://djrxh5r5us4wu" path="res://Themes/Input/boxSelect.png" id="2_nt3vr"]
+[ext_resource type="Texture2D" uid="uid://dedbanhpvsmlv" path="res://Sprites/Empty.png" id="3_vjnto"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_vjnto"]
 texture = ExtResource("1_3l8vs")
@@ -31,8 +32,13 @@ texture_margin_top = 37.0
 texture_margin_right = 32.0
 texture_margin_bottom = 37.0
 
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_o7y8o"]
+texture = ExtResource("3_vjnto")
+region_rect = Rect2(314.05402, 160.99203, 1753.9021, 985.6222)
+
 [resource]
 Button/styles/disabled = SubResource("StyleBoxTexture_vjnto")
 Button/styles/hover = SubResource("StyleBoxTexture_hixn6")
 Button/styles/normal = SubResource("StyleBoxTexture_nt3vr")
 Button/styles/pressed = SubResource("StyleBoxTexture_cqiu8")
+Panel/styles/panel = SubResource("StyleBoxTexture_o7y8o")

@@ -34,24 +34,31 @@ const SAVE_PATH = "user://clicker_save.json"
 @onready var button_click_sfx_coin_button: AudioStreamPlayer2D = %ButtonClickSFXCoinButton
 @onready var points_label = %PointsLabel
 @onready var click_button = %ClickButton
-@onready var shop_panel = $ShopPanel
-@onready var clicker_price_label = $ShopPanel/ShopScroll/ShopItems/BuyClickerButton/PriceLabel
-@onready var clickers_owned_label = $ShopPanel/ShopScroll/ShopItems/ClickersOwnedLabel
+@onready var shop_panel = $HBoxContainer/ShopPanel
+@onready var clicker_price_label = %PriceLabel
+@onready var clickers_owned_label = %ClickersOwnedLabel
 @onready var points_per_sec_label = %PointsPerSecLabel
 @onready var save_button = %SaveButton
 @onready var load_button = %LoadButton
 @onready var save_status_label = %SaveStatusLabel
+
+
+#GPU Particles Handling
 @onready var gpu_particles_2d: GPUParticles2D = %GPUParticles2D
+@onready var timer_last_click: Timer = %TimerLastClick
+
+
+
 
 
 func _ready():
 	# Connect signals
 	click_button.pressed.connect(_on_click_button_pressed)
-	$ShopPanel/ShopScroll/ShopItems/BuyClickerButton.pressed.connect(_on_buy_clicker_pressed)
-	$ShopPanel/ShopScroll/ShopItems/BuyClickMultiplierButton.pressed.connect(_on_buy_click_multiplier_pressed)
-	$ShopPanel/ShopScroll/ShopItems/BuyAutoClickerButton.pressed.connect(_on_buy_auto_clicker_pressed)
-	$ShopPanel/ShopScroll/ShopItems/BuyGoldenTouchButton.pressed.connect(_on_buy_golden_touch_pressed)
-	$ShopPanel/ShopScroll/ShopItems/BuyMegaFactoryButton.pressed.connect(_on_buy_mega_factory_pressed)
+	%BuyClickerButton.pressed.connect(_on_buy_clicker_pressed)
+	%BuyClickMultiplierButton.pressed.connect(_on_buy_click_multiplier_pressed)
+	%BuyAutoClickerButton.pressed.connect(_on_buy_auto_clicker_pressed)
+	%BuyGoldenTouchButton.pressed.connect(_on_buy_golden_touch_pressed)
+	%BuyMegaFactoryButton.pressed.connect(_on_buy_mega_factory_pressed)
 	save_button.pressed.connect(_on_save_button_pressed)
 	load_button.pressed.connect(_on_load_button_pressed)
 	
@@ -72,14 +79,20 @@ func _on_click_button_pressed():
 	var click_value = points_per_click * click_multiplier_bonus * golden_touch_bonus
 	points += click_value
 	button_click_sfx_coin_button.play()
-	gpu_particles_2d.amount_ratio += (1 - gpu_particles_2d.amount_ratio)*0.005
+	timer_last_click.start()
+	gpu_particles_2d.amount_ratio += (1 - gpu_particles_2d.amount_ratio)*0.001
 	print(str(gpu_particles_2d.amount_ratio))
 	update_ui()
-	
 	# Add animation effect
-	click_button.scale = Vector2(0.95, 0.95)
+	click_button.scale = Vector2(3.2, 3.2)
 	var tween = create_tween()
-	tween.tween_property(click_button, "scale", Vector2(6, 6), 0.1)
+	tween.tween_property(click_button, "scale", Vector2(click_button.scale.x*1.2, click_button.scale.y*1.2), 0.1)
+
+func _on_timer_last_click_timeout() -> void:
+	while gpu_particles_2d.amount_ratio > 0:
+		gpu_particles_2d.amount_ratio = gpu_particles_2d.amount_ratio - 0.005 
+		await get_tree().create_timer(1.0).timeout
+		print(str(gpu_particles_2d.amount_ratio))
 
 func _on_buy_clicker_pressed():
 	if points >= clicker_price:
@@ -212,25 +225,25 @@ func update_ui():
 	
 	# Idle Clickers
 	clicker_price_label.text = str(clicker_price) + " pts"
-	clickers_owned_label.text = "Idle Clickers: " + str(idle_clickers)
-	$ShopPanel/ShopScroll/ShopItems/BuyClickerButton.disabled = points < clicker_price
+	clickers_owned_label.text =  str(idle_clickers)
+	%BuyClickerButton.disabled = points < clicker_price
 	
 	# Click Multiplier
-	$ShopPanel/ShopScroll/ShopItems/BuyClickMultiplierButton/PriceLabel.text = str(click_multiplier_price) + " pts"
-	$ShopPanel/ShopScroll/ShopItems/ClickMultiplierLevel.text = "Click Power (Lv %d) - +%.1fx per click" % [click_multiplier_level, click_multiplier_bonus]
-	$ShopPanel/ShopScroll/ShopItems/BuyClickMultiplierButton.disabled = points < click_multiplier_price
+	%PriceLabelMulti.text = str(click_multiplier_price) + " pts"
+	%ClickMultiplierLevel.text = "(Lv %d) +%.1fx per click" % [click_multiplier_level, click_multiplier_bonus]
+	%BuyClickMultiplierButton.disabled = points < click_multiplier_price
 	
 	# Auto Clicker
-	$ShopPanel/ShopScroll/ShopItems/BuyAutoClickerButton/PriceLabel.text = str(auto_clicker_price) + " pts"
-	$ShopPanel/ShopScroll/ShopItems/AutoClickerLevel.text = "Auto Clicker (Lv %d) - +%d pts/sec" % [auto_clicker_level, auto_clicker_bonus]
-	$ShopPanel/ShopScroll/ShopItems/BuyAutoClickerButton.disabled = points < auto_clicker_price
+	%PriceLabelAuto.text = str(auto_clicker_price) + " pts"
+	%AutoClickerLevel.text = "(Lv %d) +%d pts/sec" % [auto_clicker_level, auto_clicker_bonus]
+	%BuyAutoClickerButton.disabled = points < auto_clicker_price
 	
 	# Golden Touch
-	$ShopPanel/ShopScroll/ShopItems/BuyGoldenTouchButton/PriceLabel.text = str(golden_touch_price) + " pts"
-	$ShopPanel/ShopScroll/ShopItems/GoldenTouchLevel.text = "Golden Touch (Lv %d) - %.1fx click value" % [golden_touch_level, golden_touch_bonus]
-	$ShopPanel/ShopScroll/ShopItems/BuyGoldenTouchButton.disabled = points < golden_touch_price
+	%PriceLabelGoldenTouch.text = str(golden_touch_price) + " pts"
+	%GoldenTouchLevel.text = "(Lv %d) +%.1fx click value" % [golden_touch_level, golden_touch_bonus]
+	%BuyGoldenTouchButton.disabled = points < golden_touch_price
 	
 	# Mega Factory
-	$ShopPanel/ShopScroll/ShopItems/BuyMegaFactoryButton/PriceLabel.text = str(mega_factory_price) + " pts"
-	$ShopPanel/ShopScroll/ShopItems/MegaFactoryLevel.text = "Mega Factory (Lv %d) - %.2fx idle production" % [mega_factory_level, mega_factory_multiplier]
-	$ShopPanel/ShopScroll/ShopItems/BuyMegaFactoryButton.disabled = points < mega_factory_price
+	%PriceLabelFactory.text = str(mega_factory_price) + " pts"
+	%MegaFactoryLevel.text = "(Lv %d) +%.2fx idle production" % [mega_factory_level, mega_factory_multiplier]
+	%BuyMegaFactoryButton.disabled = points < mega_factory_price
