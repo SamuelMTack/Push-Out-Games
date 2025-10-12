@@ -1,7 +1,7 @@
 [gd_scene load_steps=11 format=3 uid="uid://boycwgpu048yy"]
 
 [ext_resource type="Script" uid="uid://q7ri5gs0vl3l" path="res://Scripts/node_2d.gd" id="1_6whob"]
-[ext_resource type="Texture2D" uid="uid://dedbanhpvsmlv" path="res://backgrounds/background_0.png" id="2_d21ai"]
+[ext_resource type="Texture2D" uid="uid://opo75xv2cn43" path="res://backgrounds/background_0.png" id="2_d21ai"]
 [ext_resource type="Texture2D" uid="uid://5wyxn05cdg7p" path="res://Sprites/coin_01.png" id="2_u7krg"]
 [ext_resource type="AudioStream" uid="uid://c32f2ctcqoyid" path="res://FX/coin1.wav" id="3_tx0tn"]
 [ext_resource type="Texture2D" uid="uid://q0bfflw4ldqh" path="res://Sprites/Full Coins.png" id="4_kdubu"]
@@ -41,7 +41,6 @@ grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 script = ExtResource("1_6whob")
-points = 1000
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
 unique_name_in_owner = true
@@ -62,6 +61,7 @@ autoplay = true
 parameters/looping = true
 
 [node name="BackgroundImage" type="Panel" parent="."]
+z_index = -11
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -111,9 +111,15 @@ size_flags_vertical = 3
 [node name="Backgroundarea" type="TextureRect" parent="BackgroundImage/HBoxContainer/VBoxContainer/Clickarea"]
 unique_name_in_owner = true
 layout_mode = 1
-anchors_preset = 15
+anchors_preset = -1
+anchor_left = 0.002
+anchor_top = 0.075
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = -0.148
+offset_top = -0.20000076
+offset_right = 1.0
+offset_bottom = 34.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("2_d21ai")
@@ -397,5 +403,66 @@ size_flags_horizontal = 6
 size_flags_vertical = 3
 text = "MegaFactoryLevel"
 vertical_alignment = 1
+
+[node name="QuestPanel" type="Panel" parent="."]
+layout_mode = 0
+offset_left = 131.09088
+offset_top = 0.2727356
+offset_right = 707.0908
+offset_bottom = 55.272736
+
+[node name="QuestVBox" type="VBoxContainer" parent="QuestPanel"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="QuestTitleLabel" type="Label" parent="QuestPanel/QuestVBox"]
+layout_mode = 2
+
+[node name="QuestDescriptionLabel" type="Label" parent="QuestPanel/QuestVBox"]
+layout_mode = 2
+
+[node name="QuestProgressLabel" type="Label" parent="QuestPanel/QuestVBox"]
+layout_mode = 2
+
+[node name="CompleteQuestButton" type="Button" parent="QuestPanel/QuestVBox"]
+layout_mode = 2
+text = "Complete Quest"
+
+[node name="CostLabel" type="Label" parent="QuestPanel/QuestVBox/CompleteQuestButton"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="QuestCompletionPopup" type="Panel" parent="."]
+layout_mode = 0
+offset_left = -69.0
+offset_top = -67.0
+offset_right = -34.0
+offset_bottom = -42.0
+
+[node name="PopupVBox" type="VBoxContainer" parent="QuestCompletionPopup"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 16.205
+anchor_bottom = 13.750001
+offset_left = 298.2727
+offset_top = 296.36365
+offset_right = -143.90228
+offset_bottom = 64.61362
+
+[node name="PopupTitle" type="Label" parent="QuestCompletionPopup/PopupVBox"]
+layout_mode = 2
+text = "Quest Complete"
+
+[node name="PopupMessage" type="Label" parent="QuestCompletionPopup/PopupVBox"]
+layout_mode = 2
+
+[node name="PopupReward" type="Label" parent="QuestCompletionPopup/PopupVBox"]
+layout_mode = 2
+
+[node name="CloseButton" type="Button" parent="QuestCompletionPopup/PopupVBox"]
+layout_mode = 2
+text = "Continue"
 
 [connection signal="timeout" from="BackgroundImage/HBoxContainer/VBoxContainer/Clickarea/ClickButton/TimerLastClick" to="." method="_on_timer_last_click_timeout"]

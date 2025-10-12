@@ -27,6 +27,11 @@ var mega_factory_level = 0
 var mega_factory_price = 500
 var mega_factory_multiplier = 1.0
 
+# Quest system
+var current_quest_index = 0
+var quests = []
+
+# Background Changes
 var current_background_tier = 0
 
 # Save file path
@@ -45,6 +50,17 @@ const SAVE_PATH = "user://clicker_save.json"
 @onready var save_status_label = %SaveStatusLabel
 @onready var background_sprite = %BackgroundSprite
 @onready var backgroundarea: TextureRect = %Backgroundarea
+@onready var quest_panel = $QuestPanel
+@onready var quest_title_label = $QuestPanel/QuestVBox/QuestTitleLabel
+@onready var quest_description_label = $QuestPanel/QuestVBox/QuestDescriptionLabel
+@onready var quest_progress_label = $QuestPanel/QuestVBox/QuestProgressLabel
+@onready var complete_quest_button = $QuestPanel/QuestVBox/CompleteQuestButton
+@onready var quest_cost_label = $QuestPanel/QuestVBox/CompleteQuestButton/CostLabel
+@onready var quest_popup = $QuestCompletionPopup
+@onready var popup_title = $QuestCompletionPopup/PopupVBox/PopupTitle
+@onready var popup_message = $QuestCompletionPopup/PopupVBox/PopupMessage
+@onready var popup_reward = $QuestCompletionPopup/PopupVBox/PopupReward
+@onready var popup_close_button = $QuestCompletionPopup/PopupVBox/CloseButton
 
 
 #GPU Particles Handling
@@ -56,6 +72,8 @@ const SAVE_PATH = "user://clicker_save.json"
 
 
 func _ready():
+	initialize_quests()
+	
 	# Connect signals
 	click_button.pressed.connect(_on_click_button_pressed)
 	%BuyClickerButton.pressed.connect(_on_buy_clicker_pressed)
@@ -65,6 +83,11 @@ func _ready():
 	%BuyMegaFactoryButton.pressed.connect(_on_buy_mega_factory_pressed)
 	save_button.pressed.connect(_on_save_button_pressed)
 	load_button.pressed.connect(_on_load_button_pressed)
+	complete_quest_button.pressed.connect(_on_complete_quest_pressed)
+	popup_close_button.pressed.connect(_on_popup_close_pressed)
+	
+	# Hide popup initially
+	quest_popup.visible = false
 	
 	# Start idle clicker timer
 	var timer = Timer.new()
@@ -79,6 +102,60 @@ func _ready():
 	
 	update_ui()
 	update_background()
+	update_quest_ui()
+
+func initialize_quests():
+	quests = [
+		{
+			"title": "The First Step",
+			"description": "Invest in your clicking journey to unlock greater possibilities.",
+			"cost": 50,
+			"reward": "Unlocked: Click Efficiency +10%",
+			"reward_type": "click_bonus",
+			"reward_value": 0.1
+		},
+		{
+			"title": "Gathering Momentum",
+			"description": "Expand your operation to reach new heights of production.",
+			"cost": 200,
+			"reward": "Unlocked: Idle Speed Boost +25%",
+			"reward_type": "idle_bonus",
+			"reward_value": 0.25
+		},
+		{
+			"title": "Industrial Revolution",
+			"description": "Fund the construction of advanced automation systems.",
+			"cost": 750,
+			"reward": "Unlocked: +3 Free Idle Clickers",
+			"reward_type": "free_clickers",
+			"reward_value": 3
+		},
+		{
+			"title": "The Golden Age",
+			"description": "Achieve prosperity through massive investment in infrastructure.",
+			"cost": 2000,
+			"reward": "Unlocked: Click Power x2",
+			"reward_type": "click_multiplier",
+			"reward_value": 2.0
+		},
+		{
+			"title": "Technological Singularity",
+			"description": "Push the boundaries of what's possible with cutting-edge innovation.",
+			"cost": 5000,
+			"reward": "Unlocked: All Production x1.5",
+			"reward_type": "global_multiplier",
+			"reward_value": 1.5
+		},
+		{
+			"title": "Cosmic Domination",
+			"description": "Transcend mortal limits and ascend to legendary status.",
+			"cost": 15000,
+			"reward": "Victory! You've mastered the clicker realm!",
+			"reward_type": "victory",
+			"reward_value": 0
+		}
+	]
+
 
 func _on_click_button_pressed():
 	var click_value = points_per_click * click_multiplier_bonus * golden_touch_bonus
@@ -89,6 +166,9 @@ func _on_click_button_pressed():
 	print(str(gpu_particles_2d.amount_ratio))
 	update_ui()
 	update_background()
+	update_quest_ui()
+
+	
 	# Add animation effect
 	click_button.scale = Vector2(3.2, 3.2)
 	var tween = create_tween()
@@ -138,6 +218,65 @@ func _on_buy_mega_factory_pressed():
 		mega_factory_multiplier = 1.0 + (mega_factory_level * 0.25)
 		mega_factory_price = int(500 * pow(4, mega_factory_level))
 		update_ui()
+		
+func _on_complete_quest_pressed():
+	if current_quest_index >= quests.size():
+		return
+	
+	var quest = quests[current_quest_index]
+	if points >= quest.cost:
+		points -= quest.cost
+		
+		# Apply quest reward
+		apply_quest_reward(quest)
+		
+		# Show completion popup
+		show_quest_completion_popup(quest)
+		
+		# Move to next quest
+		current_quest_index += 1
+		
+		update_ui()
+		update_quest_ui()
+
+func apply_quest_reward(quest: Dictionary):
+	match quest.reward_type:
+		"click_bonus":
+			points_per_click += quest.reward_value
+		"idle_bonus":
+			idle_click_rate += quest.reward_value
+		"free_clickers":
+			idle_clickers += int(quest.reward_value)
+		"click_multiplier":
+			click_multiplier_bonus *= quest.reward_value
+		"global_multiplier":
+			idle_click_rate *= quest.reward_value
+			mega_factory_multiplier *= quest.reward_value
+
+func show_quest_completion_popup(quest: Dictionary):
+	popup_title.text = "Quest Complete!"
+	popup_message.text = quest.title + " - Completed!"
+	popup_reward.text = quest.reward
+	quest_popup.visible = true
+
+func _on_popup_close_pressed():
+	quest_popup.visible = false
+
+func update_quest_ui():
+	if current_quest_index >= quests.size():
+		quest_title_label.text = "All Quests Complete!"
+		quest_description_label.text = "You've conquered every challenge!"
+		quest_progress_label.text = "Congratulations, Master Clicker!"
+		complete_quest_button.visible = false
+		return
+	
+	var quest = quests[current_quest_index]
+	quest_title_label.text = "Quest %d: %s" % [current_quest_index + 1, quest.title]
+	quest_description_label.text = quest.description
+	quest_progress_label.text = "Progress: %d / %d points" % [int(points), quest.cost]
+	quest_cost_label.text = str(quest.cost) + " pts"
+	complete_quest_button.disabled = points < quest.cost
+
 
 func _on_idle_timer_timeout():
 	if idle_clickers > 0 or auto_clicker_bonus > 0:
@@ -168,18 +307,26 @@ func update_background():
 			set_fallback_background(current_background_tier)
 
 func get_background_tier() -> int:
-	if points >= 10000:
-		return 6  # Galaxy/Space theme
-	elif points >= 5000:
-		return 5  # Golden palace theme
-	elif points >= 2000:
-		return 4  # City skyline theme
+	
+	
+	if points >= 30000:
+		return 9  
+	elif points >= 20000:
+		return 8  
+	elif points >= 15000:
+		return 7  
+	elif points >= 10000:
+		return 6  
+	elif points >= 6000:
+		return 5  
+	elif points >= 3000:
+		return 4  
 	elif points >= 1000:
-		return 3  # Mountain landscape theme
+		return 3  
 	elif points >= 500:
-		return 2  # Forest theme
+		return 2 
 	elif points >= 100:
-		return 1  # Sunny field theme
+		return 1  
 	else:
 		return 0  # Simple starting theme
 
@@ -190,6 +337,11 @@ func get_background_path(tier: int) -> String:
 		2: return "res://backgrounds/background_2.png"
 		3: return "res://backgrounds/background_3.png"
 		4: return "res://backgrounds/background_4.png"
+		5: return "res://backgrounds/background_5.png"
+		6: return "res://backgrounds/background_6.png"
+		7: return "res://backgrounds/background_7.png"
+		8: return "res://backgrounds/background_8.png"
+		9: return "res://backgrounds/background_9.png"
 		_: return ""
 
 
@@ -216,7 +368,9 @@ func _on_load_button_pressed():
 func save_game():
 	var save_data = {
 		"points": points,
+		"points_per_click": points_per_click,
 		"idle_clickers": idle_clickers,
+		"idle_click_rate": idle_click_rate,
 		"clicker_price": clicker_price,
 		"click_multiplier_level": click_multiplier_level,
 		"click_multiplier_price": click_multiplier_price,
@@ -229,7 +383,8 @@ func save_game():
 		"golden_touch_bonus": golden_touch_bonus,
 		"mega_factory_level": mega_factory_level,
 		"mega_factory_price": mega_factory_price,
-		"mega_factory_multiplier": mega_factory_multiplier
+		"mega_factory_multiplier": mega_factory_multiplier,
+		"current_quest_index": current_quest_index
 	}
 	
 	var file = FileAccess.open(SAVE_PATH, FileAccess.WRITE)
@@ -257,7 +412,9 @@ func load_game():
 		if parse_result == OK:
 			var save_data = json.data
 			points = save_data.get("points", 0)
+			points_per_click = save_data.get("points_per_click", 1)
 			idle_clickers = save_data.get("idle_clickers", 0)
+			idle_click_rate = save_data.get("idle_click_rate", 1.0)
 			clicker_price = save_data.get("clicker_price", clicker_base_price)
 			click_multiplier_level = save_data.get("click_multiplier_level", 0)
 			click_multiplier_price = save_data.get("click_multiplier_price", 50)
@@ -271,7 +428,12 @@ func load_game():
 			mega_factory_level = save_data.get("mega_factory_level", 0)
 			mega_factory_price = save_data.get("mega_factory_price", 500)
 			mega_factory_multiplier = save_data.get("mega_factory_multiplier", 1.0)
+			current_quest_index = save_data.get("current_quest_index", 0)
+			
 			update_ui()
+			update_background()
+			update_quest_ui()
+			
 			show_save_status("Game Loaded!", Color.GREEN)
 		else:
 			show_save_status("Load Failed!", Color.RED)
