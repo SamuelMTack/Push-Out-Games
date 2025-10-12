@@ -41,7 +41,7 @@ const SAVE_PATH = "user://clicker_save.json"
 @onready var button_click_sfx_coin_button: AudioStreamPlayer2D = %ButtonClickSFXCoinButton
 @onready var points_label = %PointsLabel
 @onready var click_button = %ClickButton
-@onready var shop_panel = $HBoxContainer/ShopPanel
+@onready var shop_panel = %ShopPanel
 @onready var clicker_price_label = %PriceLabel
 @onready var clickers_owned_label = %ClickersOwnedLabel
 @onready var points_per_sec_label = %PointsPerSecLabel
@@ -50,12 +50,12 @@ const SAVE_PATH = "user://clicker_save.json"
 @onready var save_status_label = %SaveStatusLabel
 @onready var background_sprite = %BackgroundSprite
 @onready var backgroundarea: TextureRect = %Backgroundarea
-@onready var quest_panel = $QuestPanel
-@onready var quest_title_label = $QuestPanel/QuestVBox/QuestTitleLabel
-@onready var quest_description_label = $QuestPanel/QuestVBox/QuestDescriptionLabel
-@onready var quest_progress_label = $QuestPanel/QuestVBox/QuestProgressLabel
-@onready var complete_quest_button = $QuestPanel/QuestVBox/CompleteQuestButton
-@onready var quest_cost_label = $QuestPanel/QuestVBox/CompleteQuestButton/CostLabel
+@onready var quest_panel = %QuestPanel
+@onready var quest_title_label = %QuestTitleLabel
+@onready var quest_description_label = %QuestDescriptionLabel
+@onready var quest_progress_label = %QuestProgressLabel
+@onready var complete_quest_button = %CompleteQuestButton
+@onready var quest_cost_label = %CostLabel
 @onready var quest_popup = $QuestCompletionPopup
 @onready var popup_title = $QuestCompletionPopup/PopupVBox/PopupTitle
 @onready var popup_message = $QuestCompletionPopup/PopupVBox/PopupMessage
@@ -170,9 +170,9 @@ func _on_click_button_pressed():
 
 	
 	# Add animation effect
-	click_button.scale = Vector2(3.2, 3.2)
+	click_button.scale = Vector2(1, 1)
 	var tween = create_tween()
-	tween.tween_property(click_button, "scale", Vector2(click_button.scale.x*1.2, click_button.scale.y*1.2), 0.1)
+	tween.tween_property(click_button, "scale", Vector2(1.1, 1.1), 0.1)
 
 func _on_timer_last_click_timeout() -> void:
 	while gpu_particles_2d.amount_ratio > 0:
