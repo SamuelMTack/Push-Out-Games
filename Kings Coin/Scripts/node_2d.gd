@@ -284,7 +284,7 @@ func _on_idle_timer_timeout():
 		points += idle_points / 10.0
 		update_ui()
 		update_background()
-		
+		update_quest_ui()
 		
 func update_background():
 	var new_tier = get_background_tier()
