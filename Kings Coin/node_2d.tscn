@@ -34,6 +34,7 @@ anim_speed_max = 5.49
 [node name="Node2D" type="Control"]
 custom_minimum_size = Vector2(1150, 0)
 layout_mode = 3
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
@@ -46,7 +47,7 @@ script = ExtResource("1_6whob")
 unique_name_in_owner = true
 z_index = -1
 material = SubResource("CanvasItemMaterial_d21ai")
-position = Vector2(289.00003, 56)
+position = Vector2(291.90625, 333.17484)
 scale = Vector2(6.92, 6.92)
 amount = 1500
 amount_ratio = 0.0
@@ -121,7 +122,7 @@ custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-text = "Quest Description Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem "
+text = "Quest Description "
 autowrap_mode = 2
 clip_text = true
 
