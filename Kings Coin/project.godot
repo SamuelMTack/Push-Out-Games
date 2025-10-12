@@ -1,0 +1,27 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="Kings Coin"
+run/main_scene="uid://bn7bcymv1b1dm"
+config/features=PackedStringArray("4.5", "Forward Plus")
+boot_splash/bg_color=Color(1, 1, 1, 1)
+boot_splash/image="uid://lxau3gv5324y"
+config/icon="uid://5wyxn05cdg7p"
+boot_splash/minimum_display_time=3000
+
+[display]
+
+mouse_cursor/custom_image="uid://cr0ms0006tinh"
+
+[rendering]
+
+textures/canvas_textures/default_texture_filter=0

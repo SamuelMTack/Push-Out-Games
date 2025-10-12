@@ -1,0 +1,14 @@
+Control
+MarginContainer
+HBoxContainer
+VBoxContainer
+BoxContainer
+TextureRect
+Panel
+Label
+Timer
+Container
+GPUParticles2D
+Node
+Node2D
+AnimatedSprite2D
