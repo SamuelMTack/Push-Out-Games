@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bbhrmw4ryuuia"
-path="res://.godot/imported/New_Background_14.png-b24cdff4067d1fd23d2e115ca6f4f5d2.ctex"
+uid="uid://8ptvfmjmadnc"
+path="res://.godot/imported/ui panels leather.png-6e90f0ed5ddfb79c29fc75571f45524b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://backgrounds/New_Background_14.png"
-dest_files=["res://.godot/imported/New_Background_14.png-b24cdff4067d1fd23d2e115ca6f4f5d2.ctex"]
+source_file="res://Themes/ui panels leather.png"
+dest_files=["res://.godot/imported/ui panels leather.png-6e90f0ed5ddfb79c29fc75571f45524b.ctex"]
 
 [params]
 

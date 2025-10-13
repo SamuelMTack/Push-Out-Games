@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bxwsnqms61ple"
-path="res://.godot/imported/New_Background_12.png-5b5b9ae703e99d9df2830a8c0299db63.ctex"
+uid="uid://jrrdljhtdfi8"
+path="res://.godot/imported/menu_xp.png-2fd5e376e0c00164b92b4829d3cbf891.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://backgrounds/New_Background_12.png"
-dest_files=["res://.godot/imported/New_Background_12.png-5b5b9ae703e99d9df2830a8c0299db63.ctex"]
+source_file="res://Themes/UI Bonus/previews/menu_xp.png"
+dest_files=["res://.godot/imported/menu_xp.png-2fd5e376e0c00164b92b4829d3cbf891.ctex"]
 
 [params]
 

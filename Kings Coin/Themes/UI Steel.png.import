@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bsoqain0gye6c"
-path="res://.godot/imported/New_Background_11.png-b24e13fca6e1b607a9c9cf200052950f.ctex"
+uid="uid://dxswpmwtpgbek"
+path="res://.godot/imported/UI Steel.png-c87a7b62f6126d17fed84d5499aebb20.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://backgrounds/New_Background_11.png"
-dest_files=["res://.godot/imported/New_Background_11.png-b24e13fca6e1b607a9c9cf200052950f.ctex"]
+source_file="res://Themes/UI Steel.png"
+dest_files=["res://.godot/imported/UI Steel.png-c87a7b62f6126d17fed84d5499aebb20.ctex"]
 
 [params]
 

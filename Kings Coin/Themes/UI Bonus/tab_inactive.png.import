@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dkq4adkjd1gk"
-path="res://.godot/imported/New_Background_15.png-f9ce1de2ef4817c1a2dd29e3af83b7b7.ctex"
+uid="uid://dv7kqwjlt8fg1"
+path="res://.godot/imported/tab_inactive.png-0b99985a47ae88c1867fc741d1e8b798.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://backgrounds/New_Background_15.png"
-dest_files=["res://.godot/imported/New_Background_15.png-f9ce1de2ef4817c1a2dd29e3af83b7b7.ctex"]
+source_file="res://Themes/UI Bonus/tab_inactive.png"
+dest_files=["res://.godot/imported/tab_inactive.png-0b99985a47ae88c1867fc741d1e8b798.ctex"]
 
 [params]
 

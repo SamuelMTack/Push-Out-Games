@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://1xhysasx5i01"
-path="res://.godot/imported/New_Background_13.png-ae78023b37e39b83e10e847fbd68a3d9.ctex"
+uid="uid://cgfvwxfmdfvwj"
+path="res://.godot/imported/arrowsright.png-018b2c479df2a8e2bd6f3a0036466f7d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://backgrounds/New_Background_13.png"
-dest_files=["res://.godot/imported/New_Background_13.png-ae78023b37e39b83e10e847fbd68a3d9.ctex"]
+source_file="res://Themes/UI Bonus/previews/arrowsright.png"
+dest_files=["res://.godot/imported/arrowsright.png-018b2c479df2a8e2bd6f3a0036466f7d.ctex"]
 
 [params]
 

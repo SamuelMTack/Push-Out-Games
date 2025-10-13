@@ -107,48 +107,48 @@ func _ready():
 func initialize_quests():
 	quests = [
 		{
-			"title": "The First Step",
-			"description": "Invest in your clicking journey to unlock greater possibilities.",
+			"title": "The Kings Tax",
+			"description": "The Requires you to Mine Gold Coins and Pay his Tax.",
 			"cost": 50,
 			"reward": "Unlocked: Click Efficiency +10%",
 			"reward_type": "click_bonus",
 			"reward_value": 0.1
 		},
 		{
-			"title": "Gathering Momentum",
-			"description": "Expand your operation to reach new heights of production.",
+			"title": "A Paltery Amount",
+			"description": "The King is Displeased with the small amount of Gold you have given, Mine more and Pay up.",
 			"cost": 200,
 			"reward": "Unlocked: Idle Speed Boost +25%",
 			"reward_type": "idle_bonus",
 			"reward_value": 0.25
 		},
 		{
-			"title": "Industrial Revolution",
-			"description": "Fund the construction of advanced automation systems.",
+			"title": "Chump Change",
+			"description": "This amount will barely pay for the Kings Lunch! Mine More!",
 			"cost": 750,
 			"reward": "Unlocked: +3 Free Idle Clickers",
 			"reward_type": "free_clickers",
 			"reward_value": 3
 		},
 		{
-			"title": "The Golden Age",
-			"description": "Achieve prosperity through massive investment in infrastructure.",
+			"title": "Barely a Tip",
+			"description": "So you think this enough to Pay for the Kings Lunch? Hardly! Mine more for the Realm!",
 			"cost": 2000,
 			"reward": "Unlocked: Click Power x2",
 			"reward_type": "click_multiplier",
 			"reward_value": 2.0
 		},
 		{
-			"title": "Technological Singularity",
-			"description": "Push the boundaries of what's possible with cutting-edge innovation.",
+			"title": "A Scratch on the Realms Taxes",
+			"description": "You think this is enough to Pay the Taxes HAHA! It Barely a Scratch!",
 			"cost": 5000,
 			"reward": "Unlocked: All Production x1.5",
 			"reward_type": "global_multiplier",
 			"reward_value": 1.5
 		},
 		{
-			"title": "Cosmic Domination",
-			"description": "Transcend mortal limits and ascend to legendary status.",
+			"title": "The Kings Greed",
+			"description": "More Mine MORE!!! The King wants More Gold!",
 			"cost": 15000,
 			"reward": "Victory! You've mastered the clicker realm!",
 			"reward_type": "victory",
@@ -309,9 +309,21 @@ func update_background():
 func get_background_tier() -> int:
 	
 	
-	if points >= 30000:
+	if points >= 80000:
+		return 15 
+	elif points >= 70000:
+		return 14 
+	elif points >= 60000:
+		return 13 
+	elif points >= 50000:
+		return 12  
+	elif points >= 45000:
+		return 11  
+	elif points >= 40000:
+		return 10  
+	elif points >= 35000:
 		return 9  
-	elif points >= 20000:
+	elif points >= 30000:
 		return 8  
 	elif points >= 15000:
 		return 7  
@@ -342,6 +354,12 @@ func get_background_path(tier: int) -> String:
 		7: return "res://backgrounds/background_7.png"
 		8: return "res://backgrounds/background_8.png"
 		9: return "res://backgrounds/background_9.png"
+		10: return "res://backgrounds/background_10.png"
+		11: return "res://backgrounds/background_11.png"
+		12: return "res://backgrounds/background_12.png"
+		13: return "res://backgrounds/background_13.png"
+		14: return "res://backgrounds/background_14.png"
+		15: return "res://backgrounds/background_15.png"
 		_: return ""
 
 
