@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://boycwgpu048yy"]
+[gd_scene load_steps=13 format=3 uid="uid://boycwgpu048yy"]
 
 [ext_resource type="Script" uid="uid://q7ri5gs0vl3l" path="res://Scripts/node_2d.gd" id="1_6whob"]
 [ext_resource type="Texture2D" uid="uid://opo75xv2cn43" path="res://backgrounds/background_0.png" id="2_d21ai"]
@@ -30,6 +30,10 @@ anim_speed_min = 4.42
 anim_speed_max = 5.49
 
 [sub_resource type="Theme" id="Theme_d21ai"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_d21ai"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_rj586"]
 
 [node name="Node2D" type="Control"]
 custom_minimum_size = Vector2(1150, 0)
@@ -148,6 +152,7 @@ unique_name_in_owner = true
 z_index = 10
 layout_mode = 2
 size_flags_vertical = 4
+theme_override_styles/focus = SubResource("StyleBoxEmpty_d21ai")
 text = "Complete Quest"
 
 [node name="Clickarea" type="Control" parent="Main_UI_Background/MarginContainer/HBoxContainer/VBoxContainer"]
@@ -156,10 +161,13 @@ size_flags_vertical = 3
 
 [node name="Backgroundarea" type="TextureRect" parent="Main_UI_Background/MarginContainer/HBoxContainer/VBoxContainer/Clickarea"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(500, 350)
 layout_mode = 1
-anchors_preset = -1
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 texture = ExtResource("2_d21ai")
 expand_mode = 1
 
@@ -174,38 +182,28 @@ texture = ExtResource("2_d21ai")
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.1
-anchor_top = 0.12
-anchor_right = 0.893
-anchor_bottom = 0.127
-offset_bottom = 50.0
-grow_horizontal = 2
+anchor_top = 0.125
+anchor_right = 0.9
+anchor_bottom = 0.125
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Main_UI_Background/MarginContainer/HBoxContainer/VBoxContainer/Clickarea/HBoxContainer"]
 layout_mode = 2
+size_flags_horizontal = 0
 
 [node name="PointsLabel" type="Label" parent="Main_UI_Background/MarginContainer/HBoxContainer/VBoxContainer/Clickarea/HBoxContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 0
-size_flags_vertical = 3
+size_flags_vertical = 1
 text = "Points:"
 vertical_alignment = 1
-
-[node name="TextureRect" type="TextureRect" parent="Main_UI_Background/MarginContainer/HBoxContainer/VBoxContainer/Clickarea/HBoxContainer/VBoxContainer/PointsLabel"]
-z_index = 10
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
 
 [node name="PointsPerSecLabel" type="Label" parent="Main_UI_Background/MarginContainer/HBoxContainer/VBoxContainer/Clickarea/HBoxContainer/VBoxContainer"]
 unique_name_in_owner = true
 z_index = 10
 layout_mode = 2
 size_flags_horizontal = 0
-size_flags_vertical = 3
+size_flags_vertical = 1
 text = "Per sec:"
 vertical_alignment = 1
 
@@ -219,40 +217,51 @@ text = "Quest Progress"
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="ClickButton" type="TextureButton" parent="Main_UI_Background/MarginContainer/HBoxContainer/VBoxContainer/Clickarea"]
+[node name="Control" type="Control" parent="Main_UI_Background/MarginContainer/HBoxContainer/VBoxContainer/Clickarea"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ClickButton" type="TextureButton" parent="Main_UI_Background/MarginContainer/HBoxContainer/VBoxContainer/Clickarea/Control"]
 unique_name_in_owner = true
 z_index = 10
 layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.33
-anchor_top = 0.25
-anchor_right = 0.66
-anchor_bottom = 0.75
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -22.5
+offset_top = -24.0
+offset_right = 22.5
+offset_bottom = 24.0
 grow_horizontal = 2
 grow_vertical = 2
-pivot_offset = Vector2(91.95, 99.1)
+scale = Vector2(3, 3)
+pivot_offset = Vector2(22.5, 24)
 size_flags_stretch_ratio = 0.0
 texture_normal = ExtResource("2_u7krg")
 stretch_mode = 4
 
-[node name="ButtonClickSFXCoinButton" type="AudioStreamPlayer2D" parent="Main_UI_Background/MarginContainer/HBoxContainer/VBoxContainer/Clickarea/ClickButton"]
+[node name="ButtonClickSFXCoinButton" type="AudioStreamPlayer2D" parent="Main_UI_Background/MarginContainer/HBoxContainer/VBoxContainer/Clickarea/Control/ClickButton"]
 unique_name_in_owner = true
 stream = ExtResource("3_tx0tn")
 
-[node name="TimerLastClick" type="Timer" parent="Main_UI_Background/MarginContainer/HBoxContainer/VBoxContainer/Clickarea/ClickButton"]
+[node name="TimerLastClick" type="Timer" parent="Main_UI_Background/MarginContainer/HBoxContainer/VBoxContainer/Clickarea/Control/ClickButton"]
 unique_name_in_owner = true
 wait_time = 2.0
 one_shot = true
 
 [node name="MarginContainer" type="MarginContainer" parent="Main_UI_Background/MarginContainer/HBoxContainer/VBoxContainer/Clickarea"]
 layout_mode = 1
-anchors_preset = 12
-anchor_top = 1.0
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -23.0
 grow_horizontal = 2
-grow_vertical = 0
+grow_vertical = 2
 theme_override_constants/margin_left = 25
 theme_override_constants/margin_bottom = 15
 
@@ -274,58 +283,64 @@ theme_override_constants/separation = 19
 [node name="SaveButton" type="Button" parent="Main_UI_Background/MarginContainer/HBoxContainer/VBoxContainer/VBoxContainer/SaveLoadButtons"]
 unique_name_in_owner = true
 z_index = 10
+custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
-size_flags_horizontal = 3
+size_flags_horizontal = 6
 theme = ExtResource("4_q6r6c")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_d21ai")
 text = "Save Game"
 
 [node name="LoadButton" type="Button" parent="Main_UI_Background/MarginContainer/HBoxContainer/VBoxContainer/VBoxContainer/SaveLoadButtons"]
 unique_name_in_owner = true
 z_index = 10
+custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
-size_flags_horizontal = 3
+size_flags_horizontal = 6
 theme = ExtResource("4_q6r6c")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_d21ai")
 text = "Load Game
 "
 
-[node name="ShopPanel" type="Control" parent="Main_UI_Background/MarginContainer/HBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="Main_UI_Background/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 10
+
+[node name="ShopPanel" type="Control" parent="Main_UI_Background/MarginContainer/HBoxContainer/MarginContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(550, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="ShopScroll" type="ScrollContainer" parent="Main_UI_Background/MarginContainer/HBoxContainer/ShopPanel"]
+[node name="ShopItems" type="VBoxContainer" parent="Main_UI_Background/MarginContainer/HBoxContainer/MarginContainer/ShopPanel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-
-[node name="ShopItems" type="VBoxContainer" parent="Main_UI_Background/MarginContainer/HBoxContainer/ShopPanel/ShopScroll"]
-layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 alignment = 1
 
-[node name="Shop" type="Label" parent="Main_UI_Background/MarginContainer/HBoxContainer/ShopPanel/ShopScroll/ShopItems"]
+[node name="Shop" type="Label" parent="Main_UI_Background/MarginContainer/HBoxContainer/MarginContainer/ShopPanel/ShopItems"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
-size_flags_vertical = 1
+size_flags_vertical = 0
 text = "Shop"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="HBoxContainer6" type="HBoxContainer" parent="Main_UI_Background/MarginContainer/HBoxContainer/ShopPanel/ShopScroll/ShopItems"]
+[node name="HBoxContainer6" type="HBoxContainer" parent="Main_UI_Background/MarginContainer/HBoxContainer/MarginContainer/ShopPanel/ShopItems"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Main_UI_Background/MarginContainer/HBoxContainer/ShopPanel/ShopScroll/ShopItems/HBoxContainer6"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Main_UI_Background/MarginContainer/HBoxContainer/MarginContainer/ShopPanel/ShopItems/HBoxContainer6"]
+custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
+size_flags_horizontal = 4
 
-[node name="PriceLabel" type="Label" parent="Main_UI_Background/MarginContainer/HBoxContainer/ShopPanel/ShopScroll/ShopItems/HBoxContainer6/VBoxContainer"]
+[node name="PriceLabel" type="Label" parent="Main_UI_Background/MarginContainer/HBoxContainer/MarginContainer/ShopPanel/ShopItems/HBoxContainer6/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -334,7 +349,7 @@ text = "Price"
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="PriceLabelMulti" type="Label" parent="Main_UI_Background/MarginContainer/HBoxContainer/ShopPanel/ShopScroll/ShopItems/HBoxContainer6/VBoxContainer"]
+[node name="PriceLabelMulti" type="Label" parent="Main_UI_Background/MarginContainer/HBoxContainer/MarginContainer/ShopPanel/ShopItems/HBoxContainer6/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -343,7 +358,7 @@ text = "Price"
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="PriceLabelAuto" type="Label" parent="Main_UI_Background/MarginContainer/HBoxContainer/ShopPanel/ShopScroll/ShopItems/HBoxContainer6/VBoxContainer"]
+[node name="PriceLabelAuto" type="Label" parent="Main_UI_Background/MarginContainer/HBoxContainer/MarginContainer/ShopPanel/ShopItems/HBoxContainer6/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -352,7 +367,7 @@ text = "Price"
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="PriceLabelGoldenTouch" type="Label" parent="Main_UI_Background/MarginContainer/HBoxContainer/ShopPanel/ShopScroll/ShopItems/HBoxContainer6/VBoxContainer"]
+[node name="PriceLabelGoldenTouch" type="Label" parent="Main_UI_Background/MarginContainer/HBoxContainer/MarginContainer/ShopPanel/ShopItems/HBoxContainer6/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -361,7 +376,7 @@ text = "Price"
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="PriceLabelFactory" type="Label" parent="Main_UI_Background/MarginContainer/HBoxContainer/ShopPanel/ShopScroll/ShopItems/HBoxContainer6/VBoxContainer"]
+[node name="PriceLabelFactory" type="Label" parent="Main_UI_Background/MarginContainer/HBoxContainer/MarginContainer/ShopPanel/ShopItems/HBoxContainer6/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -370,66 +385,71 @@ text = "Price"
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="Main_UI_Background/MarginContainer/HBoxContainer/ShopPanel/ShopScroll/ShopItems/HBoxContainer6"]
+[node name="VBoxContainer2" type="VBoxContainer" parent="Main_UI_Background/MarginContainer/HBoxContainer/MarginContainer/ShopPanel/ShopItems/HBoxContainer6"]
 layout_mode = 2
-size_flags_horizontal = 8
+size_flags_horizontal = 4
 
-[node name="BuyClickerButton" type="Button" parent="Main_UI_Background/MarginContainer/HBoxContainer/ShopPanel/ShopScroll/ShopItems/HBoxContainer6/VBoxContainer2"]
+[node name="BuyClickerButton" type="Button" parent="Main_UI_Background/MarginContainer/HBoxContainer/MarginContainer/ShopPanel/ShopItems/HBoxContainer6/VBoxContainer2"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(280, 0)
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_vertical = 6
+size_flags_vertical = 3
+theme_override_styles/focus = SubResource("StyleBoxEmpty_rj586")
 text = "Buy Auto Clicker"
 
-[node name="BuyClickMultiplierButton" type="Button" parent="Main_UI_Background/MarginContainer/HBoxContainer/ShopPanel/ShopScroll/ShopItems/HBoxContainer6/VBoxContainer2"]
+[node name="BuyClickMultiplierButton" type="Button" parent="Main_UI_Background/MarginContainer/HBoxContainer/MarginContainer/ShopPanel/ShopItems/HBoxContainer6/VBoxContainer2"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(280, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 6
+theme_override_styles/focus = SubResource("StyleBoxEmpty_rj586")
 text = "Buy Click Power"
 
-[node name="BuyAutoClickerButton" type="Button" parent="Main_UI_Background/MarginContainer/HBoxContainer/ShopPanel/ShopScroll/ShopItems/HBoxContainer6/VBoxContainer2"]
+[node name="BuyAutoClickerButton" type="Button" parent="Main_UI_Background/MarginContainer/HBoxContainer/MarginContainer/ShopPanel/ShopItems/HBoxContainer6/VBoxContainer2"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(280, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 6
+theme_override_styles/focus = SubResource("StyleBoxEmpty_rj586")
 text = "Buy Super Auto Clicker"
 
-[node name="BuyGoldenTouchButton" type="Button" parent="Main_UI_Background/MarginContainer/HBoxContainer/ShopPanel/ShopScroll/ShopItems/HBoxContainer6/VBoxContainer2"]
+[node name="BuyGoldenTouchButton" type="Button" parent="Main_UI_Background/MarginContainer/HBoxContainer/MarginContainer/ShopPanel/ShopItems/HBoxContainer6/VBoxContainer2"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(280, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 6
+theme_override_styles/focus = SubResource("StyleBoxEmpty_rj586")
 text = "Buy Golden Touch"
 
-[node name="BuyMegaFactoryButton" type="Button" parent="Main_UI_Background/MarginContainer/HBoxContainer/ShopPanel/ShopScroll/ShopItems/HBoxContainer6/VBoxContainer2"]
+[node name="BuyMegaFactoryButton" type="Button" parent="Main_UI_Background/MarginContainer/HBoxContainer/MarginContainer/ShopPanel/ShopItems/HBoxContainer6/VBoxContainer2"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(280, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 6
+theme_override_styles/focus = SubResource("StyleBoxEmpty_rj586")
 text = "Buy MegaFactory
 "
 
-[node name="VBoxContainer3" type="VBoxContainer" parent="Main_UI_Background/MarginContainer/HBoxContainer/ShopPanel/ShopScroll/ShopItems/HBoxContainer6"]
+[node name="VBoxContainer3" type="VBoxContainer" parent="Main_UI_Background/MarginContainer/HBoxContainer/MarginContainer/ShopPanel/ShopItems/HBoxContainer6"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Main_UI_Background/MarginContainer/HBoxContainer/ShopPanel/ShopScroll/ShopItems/HBoxContainer6/VBoxContainer3"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Main_UI_Background/MarginContainer/HBoxContainer/MarginContainer/ShopPanel/ShopItems/HBoxContainer6/VBoxContainer3"]
 layout_mode = 2
 size_flags_vertical = 6
 
-[node name="Label" type="Label" parent="Main_UI_Background/MarginContainer/HBoxContainer/ShopPanel/ShopScroll/ShopItems/HBoxContainer6/VBoxContainer3/VBoxContainer"]
+[node name="Label" type="Label" parent="Main_UI_Background/MarginContainer/HBoxContainer/MarginContainer/ShopPanel/ShopItems/HBoxContainer6/VBoxContainer3/VBoxContainer"]
 layout_mode = 2
 text = "Clickers:"
 horizontal_alignment = 1
 vertical_alignment = 2
 
-[node name="ClickersOwnedLabel" type="Label" parent="Main_UI_Background/MarginContainer/HBoxContainer/ShopPanel/ShopScroll/ShopItems/HBoxContainer6/VBoxContainer3/VBoxContainer"]
+[node name="ClickersOwnedLabel" type="Label" parent="Main_UI_Background/MarginContainer/HBoxContainer/MarginContainer/ShopPanel/ShopItems/HBoxContainer6/VBoxContainer3/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -437,16 +457,16 @@ size_flags_vertical = 3
 text = "ClickersOwnedLabel"
 horizontal_alignment = 1
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="Main_UI_Background/MarginContainer/HBoxContainer/ShopPanel/ShopScroll/ShopItems/HBoxContainer6/VBoxContainer3"]
+[node name="VBoxContainer2" type="VBoxContainer" parent="Main_UI_Background/MarginContainer/HBoxContainer/MarginContainer/ShopPanel/ShopItems/HBoxContainer6/VBoxContainer3"]
 layout_mode = 2
 size_flags_vertical = 6
 
-[node name="Label" type="Label" parent="Main_UI_Background/MarginContainer/HBoxContainer/ShopPanel/ShopScroll/ShopItems/HBoxContainer6/VBoxContainer3/VBoxContainer2"]
+[node name="Label" type="Label" parent="Main_UI_Background/MarginContainer/HBoxContainer/MarginContainer/ShopPanel/ShopItems/HBoxContainer6/VBoxContainer3/VBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 4
 text = "Click Power:"
 
-[node name="ClickMultiplierLevel" type="Label" parent="Main_UI_Background/MarginContainer/HBoxContainer/ShopPanel/ShopScroll/ShopItems/HBoxContainer6/VBoxContainer3/VBoxContainer2"]
+[node name="ClickMultiplierLevel" type="Label" parent="Main_UI_Background/MarginContainer/HBoxContainer/MarginContainer/ShopPanel/ShopItems/HBoxContainer6/VBoxContainer3/VBoxContainer2"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 6
@@ -454,16 +474,16 @@ size_flags_vertical = 3
 text = "ClickMultiplierLevel"
 vertical_alignment = 1
 
-[node name="VBoxContainer3" type="VBoxContainer" parent="Main_UI_Background/MarginContainer/HBoxContainer/ShopPanel/ShopScroll/ShopItems/HBoxContainer6/VBoxContainer3"]
+[node name="VBoxContainer3" type="VBoxContainer" parent="Main_UI_Background/MarginContainer/HBoxContainer/MarginContainer/ShopPanel/ShopItems/HBoxContainer6/VBoxContainer3"]
 layout_mode = 2
 size_flags_vertical = 6
 
-[node name="Label" type="Label" parent="Main_UI_Background/MarginContainer/HBoxContainer/ShopPanel/ShopScroll/ShopItems/HBoxContainer6/VBoxContainer3/VBoxContainer3"]
+[node name="Label" type="Label" parent="Main_UI_Background/MarginContainer/HBoxContainer/MarginContainer/ShopPanel/ShopItems/HBoxContainer6/VBoxContainer3/VBoxContainer3"]
 layout_mode = 2
 size_flags_horizontal = 4
 text = "Auto Clicker:"
 
-[node name="AutoClickerLevel" type="Label" parent="Main_UI_Background/MarginContainer/HBoxContainer/ShopPanel/ShopScroll/ShopItems/HBoxContainer6/VBoxContainer3/VBoxContainer3"]
+[node name="AutoClickerLevel" type="Label" parent="Main_UI_Background/MarginContainer/HBoxContainer/MarginContainer/ShopPanel/ShopItems/HBoxContainer6/VBoxContainer3/VBoxContainer3"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 6
@@ -471,16 +491,16 @@ size_flags_vertical = 3
 text = "AutoClickerLevel"
 vertical_alignment = 1
 
-[node name="VBoxContainer4" type="VBoxContainer" parent="Main_UI_Background/MarginContainer/HBoxContainer/ShopPanel/ShopScroll/ShopItems/HBoxContainer6/VBoxContainer3"]
+[node name="VBoxContainer4" type="VBoxContainer" parent="Main_UI_Background/MarginContainer/HBoxContainer/MarginContainer/ShopPanel/ShopItems/HBoxContainer6/VBoxContainer3"]
 layout_mode = 2
 size_flags_vertical = 6
 
-[node name="Label" type="Label" parent="Main_UI_Background/MarginContainer/HBoxContainer/ShopPanel/ShopScroll/ShopItems/HBoxContainer6/VBoxContainer3/VBoxContainer4"]
+[node name="Label" type="Label" parent="Main_UI_Background/MarginContainer/HBoxContainer/MarginContainer/ShopPanel/ShopItems/HBoxContainer6/VBoxContainer3/VBoxContainer4"]
 layout_mode = 2
 size_flags_horizontal = 4
 text = "Golden Touch:"
 
-[node name="GoldenTouchLevel" type="Label" parent="Main_UI_Background/MarginContainer/HBoxContainer/ShopPanel/ShopScroll/ShopItems/HBoxContainer6/VBoxContainer3/VBoxContainer4"]
+[node name="GoldenTouchLevel" type="Label" parent="Main_UI_Background/MarginContainer/HBoxContainer/MarginContainer/ShopPanel/ShopItems/HBoxContainer6/VBoxContainer3/VBoxContainer4"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 6
@@ -488,16 +508,16 @@ size_flags_vertical = 3
 text = "GoldenTouchLevel"
 vertical_alignment = 1
 
-[node name="VBoxContainer5" type="VBoxContainer" parent="Main_UI_Background/MarginContainer/HBoxContainer/ShopPanel/ShopScroll/ShopItems/HBoxContainer6/VBoxContainer3"]
+[node name="VBoxContainer5" type="VBoxContainer" parent="Main_UI_Background/MarginContainer/HBoxContainer/MarginContainer/ShopPanel/ShopItems/HBoxContainer6/VBoxContainer3"]
 layout_mode = 2
 size_flags_vertical = 6
 
-[node name="Label" type="Label" parent="Main_UI_Background/MarginContainer/HBoxContainer/ShopPanel/ShopScroll/ShopItems/HBoxContainer6/VBoxContainer3/VBoxContainer5"]
+[node name="Label" type="Label" parent="Main_UI_Background/MarginContainer/HBoxContainer/MarginContainer/ShopPanel/ShopItems/HBoxContainer6/VBoxContainer3/VBoxContainer5"]
 layout_mode = 2
 size_flags_horizontal = 4
 text = "Mega Factory:"
 
-[node name="MegaFactoryLevel" type="Label" parent="Main_UI_Background/MarginContainer/HBoxContainer/ShopPanel/ShopScroll/ShopItems/HBoxContainer6/VBoxContainer3/VBoxContainer5"]
+[node name="MegaFactoryLevel" type="Label" parent="Main_UI_Background/MarginContainer/HBoxContainer/MarginContainer/ShopPanel/ShopItems/HBoxContainer6/VBoxContainer3/VBoxContainer5"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 6
@@ -534,6 +554,7 @@ vertical_alignment = 1
 uppercase = true
 
 [node name="PopupMessage" type="Label" parent="QuestCompletionPopup/PopupVBox"]
+custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
 size_flags_vertical = 3
 text = "Message"
@@ -556,4 +577,4 @@ size_flags_vertical = 8
 theme = ExtResource("4_q6r6c")
 text = "Continue"
 
-[connection signal="timeout" from="Main_UI_Background/MarginContainer/HBoxContainer/VBoxContainer/Clickarea/ClickButton/TimerLastClick" to="." method="_on_timer_last_click_timeout"]
+[connection signal="timeout" from="Main_UI_Background/MarginContainer/HBoxContainer/VBoxContainer/Clickarea/Control/ClickButton/TimerLastClick" to="." method="_on_timer_last_click_timeout"]
