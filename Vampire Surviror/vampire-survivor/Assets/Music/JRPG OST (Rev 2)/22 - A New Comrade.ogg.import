@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://ceuok2x640sib"
+path="res://.godot/imported/22 - A New Comrade.ogg-99ae23074264b3af19ab727bdf65b55a.oggvorbisstr"
+
+[deps]
+
+source_file="res://Assets/Music/JRPG OST (Rev 2)/22 - A New Comrade.ogg"
+dest_files=["res://.godot/imported/22 - A New Comrade.ogg-99ae23074264b3af19ab727bdf65b55a.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

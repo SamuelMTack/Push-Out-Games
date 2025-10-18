@@ -2,12 +2,13 @@ extends CharacterBody2D
 
 @export var speed = 80.0
 @export var max_health = 30.0
-@export var damage = 10.0
-@export var exp_value = 1
+@export var contact_damage = 5.0  # Damage per hit to player
+@export var exp_drop_chance = 0.7  # 70% chance to drop exp
 @export var experience_scene: PackedScene
 
 var health = max_health
 var player: CharacterBody2D
+var damage_cooldown = 0.0  # To prevent instant multiple hits
 
 func _ready():
 	add_to_group("enemies")
@@ -17,7 +18,7 @@ func _ready():
 	if not players.is_empty():
 		player = players[0]
 
-func _physics_process(_delta):
+func _physics_process(delta):
 	if not player:
 		return
 	
@@ -26,15 +27,22 @@ func _physics_process(_delta):
 	velocity = direction * speed
 	move_and_slide()
 	
+	# Cooldown for damage
+	if damage_cooldown > 0:
+		damage_cooldown -= delta
+	
 	# Check collision with player
 	for i in get_slide_collision_count():
 		var collision = get_slide_collision(i)
 		if collision.get_collider().is_in_group("player"):
-			player.take_damage(damage * 0.1) # Damage per frame of contact
+			if damage_cooldown <= 0:
+				player.take_damage(contact_damage)
+				damage_cooldown = 0.5  # Half second between damage hits
 
 func take_damage(amount):
 	health -= amount
-	# Visual feedback (optional - add a shader or sprite modulation)
+	
+	# Visual feedback
 	modulate = Color.RED
 	await get_tree().create_timer(0.1).timeout
 	modulate = Color.WHITE
@@ -43,11 +51,10 @@ func take_damage(amount):
 		die()
 
 func die():
-	# Drop experience
-	if experience_scene:
+	# Random chance to drop experience
+	if randf() < exp_drop_chance and experience_scene:
 		var exp = experience_scene.instantiate()
 		get_parent().add_child(exp)
 		exp.global_position = global_position
-		exp.experience_value = exp_value
 	
 	queue_free()

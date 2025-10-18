@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://b242huahju60e"
+path="res://.godot/imported/sfx_wpn_noammo2.wav-5453a5a65f4f4e79f93131628290cb30.sample"
+
+[deps]
+
+source_file="res://Assets/Sound FX/The Essential Retro/The Essential Retro/Weapons/Out of Ammo/sfx_wpn_noammo2.wav"
+dest_files=["res://.godot/imported/sfx_wpn_noammo2.wav-5453a5a65f4f4e79f93131628290cb30.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

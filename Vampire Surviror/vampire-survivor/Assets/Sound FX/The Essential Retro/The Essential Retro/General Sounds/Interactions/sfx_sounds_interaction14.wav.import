@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://p02dx2qjg2yr"
+path="res://.godot/imported/sfx_sounds_interaction14.wav-0a331b37ed2c40bef8122385e8329a77.sample"
+
+[deps]
+
+source_file="res://Assets/Sound FX/The Essential Retro/The Essential Retro/General Sounds/Interactions/sfx_sounds_interaction14.wav"
+dest_files=["res://.godot/imported/sfx_sounds_interaction14.wav-0a331b37ed2c40bef8122385e8329a77.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

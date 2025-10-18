@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://b52klgpywimre"
+path="res://.godot/imported/sfx_movement_ladder1b.wav-28a7a42fa70d5e2f5e0d8a426c470797.sample"
+
+[deps]
+
+source_file="res://Assets/Sound FX/The Essential Retro/The Essential Retro/Movement/Climbing Ladder/sfx_movement_ladder1b.wav"
+dest_files=["res://.godot/imported/sfx_movement_ladder1b.wav-28a7a42fa70d5e2f5e0d8a426c470797.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

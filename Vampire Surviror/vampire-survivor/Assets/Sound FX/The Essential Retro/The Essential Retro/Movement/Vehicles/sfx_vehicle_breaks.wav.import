@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://duh3vpy7q0f3g"
+path="res://.godot/imported/sfx_vehicle_breaks.wav-9eeaefce854871f226e4b652c75220b2.sample"
+
+[deps]
+
+source_file="res://Assets/Sound FX/The Essential Retro/The Essential Retro/Movement/Vehicles/sfx_vehicle_breaks.wav"
+dest_files=["res://.godot/imported/sfx_vehicle_breaks.wav-9eeaefce854871f226e4b652c75220b2.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

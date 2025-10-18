@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://dxhb2euas733j"
+path="res://.godot/imported/sfx_exp_short_hard6.wav-2f2e36c0c637429d03a4b508883bbaaf.sample"
+
+[deps]
+
+source_file="res://Assets/Sound FX/The Essential Retro/The Essential Retro/Explosions/Short/sfx_exp_short_hard6.wav"
+dest_files=["res://.godot/imported/sfx_exp_short_hard6.wav-2f2e36c0c637429d03a4b508883bbaaf.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

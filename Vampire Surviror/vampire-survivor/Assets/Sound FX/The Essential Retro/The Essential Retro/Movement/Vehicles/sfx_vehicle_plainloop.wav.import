@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bb3ffb60hu410"
+path="res://.godot/imported/sfx_vehicle_plainloop.wav-8f20e1ba2780eb3b43c2f84491e52f3c.sample"
+
+[deps]
+
+source_file="res://Assets/Sound FX/The Essential Retro/The Essential Retro/Movement/Vehicles/sfx_vehicle_plainloop.wav"
+dest_files=["res://.godot/imported/sfx_vehicle_plainloop.wav-8f20e1ba2780eb3b43c2f84491e52f3c.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

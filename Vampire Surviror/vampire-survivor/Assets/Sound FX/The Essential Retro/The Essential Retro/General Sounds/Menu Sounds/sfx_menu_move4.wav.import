@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://2tqy3sqwrx1p"
+path="res://.godot/imported/sfx_menu_move4.wav-259b27af172c5d8563e5484be4d2420e.sample"
+
+[deps]
+
+source_file="res://Assets/Sound FX/The Essential Retro/The Essential Retro/General Sounds/Menu Sounds/sfx_menu_move4.wav"
+dest_files=["res://.godot/imported/sfx_menu_move4.wav-259b27af172c5d8563e5484be4d2420e.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://c53eu3jc8o828"
+path="res://.godot/imported/sfx_sounds_impact8.wav-c5917632cfebeb13631d15de9dd6b38e.sample"
+
+[deps]
+
+source_file="res://Assets/Sound FX/The Essential Retro/The Essential Retro/General Sounds/Impacts/sfx_sounds_impact8.wav"
+dest_files=["res://.godot/imported/sfx_sounds_impact8.wav-c5917632cfebeb13631d15de9dd6b38e.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

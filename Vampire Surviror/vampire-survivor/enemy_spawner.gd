@@ -3,6 +3,7 @@ extends Node2D
 @export var enemy_scene: PackedScene
 @export var spawn_interval = 2.0
 @export var spawn_distance = 600.0
+@export var max_enemies = 50  # Prevent too many enemies
 
 var spawn_timer = 0.0
 var player: CharacterBody2D
@@ -16,11 +17,14 @@ func _physics_process(delta):
 	spawn_timer -= delta
 	
 	if spawn_timer <= 0:
-		spawn_enemy()
+		var enemy_count = get_tree().get_nodes_in_group("enemies").size()
+		if enemy_count < max_enemies:
+			spawn_enemy()
+		
 		spawn_timer = spawn_interval
 		
-		# Increase difficulty over time
-		spawn_interval = max(0.5, spawn_interval * 0.99)
+		# Gradually increase difficulty
+		spawn_interval = max(0.5, spawn_interval * 0.995)
 
 func spawn_enemy():
 	if not enemy_scene or not player:

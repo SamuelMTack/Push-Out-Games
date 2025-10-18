@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://cfph8abtbxwd8"
+path="res://.godot/imported/sfx_sounds_powerup12.wav-60fcb16a91d79f43c3842355fc6994a0.sample"
+
+[deps]
+
+source_file="res://Assets/Sound FX/The Essential Retro/The Essential Retro/General Sounds/Positive Sounds/sfx_sounds_powerup12.wav"
+dest_files=["res://.godot/imported/sfx_sounds_powerup12.wav-60fcb16a91d79f43c3842355fc6994a0.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

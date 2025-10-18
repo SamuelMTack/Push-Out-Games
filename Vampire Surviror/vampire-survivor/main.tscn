@@ -1,62 +1,67 @@
-[gd_scene load_steps=12 format=3 uid="uid://20fs7i4d8tk1"]
+[gd_scene load_steps=9 format=3 uid="uid://20fs7i4d8tk1"]
 
 [ext_resource type="Script" uid="uid://b2wgt2u1ktxwa" path="res://player.gd" id="1_7mycd"]
-[ext_resource type="Texture2D" uid="uid://cmmt0r0tskjjr" path="res://icon.svg" id="2_272bh"]
+[ext_resource type="Texture2D" uid="uid://beuoswje5bwf1" path="res://Assets/Sprite Assets/crawl-tiles Oct-5-2010/crawl-tiles Oct-5-2010/dc-mon/angel.png" id="2_4c57u"]
 [ext_resource type="Script" uid="uid://b783p6e1ovwil" path="res://enemy_spawner.gd" id="3_5vw27"]
+[ext_resource type="PackedScene" uid="uid://cg2v4p8ofo1st" path="res://Projectile.tscn" id="3_272bh"]
 [ext_resource type="Script" uid="uid://doc1f2lvhpa45" path="res://ui.gd" id="4_kek77"]
-[ext_resource type="Script" uid="uid://cjk2hhfsxa5r1" path="res://enemy.gd" id="5_4c57u"]
-[ext_resource type="Script" uid="uid://bkwyclv5s2kuu" path="res://experience.gd" id="6_272bh"]
-[ext_resource type="Script" uid="uid://chcx8fke2k41t" path="res://projectile.gd" id="6_efxa6"]
+[ext_resource type="PackedScene" uid="uid://d3xq8jw1y3csv" path="res://Enemy.tscn" id="5_5vw27"]
+[ext_resource type="PackedScene" uid="uid://cemqtsafic18p" path="res://Experience.tscn" id="6_kek77"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dg77c"]
-size = Vector2(41, 42)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ycdy4"]
-size = Vector2(28, 27)
-
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_w48qg"]
-radius = 5.0
-height = 10.0
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_vivmo"]
-radius = 3.0
+size = Vector2(17, 26)
 
 [node name="Main" type="Node2D"]
 
 [node name="Player" type="CharacterBody2D" parent="."]
-position = Vector2(52, 56)
+position = Vector2(124.125, 78)
 script = ExtResource("1_7mycd")
 
 [node name="Sprite2D" type="Sprite2D" parent="Player"]
-position = Vector2(123.5, 95)
-scale = Vector2(0.3359375, 0.3125)
-texture = ExtResource("2_272bh")
+position = Vector2(-0.06249237, 1)
+scale = Vector2(0.5585942, 0.8125001)
+texture = ExtResource("2_4c57u")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
-position = Vector2(123.5, 95)
+position = Vector2(-0.625, 1)
 shape = SubResource("RectangleShape2D_dg77c")
+
+[node name="Projectile" parent="Player" instance=ExtResource("3_272bh")]
 
 [node name="EnemySpawner" type="Node2D" parent="."]
 position = Vector2(15, 54)
 script = ExtResource("3_5vw27")
 
+[node name="Enemy" parent="EnemySpawner" instance=ExtResource("5_5vw27")]
+position = Vector2(109.125, 24)
+
+[node name="Experience" parent="EnemySpawner/Enemy" instance=ExtResource("6_kek77")]
+
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(176, 152)
+position = Vector2(121, 72)
 
 [node name="UI" type="CanvasLayer" parent="."]
 script = ExtResource("4_kek77")
 
 [node name="ExperienceBar" type="ProgressBar" parent="UI"]
-offset_right = 4.0
-offset_bottom = 27.0
+offset_left = 175.0
+offset_top = 46.0
+offset_right = 291.0
+offset_bottom = 73.0
 
 [node name="LevelLabel" type="Label" parent="UI"]
-offset_right = 40.0
-offset_bottom = 23.0
+anchors_preset = -1
+anchor_bottom = 0.018000001
+offset_left = 177.0
+offset_top = 9.0
+offset_right = 245.0
+offset_bottom = 20.335999
 
 [node name="TimeLabel" type="Label" parent="UI"]
-offset_right = 40.0
-offset_bottom = 23.0
+offset_left = 179.0
+offset_top = 81.0
+offset_right = 287.0
+offset_bottom = 107.0
 
 [node name="LevelUpPanel" type="Panel" parent="UI"]
 anchors_preset = -1
@@ -64,46 +69,45 @@ anchor_left = 0.011000001
 anchor_top = 0.041
 anchor_right = 0.011000001
 anchor_bottom = 0.041
-offset_left = 21.328
-offset_top = -29.568
-offset_right = 61.328
-offset_bottom = 10.431999
+offset_left = 26.328
+offset_top = 139.432
+offset_right = 307.328
+offset_bottom = 316.432
 
-[node name="Enemy" type="CharacterBody2D" parent="."]
-position = Vector2(24, 95)
-script = ExtResource("5_4c57u")
+[node name="TitleLabel" type="Label" parent="UI/LevelUpPanel"]
+layout_mode = 0
+offset_left = 61.0
+offset_top = 14.0
+offset_right = 212.0
+offset_bottom = 37.0
+text = "Choose an Upgrade"
 
-[node name="Sprite2D" type="Sprite2D" parent="Enemy"]
-position = Vector2(65, 45)
-scale = Vector2(0.234375, 0.21875)
-texture = ExtResource("2_272bh")
+[node name="UpgradeButton1" type="Button" parent="UI/LevelUpPanel"]
+layout_mode = 0
+offset_left = 75.0
+offset_top = 51.0
+offset_right = 208.0
+offset_bottom = 82.0
+text = "Faster Projectile"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemy"]
-position = Vector2(65, 45.5)
-shape = SubResource("RectangleShape2D_ycdy4")
+[node name="UpgradeButton2" type="Button" parent="UI/LevelUpPanel"]
+layout_mode = 0
+offset_left = 68.0
+offset_top = 88.0
+offset_right = 220.0
+offset_bottom = 119.0
+text = "Stronger Projectile"
 
-[node name="Experience" type="Area2D" parent="."]
-position = Vector2(36, 88)
-script = ExtResource("6_272bh")
+[node name="UpgradeButton3" type="Button" parent="UI/LevelUpPanel"]
+layout_mode = 0
+offset_left = 72.0
+offset_top = 125.0
+offset_right = 206.0
+offset_bottom = 156.0
+text = "More Projectiles"
 
-[node name="Sprite2D" type="Sprite2D" parent="Experience"]
-position = Vector2(-59, -59)
-scale = Vector2(0.078124985, 0.078124985)
-texture = ExtResource("2_272bh")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Experience"]
-position = Vector2(-59, -59)
-shape = SubResource("CapsuleShape2D_w48qg")
-
-[node name="Projectile" type="Area2D" parent="."]
-position = Vector2(41, 104)
-script = ExtResource("6_efxa6")
-
-[node name="Sprite2D" type="Sprite2D" parent="Projectile"]
-position = Vector2(-60.5, 60.5)
-scale = Vector2(0.054687504, 0.05468747)
-texture = ExtResource("2_272bh")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Projectile"]
-position = Vector2(-60, 61)
-shape = SubResource("CircleShape2D_vivmo")
+[node name="HealthBar" type="ProgressBar" parent="UI"]
+offset_left = 43.0
+offset_top = 43.0
+offset_right = 148.0
+offset_bottom = 70.0

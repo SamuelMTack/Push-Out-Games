@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://cx3jyhlbh2075"
+path="res://.godot/imported/15 - Dungeon.ogg-25373d7ae5200b044837a5dc16ae15f8.oggvorbisstr"
+
+[deps]
+
+source_file="res://Assets/Music/JRPG OST (Rev 2)/15 - Dungeon.ogg"
+dest_files=["res://.godot/imported/15 - Dungeon.ogg-25373d7ae5200b044837a5dc16ae15f8.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

@@ -2,8 +2,8 @@ extends Area2D
 
 var direction = Vector2.ZERO
 var speed = 300.0
-var damage = 10.0
-var lifetime = 3.0
+var damage = 15.0
+var lifetime = 4.0
 
 func _ready():
 	body_entered.connect(_on_body_entered)

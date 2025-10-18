@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://nfkctspctdpo"
+path="res://.godot/imported/sfx_sounds_Blip1.wav-13a7c30a07af936300db29baf2093704.sample"
+
+[deps]
+
+source_file="res://Assets/Sound FX/The Essential Retro/The Essential Retro/General Sounds/Simple Bleeps/sfx_sounds_Blip1.wav"
+dest_files=["res://.godot/imported/sfx_sounds_Blip1.wav-13a7c30a07af936300db29baf2093704.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

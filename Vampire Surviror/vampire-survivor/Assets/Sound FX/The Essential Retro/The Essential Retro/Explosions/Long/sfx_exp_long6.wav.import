@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://dk32rivs8qog7"
+path="res://.godot/imported/sfx_exp_long6.wav-1e9e3ed35bbbbb933e6ac5e27b140aa8.sample"
+
+[deps]
+
+source_file="res://Assets/Sound FX/The Essential Retro/The Essential Retro/Explosions/Long/sfx_exp_long6.wav"
+dest_files=["res://.godot/imported/sfx_exp_long6.wav-1e9e3ed35bbbbb933e6ac5e27b140aa8.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

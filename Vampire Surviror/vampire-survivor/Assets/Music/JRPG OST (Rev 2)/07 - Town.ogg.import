@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://bnpqqumepsou6"
+path="res://.godot/imported/07 - Town.ogg-9dd4f53b9a94af3af9fc3d9bf4394e8b.oggvorbisstr"
+
+[deps]
+
+source_file="res://Assets/Music/JRPG OST (Rev 2)/07 - Town.ogg"
+dest_files=["res://.godot/imported/07 - Town.ogg-9dd4f53b9a94af3af9fc3d9bf4394e8b.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

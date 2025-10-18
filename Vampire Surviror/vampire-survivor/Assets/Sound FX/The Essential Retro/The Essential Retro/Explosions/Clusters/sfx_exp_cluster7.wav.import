@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bpqguhpmvasuw"
+path="res://.godot/imported/sfx_exp_cluster7.wav-a60d63bb2ceade70a9e0738f82de19d9.sample"
+
+[deps]
+
+source_file="res://Assets/Sound FX/The Essential Retro/The Essential Retro/Explosions/Clusters/sfx_exp_cluster7.wav"
+dest_files=["res://.godot/imported/sfx_exp_cluster7.wav-a60d63bb2ceade70a9e0738f82de19d9.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

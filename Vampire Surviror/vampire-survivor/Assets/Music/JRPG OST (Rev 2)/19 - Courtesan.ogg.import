@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://daf3hlmvewoyj"
+path="res://.godot/imported/19 - Courtesan.ogg-1f6a9c23beb372b76aad50db1bbc310d.oggvorbisstr"
+
+[deps]
+
+source_file="res://Assets/Music/JRPG OST (Rev 2)/19 - Courtesan.ogg"
+dest_files=["res://.godot/imported/19 - Courtesan.ogg-1f6a9c23beb372b76aad50db1bbc310d.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
