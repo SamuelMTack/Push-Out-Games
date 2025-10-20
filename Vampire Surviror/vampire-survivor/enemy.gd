@@ -3,8 +3,8 @@ extends CharacterBody2D
 @export var speed = 80.0
 @export var max_health = 30.0
 @export var contact_damage = 5.0  # Damage per hit to player
-@export var exp_drop_chance = 0.7  # 70% chance to drop exp
-@export var experience_scene: PackedScene
+@export var exp_drop_chance = 1  # 70% chance to drop exp
+@export var experience_scene: PackedScene = preload("res://Experience.tscn")
 
 var health = max_health
 var player: CharacterBody2D

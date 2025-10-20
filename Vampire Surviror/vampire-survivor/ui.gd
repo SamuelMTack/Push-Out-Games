@@ -8,10 +8,12 @@ extends CanvasLayer
 @onready var upgrade_button1 = $LevelUpPanel/UpgradeButton1
 @onready var upgrade_button2 = $LevelUpPanel/UpgradeButton2
 @onready var upgrade_button3 = $LevelUpPanel/UpgradeButton3
+@onready var confirm_button = $LevelUpPanel/ConfirmButton
 
 var player: CharacterBody2D
 var game_time = 0.0
 var current_level = 1
+var selected_upgrade = ""  # Tracks which upgrade was selected
 
 func _ready():
 	add_to_group("ui")
@@ -26,10 +28,14 @@ func _ready():
 	
 	level_up_panel.hide()
 	
-	# Connect upgrade buttons
-	upgrade_button1.pressed.connect(_on_upgrade_selected.bind("faster"))
-	upgrade_button2.pressed.connect(_on_upgrade_selected.bind("stronger"))
-	upgrade_button3.pressed.connect(_on_upgrade_selected.bind("more"))
+	# Connect upgrade buttons to selection (not immediate application)
+	upgrade_button1.pressed.connect(_on_upgrade_button_pressed.bind("faster", upgrade_button1))
+	upgrade_button2.pressed.connect(_on_upgrade_button_pressed.bind("stronger", upgrade_button2))
+	upgrade_button3.pressed.connect(_on_upgrade_button_pressed.bind("more", upgrade_button3))
+	
+	# Connect confirm button
+	confirm_button.pressed.connect(_on_confirm_pressed)
+	confirm_button.disabled = true  # Start disabled until upgrade selected
 
 func _process(delta):
 	if not get_tree().paused:
@@ -52,12 +58,38 @@ func show_level_up_panel():
 	current_level += 1
 	level_label.text = "Level: " + str(current_level)
 	
+	# Reset selection
+	selected_upgrade = ""
+	confirm_button.disabled = true
+	
+	# Reset button colors
+	upgrade_button1.modulate = Color.WHITE
+	upgrade_button2.modulate = Color.WHITE
+	upgrade_button3.modulate = Color.WHITE
+	
 	level_up_panel.show()
 	get_tree().paused = true
 
-func _on_upgrade_selected(upgrade_type: String):
-	if player:
-		player.apply_upgrade(upgrade_type)
+func _on_upgrade_button_pressed(upgrade_type: String, button: Button):
+	# Store the selected upgrade
+	selected_upgrade = upgrade_type
 	
-	level_up_panel.hide()
-	get_tree().paused = false
+	# Reset all button colors
+	upgrade_button1.modulate = Color.WHITE
+	upgrade_button2.modulate = Color.WHITE
+	upgrade_button3.modulate = Color.WHITE
+	
+	# Highlight selected button
+	button.modulate = Color.YELLOW
+	
+	# Enable confirm button
+	confirm_button.disabled = false
+
+func _on_confirm_pressed():
+	if selected_upgrade != "" and player:
+		# Apply the selected upgrade
+		player.apply_upgrade(selected_upgrade)
+		
+		# Close panel and resume game
+		level_up_panel.hide()
+		get_tree().paused = false

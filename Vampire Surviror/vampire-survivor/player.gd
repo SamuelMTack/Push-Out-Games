@@ -2,7 +2,7 @@ extends CharacterBody2D
 
 @export var speed = 200.0
 @export var max_health = 100.0
-@export var projectile_scene: PackedScene
+@export var projectile_scene: PackedScene = preload("res://Projectile.tscn")
 
 var health = max_health
 var experience = 0.0
@@ -40,28 +40,41 @@ func _physics_process(delta):
 		shoot_timer = shoot_interval
 
 func shoot_projectiles():
+	
 	if not projectile_scene:
+		print("Error: projectile_scene not assigned!")
 		return
 	
-	# Find nearest enemies
+	# Find all enemies
 	var enemies = get_tree().get_nodes_in_group("enemies")
 	if enemies.is_empty():
 		return
 	
-	# Sort by distance to find nearest enemies
+	# Sort enemies by distance to find nearest ones
 	enemies.sort_custom(func(a, b): 
 		return global_position.distance_to(a.global_position) < global_position.distance_to(b.global_position)
 	)
 	
-	# Shoot at nearest enemies (based on projectile count)
+	# Shoot projectiles at nearest enemies (based on projectile_count)
 	for i in range(min(projectile_count, enemies.size())):
+		# Create new projectile instance
 		var projectile = projectile_scene.instantiate()
+		
+		# Add to scene tree (same parent as player)
 		get_parent().add_child(projectile)
+		
+		# Spawn projectile at player's position
 		projectile.global_position = global_position
 		
-		var direction = (enemies[i].global_position - global_position).normalized()
+		# Calculate direction from player to enemy (locked at firing time)
+		var target_position = enemies[i].global_position
+		var direction = (target_position - global_position).normalized()
+		
+		# Initialize the projectile with direction and stats
 		projectile.setup(direction, projectile_speed, projectile_damage)
-
+		
+		print("Projectile fired from ", global_position, " toward enemy at ", target_position)
+		
 func add_experience(amount):
 	experience += amount
 	
