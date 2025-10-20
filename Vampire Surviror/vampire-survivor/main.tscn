@@ -37,6 +37,9 @@ position = Vector2(109.125, 24)
 
 [node name="Experience" parent="EnemySpawner/Enemy" instance=ExtResource("6_kek77")]
 
+[node name="Spawn_Timer" type="Timer" parent="EnemySpawner"]
+unique_name_in_owner = true
+
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(121, 72)
 
