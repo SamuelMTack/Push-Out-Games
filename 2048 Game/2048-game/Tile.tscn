@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://d1fui5jqtfg02"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_yhqha"]
+font_size = 40
+
+[node name="Tile" type="Label"]
+label_settings = SubResource("LabelSettings_yhqha")
+horizontal_alignment = 1

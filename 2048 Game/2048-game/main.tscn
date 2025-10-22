@@ -1,0 +1,31 @@
+[gd_scene load_steps=3 format=3 uid="uid://vu5jchsn6t47"]
+
+[ext_resource type="Script" uid="uid://bwnw4t1sx0wkr" path="res://main.gd" id="1_ig7tw"]
+[ext_resource type="PackedScene" uid="uid://d1fui5jqtfg02" path="res://Tile.tscn" id="2_0xm2m"]
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_ig7tw")
+
+[node name="Tile" parent="." instance=ExtResource("2_0xm2m")]
+offset_right = 1.0
+offset_bottom = 55.0
+
+[node name="ScoreLabel" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="BestLabel" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="GameOverLabel" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="RestartButton" type="Button" parent="."]
+offset_right = 8.0
+offset_bottom = 8.0
+
+[node name="TileContainer" type="Container" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
