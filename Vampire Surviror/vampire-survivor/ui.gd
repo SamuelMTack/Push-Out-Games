@@ -1,9 +1,9 @@
 extends CanvasLayer
 
-@onready var health_bar = $HealthBar
-@onready var exp_bar = $ExperienceBar
-@onready var level_label = $LevelLabel
-@onready var time_label = $TimeLabel
+@onready var health_bar = $%HealthBar
+@onready var exp_bar = $%ExperienceBar
+@onready var level_label = $%LevelLabel
+@onready var time_label = $%TimeLabel
 @onready var level_up_panel = $LevelUpPanel
 @onready var upgrade_button1 = $LevelUpPanel/UpgradeButton1
 @onready var upgrade_button2 = $LevelUpPanel/UpgradeButton2

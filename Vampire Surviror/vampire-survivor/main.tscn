@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://20fs7i4d8tk1"]
+[gd_scene load_steps=11 format=3 uid="uid://20fs7i4d8tk1"]
 
 [ext_resource type="Script" uid="uid://b2wgt2u1ktxwa" path="res://player.gd" id="1_7mycd"]
 [ext_resource type="Texture2D" uid="uid://beuoswje5bwf1" path="res://Assets/Sprite Assets/crawl-tiles Oct-5-2010/crawl-tiles Oct-5-2010/dc-mon/angel.png" id="2_4c57u"]
@@ -7,14 +7,28 @@
 [ext_resource type="Script" uid="uid://doc1f2lvhpa45" path="res://ui.gd" id="4_kek77"]
 [ext_resource type="PackedScene" uid="uid://d3xq8jw1y3csv" path="res://Enemy.tscn" id="5_5vw27"]
 [ext_resource type="PackedScene" uid="uid://cemqtsafic18p" path="res://Experience.tscn" id="6_kek77"]
+[ext_resource type="Texture2D" uid="uid://beguhx3bnlvkl" path="res://Assets/Free-Vampires-Locations-Battle-Background-Pack2.jpg" id="8_5vw27"]
+[ext_resource type="Theme" uid="uid://cylymafaxyj0j" path="res://UI_Theme.tres" id="9_kek77"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dg77c"]
 size = Vector2(17, 26)
 
 [node name="Main" type="Node2D"]
 
+[node name="TextureRect" type="TextureRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -324.0
+offset_top = -276.0
+offset_right = 1476.0
+offset_bottom = 924.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("8_5vw27")
+
 [node name="Player" type="CharacterBody2D" parent="."]
-position = Vector2(420.125, 221)
+position = Vector2(581, 329)
 script = ExtResource("1_7mycd")
 
 [node name="Sprite2D" type="Sprite2D" parent="Player"]
@@ -28,6 +42,16 @@ shape = SubResource("RectangleShape2D_dg77c")
 
 [node name="Projectile" parent="Player" instance=ExtResource("3_272bh")]
 
+[node name="Camera2D" type="Camera2D" parent="Player"]
+position = Vector2(40, 38)
+limit_left = -324
+limit_top = -145
+limit_right = 1470
+limit_bottom = 914
+limit_smoothed = true
+position_smoothing_enabled = true
+position_smoothing_speed = 2.0
+
 [node name="EnemySpawner" type="Node2D" parent="."]
 position = Vector2(15, 54)
 script = ExtResource("3_5vw27")
@@ -40,42 +64,96 @@ position = Vector2(405.125, 167)
 [node name="Spawn_Timer" type="Timer" parent="EnemySpawner"]
 unique_name_in_owner = true
 
-[node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(417, 215)
-
 [node name="UI" type="CanvasLayer" parent="."]
 script = ExtResource("4_kek77")
 
-[node name="ExperienceBar" type="ProgressBar" parent="UI"]
-offset_left = 175.0
-offset_top = 46.0
-offset_right = 291.0
-offset_bottom = 73.0
+[node name="MarginContainer" type="MarginContainer" parent="UI"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
 
-[node name="LevelLabel" type="Label" parent="UI"]
-anchors_preset = -1
-anchor_bottom = 0.018000001
-offset_left = 177.0
-offset_top = 9.0
-offset_right = 245.0
-offset_bottom = 20.335999
+[node name="MarginContainer" type="MarginContainer" parent="UI/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
 
-[node name="TimeLabel" type="Label" parent="UI"]
-offset_left = 179.0
-offset_top = 81.0
-offset_right = 287.0
-offset_bottom = 107.0
+[node name="Panel" type="Panel" parent="UI/MarginContainer/MarginContainer"]
+layout_mode = 2
+theme = ExtResource("9_kek77")
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/MarginContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="GridContainer" type="GridContainer" parent="UI/MarginContainer/MarginContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+columns = 2
+
+[node name="Label" type="Label" parent="UI/MarginContainer/MarginContainer/MarginContainer/GridContainer"]
+custom_minimum_size = Vector2(130, 0)
+layout_mode = 2
+text = "Health:"
+vertical_alignment = 1
+
+[node name="HealthBar" type="ProgressBar" parent="UI/MarginContainer/MarginContainer/MarginContainer/GridContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(150, 23)
+layout_mode = 2
+theme = ExtResource("9_kek77")
+value = 100.0
+
+[node name="Label2" type="Label" parent="UI/MarginContainer/MarginContainer/MarginContainer/GridContainer"]
+custom_minimum_size = Vector2(130, 0)
+layout_mode = 2
+text = "Experience:"
+vertical_alignment = 1
+
+[node name="ExperienceBar" type="ProgressBar" parent="UI/MarginContainer/MarginContainer/MarginContainer/GridContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+theme = ExtResource("9_kek77")
+
+[node name="LevelLabel" type="Label" parent="UI/MarginContainer/MarginContainer/MarginContainer/GridContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(130, 0)
+layout_mode = 2
+text = "Level: 1"
+vertical_alignment = 1
+
+[node name="TimeLabel" type="Label" parent="UI/MarginContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+text = "time"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="LevelUpPanel" type="Panel" parent="UI"]
-anchors_preset = -1
-anchor_left = 0.011000001
-anchor_top = 0.041
-anchor_right = 0.011000001
-anchor_bottom = 0.041
-offset_left = 430.328
-offset_top = 163.432
-offset_right = 711.328
-offset_bottom = 380.432
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -140.5
+offset_top = -108.5
+offset_right = 140.5
+offset_bottom = 108.5
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="TitleLabel" type="Label" parent="UI/LevelUpPanel"]
 layout_mode = 0
@@ -116,12 +194,6 @@ offset_top = 166.0
 offset_right = 177.0
 offset_bottom = 197.0
 text = "Confirm"
-
-[node name="HealthBar" type="ProgressBar" parent="UI"]
-offset_left = 43.0
-offset_top = 43.0
-offset_right = 148.0
-offset_bottom = 70.0
 
 [node name="Experience" parent="." instance=ExtResource("6_kek77")]
 position = Vector2(454, 317)
