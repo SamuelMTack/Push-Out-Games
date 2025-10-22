@@ -143,6 +143,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="LevelUpPanel" type="Panel" parent="UI"]
+unique_name_in_owner = true
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -154,45 +155,58 @@ offset_right = 140.5
 offset_bottom = 108.5
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("9_kek77")
 
-[node name="TitleLabel" type="Label" parent="UI/LevelUpPanel"]
-layout_mode = 0
-offset_left = 61.0
-offset_top = 14.0
-offset_right = 212.0
-offset_bottom = 37.0
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/LevelUpPanel"]
+layout_mode = 1
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -76.0
+offset_right = 76.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TitleLabel" type="Label" parent="UI/LevelUpPanel/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 2
 text = "Choose an Upgrade"
 
-[node name="UpgradeButton1" type="Button" parent="UI/LevelUpPanel"]
-layout_mode = 0
-offset_left = 75.0
-offset_top = 51.0
-offset_right = 208.0
-offset_bottom = 82.0
+[node name="UpgradeButton1" type="Button" parent="UI/LevelUpPanel/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+size_flags_horizontal = 5
+size_flags_vertical = 4
+theme = ExtResource("9_kek77")
 text = "Faster Projectile"
 
-[node name="UpgradeButton2" type="Button" parent="UI/LevelUpPanel"]
-layout_mode = 0
-offset_left = 68.0
-offset_top = 88.0
-offset_right = 220.0
-offset_bottom = 119.0
+[node name="UpgradeButton2" type="Button" parent="UI/LevelUpPanel/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+size_flags_horizontal = 5
+size_flags_vertical = 4
+theme = ExtResource("9_kek77")
 text = "Stronger Projectile"
 
-[node name="UpgradeButton3" type="Button" parent="UI/LevelUpPanel"]
-layout_mode = 0
-offset_left = 72.0
-offset_top = 125.0
-offset_right = 206.0
-offset_bottom = 156.0
+[node name="UpgradeButton3" type="Button" parent="UI/LevelUpPanel/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+size_flags_horizontal = 5
+size_flags_vertical = 4
+theme = ExtResource("9_kek77")
 text = "More Projectiles"
 
-[node name="ConfirmButton" type="Button" parent="UI/LevelUpPanel"]
-layout_mode = 0
-offset_left = 106.0
-offset_top = 166.0
-offset_right = 177.0
-offset_bottom = 197.0
+[node name="ConfirmButton" type="Button" parent="UI/LevelUpPanel/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+size_flags_vertical = 6
+theme = ExtResource("9_kek77")
 text = "Confirm"
 
 [node name="Experience" parent="." instance=ExtResource("6_kek77")]

@@ -4,11 +4,11 @@ extends CanvasLayer
 @onready var exp_bar = $%ExperienceBar
 @onready var level_label = $%LevelLabel
 @onready var time_label = $%TimeLabel
-@onready var level_up_panel = $LevelUpPanel
-@onready var upgrade_button1 = $LevelUpPanel/UpgradeButton1
-@onready var upgrade_button2 = $LevelUpPanel/UpgradeButton2
-@onready var upgrade_button3 = $LevelUpPanel/UpgradeButton3
-@onready var confirm_button = $LevelUpPanel/ConfirmButton
+@onready var level_up_panel = $%LevelUpPanel
+@onready var upgrade_button1 = $%UpgradeButton1
+@onready var upgrade_button2 = $%UpgradeButton2
+@onready var upgrade_button3 = $%UpgradeButton3
+@onready var confirm_button = $%ConfirmButton
 
 var player: CharacterBody2D
 var game_time = 0.0
