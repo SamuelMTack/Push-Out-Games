@@ -13,7 +13,14 @@ config_version=5
 config/name="Vampire Survivor"
 run/main_scene="res://main.tscn"
 config/features=PackedStringArray("4.5", "GL Compatibility")
-config/icon="res://icon.svg"
+boot_splash/bg_color=Color(1, 1, 1, 1)
+boot_splash/image="uid://cxs2i70kdsqac"
+config/icon="uid://djbmy5mty5com"
+boot_splash/minimum_display_time=2000
+
+[display]
+
+mouse_cursor/custom_image="uid://b24pmv2plrdsb"
 
 [rendering]
 
