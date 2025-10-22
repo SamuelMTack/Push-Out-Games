@@ -21,7 +21,6 @@ func _physics_process(delta):
 		var enemy_count = get_tree().get_nodes_in_group("enemies").size()
 		if enemy_count < max_enemies:
 			spawn_enemy()
-			print("spawn enemy")
 		
 		spawn_timer = spawn_interval
 		
@@ -29,8 +28,12 @@ func _physics_process(delta):
 		spawn_interval = max(0.5, spawn_interval * 0.995)
 
 func spawn_enemy():
-	var enemy: = enemy_scene.instantiate()
-	add_child(enemy)
+	if not enemy_scene or not player:
+		return
+	
+	var enemy = enemy_scene.instantiate()
+	get_parent().add_child(enemy)
+	
 	# Spawn at random position around player
 	var angle = randf() * TAU
 	var offset = Vector2(cos(angle), sin(angle)) * spawn_distance

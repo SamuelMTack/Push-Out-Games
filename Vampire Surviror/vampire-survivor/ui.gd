@@ -1,19 +1,36 @@
 extends CanvasLayer
 
-@onready var health_bar = $%HealthBar
-@onready var exp_bar = $%ExperienceBar
-@onready var level_label = $%LevelLabel
-@onready var time_label = $%TimeLabel
-@onready var level_up_panel = $%LevelUpPanel
-@onready var upgrade_button1 = $%UpgradeButton1
-@onready var upgrade_button2 = $%UpgradeButton2
-@onready var upgrade_button3 = $%UpgradeButton3
-@onready var confirm_button = $%ConfirmButton
+@onready var health_bar = %HealthBar
+@onready var exp_bar = %ExperienceBar
+@onready var level_label = %LevelLabel
+@onready var time_label = %TimeLabel
+@onready var level_up_panel = %LevelUpPanel
+@onready var upgrade_button1 = %LevelUpPanel/%UpgradeButton1
+@onready var upgrade_button2 = %LevelUpPanel/%UpgradeButton2
+@onready var upgrade_button3 = %LevelUpPanel/%UpgradeButton3
+@onready var confirm_button = %LevelUpPanel/%ConfirmButton
 
 var player: CharacterBody2D
 var game_time = 0.0
 var current_level = 1
 var selected_upgrade = ""  # Tracks which upgrade was selected
+var selected_button_index = 0  # 0, 1, or 2 for the three upgrade buttons
+var upgrade_buttons = []  # Array to hold the three upgrade buttons
+var available_upgrades = []  # Currently available upgrade options
+
+# All possible upgrades with display names and internal IDs
+var all_upgrades = [
+	{"name": "Faster Projectiles", "id": "projectile_speed"},
+	{"name": "More Damage", "id": "projectile_damage"},
+	{"name": "Extra Projectile", "id": "projectile_count"},
+	{"name": "Attack Speed", "id": "attack_speed"},
+	{"name": "Move Speed", "id": "player_speed"},
+	{"name": "Max Health", "id": "max_health"},
+	{"name": "Health Regen", "id": "health_regen"},
+	{"name": "Pickup Range", "id": "pickup_range"},
+	{"name": "Projectile Pierce", "id": "projectile_pierce"},
+	{"name": "Projectile Size", "id": "projectile_size"}
+]
 
 func _ready():
 	add_to_group("ui")
@@ -28,10 +45,13 @@ func _ready():
 	
 	level_up_panel.hide()
 	
+	# Store buttons in array for easy navigation
+	upgrade_buttons = [upgrade_button1, upgrade_button2, upgrade_button3]
+	
 	# Connect upgrade buttons to selection (not immediate application)
-	upgrade_button1.pressed.connect(_on_upgrade_button_pressed.bind("faster", upgrade_button1))
-	upgrade_button2.pressed.connect(_on_upgrade_button_pressed.bind("stronger", upgrade_button2))
-	upgrade_button3.pressed.connect(_on_upgrade_button_pressed.bind("more", upgrade_button3))
+	upgrade_button1.pressed.connect(_on_upgrade_button_pressed.bind(0))
+	upgrade_button2.pressed.connect(_on_upgrade_button_pressed.bind(1))
+	upgrade_button3.pressed.connect(_on_upgrade_button_pressed.bind(2))
 	
 	# Connect confirm button
 	confirm_button.pressed.connect(_on_confirm_pressed)
@@ -45,6 +65,63 @@ func _process(delta):
 		var minutes = int(game_time / 60)
 		var seconds = int(game_time) % 60
 		time_label.text = "Time: %02d:%02d" % [minutes, seconds]
+	
+	# Always handle input when panel is visible (even when paused)
+	if level_up_panel.visible:
+		_handle_level_up_input()
+
+func _handle_level_up_input():
+	# Up arrow - move selection up
+	if Input.is_action_just_pressed("ui_up"):
+		selected_button_index -= 1
+		if selected_button_index < 0:
+			selected_button_index = 2  # Wrap to bottom
+		_highlight_selected_button()
+	
+	# Down arrow - move selection down
+	elif Input.is_action_just_pressed("ui_down"):
+		selected_button_index += 1
+		if selected_button_index > 2:
+			selected_button_index = 0  # Wrap to top
+		_highlight_selected_button()
+	
+	# Space bar - select the highlighted upgrade and confirm
+	elif Input.is_action_just_pressed("ui_accept"):  # Space bar or Enter
+		_select_current_upgrade()
+		_on_confirm_pressed()
+
+func _highlight_selected_button():
+	# Reset all button colors
+	for i in range(upgrade_buttons.size()):
+		if i == selected_button_index:
+			upgrade_buttons[i].modulate = Color.YELLOW  # Highlight selected
+		else:
+			upgrade_buttons[i].modulate = Color.WHITE  # Normal color
+
+func _select_current_upgrade():
+	# Select the upgrade based on current button index
+	if selected_button_index < available_upgrades.size():
+		selected_upgrade = available_upgrades[selected_button_index]["id"]
+		confirm_button.disabled = false
+		print("Upgrade selected: ", selected_upgrade)
+
+func _pick_random_upgrades():
+	# Shuffle and pick 3 random upgrades
+	available_upgrades.clear()
+	var shuffled = all_upgrades.duplicate()
+	shuffled.shuffle()
+	
+	# Take first 3
+	for i in range(min(3, shuffled.size())):
+		available_upgrades.append(shuffled[i])
+	
+	# Update button texts
+	for i in range(3):
+		if i < available_upgrades.size():
+			upgrade_buttons[i].text = available_upgrades[i]["name"]
+			upgrade_buttons[i].visible = true
+		else:
+			upgrade_buttons[i].visible = false
 
 func update_health(current: float, maximum: float):
 	health_bar.max_value = maximum
@@ -58,38 +135,64 @@ func show_level_up_panel():
 	current_level += 1
 	level_label.text = "Level: " + str(current_level)
 	
+	# Pick 3 random upgrades
+	_pick_random_upgrades()
+	
 	# Reset selection
 	selected_upgrade = ""
+	selected_button_index = 0  # Start at first button
 	confirm_button.disabled = true
 	
-	# Reset button colors
-	upgrade_button1.modulate = Color.WHITE
-	upgrade_button2.modulate = Color.WHITE
-	upgrade_button3.modulate = Color.WHITE
+	# Reset button colors and highlight first one
+	_highlight_selected_button()
 	
 	level_up_panel.show()
+	
+	# Set process mode to always so UI can receive input while paused
+	level_up_panel.process_mode = Node.PROCESS_MODE_ALWAYS
+	process_mode = Node.PROCESS_MODE_ALWAYS
+	
 	get_tree().paused = true
+	print("Level up panel shown - Use arrow keys to select, space to confirm")
 
-func _on_upgrade_button_pressed(upgrade_type: String, button: Button):
-	# Store the selected upgrade
-	selected_upgrade = upgrade_type
+func _on_upgrade_button_pressed(button_index: int):
+	# Store which button was clicked
+	selected_button_index = button_index
 	
-	# Reset all button colors
-	upgrade_button1.modulate = Color.WHITE
-	upgrade_button2.modulate = Color.WHITE
-	upgrade_button3.modulate = Color.WHITE
+	# Select the upgrade
+	if button_index < available_upgrades.size():
+		selected_upgrade = available_upgrades[button_index]["id"]
 	
-	# Highlight selected button
-	button.modulate = Color.YELLOW
+	# Highlight the selected button
+	_highlight_selected_button()
 	
-	# Enable confirm button
+	# Enable the confirm button
 	confirm_button.disabled = false
+	
+	print("Upgrade selected: ", selected_upgrade, " - Press CONFIRM to apply!")
 
 func _on_confirm_pressed():
-	if selected_upgrade != "" and player:
-		# Apply the selected upgrade
-		player.apply_upgrade(selected_upgrade)
-		
-		# Close panel and resume game
-		level_up_panel.hide()
-		get_tree().paused = false
+	# Check that an upgrade was actually selected
+	if selected_upgrade == "":
+		print("Error: No upgrade selected!")
+		return
+	
+	if not player:
+		print("Error: Player not found!")
+		return
+	
+	# NOW apply the upgrade (only when confirm is pressed)
+	player.apply_upgrade(selected_upgrade)
+	print("Upgrade applied: ", selected_upgrade)
+	
+	# Close the panel and resume the game
+	level_up_panel.hide()
+	
+	# Reset process modes
+	level_up_panel.process_mode = Node.PROCESS_MODE_INHERIT
+	process_mode = Node.PROCESS_MODE_INHERIT
+	
+	get_tree().paused = false
+	
+	# Reset for next level up
+	selected_upgrade = ""

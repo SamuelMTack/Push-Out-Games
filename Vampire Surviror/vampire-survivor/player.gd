@@ -14,6 +14,14 @@ var shoot_timer = 0.0
 var projectile_damage = 15.0
 var projectile_count = 1
 var projectile_speed = 300.0
+var projectile_pierce = 1  # How many enemies a projectile can hit
+var projectile_size = 1.0  # Scale multiplier for projectiles
+
+
+# Player stats
+var pickup_range = 50.0  # Range for auto-collecting experience
+var health_regen = 0.0  # Health regeneration per second
+
 
 func _ready():
 	add_to_group("player")
@@ -32,6 +40,14 @@ func _physics_process(delta):
 		velocity = Vector2.ZERO
 	
 	move_and_slide()
+	
+	# Health regeneration
+	if health_regen > 0 and health < max_health:
+		health += health_regen * delta
+		if health > max_health:
+			health = max_health
+		get_tree().call_group("ui", "update_health", health, max_health)
+	
 	
 	# Auto-shoot timer
 	shoot_timer -= delta
@@ -112,11 +128,39 @@ func die():
 	get_tree().paused = false
 	get_tree().reload_current_scene()
 
-func apply_upgrade(upgrade_type: String):
-	match upgrade_type:
-		"faster":
+func apply_upgrade(upgrade_name: String):
+	match upgrade_name:
+		"projectile_speed":
 			projectile_speed += 100.0
-		"stronger":
+			print("Projectile speed increased to ", projectile_speed)
+		"projectile_damage":
 			projectile_damage += 10.0
-		"more":
+			print("Projectile damage increased to ", projectile_damage)
+		"projectile_count":
 			projectile_count += 1
+			print("Projectile count increased to ", projectile_count)
+		"attack_speed":
+			shoot_interval = max(0.3, shoot_interval - 0.3)
+			print("Attack speed increased, interval now ", shoot_interval)
+		"player_speed":
+			speed += 30.0
+			print("Player speed increased to ", speed)
+		"max_health":
+			max_health += 20.0
+			health += 20.0  # Also heal for the increase
+			print("Max health increased to ", max_health)
+		"health_regen":
+			health_regen += 2.0
+			print("Health regen increased to ", health_regen, "/sec")
+		"pickup_range":
+			pickup_range += 20.0
+			print("Pickup range increased to ", pickup_range)
+		"projectile_pierce":
+			projectile_pierce += 1
+			print("Projectile pierce increased to ", projectile_pierce)
+		"projectile_size":
+			projectile_size += 0.3
+			print("Projectile size increased to ", projectile_size)
+	
+	# Update health UI
+	get_tree().call_group("ui", "update_health", health, max_health)
