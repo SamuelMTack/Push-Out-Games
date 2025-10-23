@@ -11,7 +11,7 @@
 [ext_resource type="Theme" uid="uid://cylymafaxyj0j" path="res://UI_Theme.tres" id="9_kek77"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dg77c"]
-size = Vector2(17, 26)
+size = Vector2(32.125, 43)
 
 [node name="Main" type="Node2D"]
 
@@ -32,12 +32,12 @@ position = Vector2(581, 329)
 script = ExtResource("1_7mycd")
 
 [node name="Sprite2D" type="Sprite2D" parent="Player"]
-position = Vector2(-0.06249237, 1)
-scale = Vector2(0.5585942, 0.8125001)
+position = Vector2(7.4999747, 9.499996)
+scale = Vector2(1.0312485, 1.3437499)
 texture = ExtResource("2_4c57u")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
-position = Vector2(-0.625, 1)
+position = Vector2(6.9375, 9.5)
 shape = SubResource("RectangleShape2D_dg77c")
 
 [node name="Projectile" parent="Player" instance=ExtResource("3_272bh")]
