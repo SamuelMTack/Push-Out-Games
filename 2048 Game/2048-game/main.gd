@@ -1,12 +1,11 @@
 extends Node2D
 
-
-
 # Grid settings
 const GRID_SIZE = 4
 const TILE_SIZE = 100
 const TILE_SPACING = 10
 const ANIMATION_SPEED = 0.15
+const BASE_WINDOW_SIZE = Vector2(700, 700)
 
 # Colors for tiles
 var tile_colors = {
@@ -35,11 +34,25 @@ var game_over = false
 @onready var restart_button = $UI/RestartButton
 
 func _ready():
+	get_viewport().size_changed.connect(_on_viewport_size_changed)
+	_on_viewport_size_changed()
+	restart_button.pressed.connect(_on_restart_button_pressed)
 	setup_grid()
 	spawn_tile()
 	spawn_tile()
 	update_display()
 	game_over_label.hide()
+
+func _on_viewport_size_changed():
+	var viewport_size = get_viewport_rect().size
+	var scale_x = viewport_size.x / BASE_WINDOW_SIZE.x
+	var scale_y = viewport_size.y / BASE_WINDOW_SIZE.y
+	var scale_factor = min(scale_x, scale_y)
+	scale = Vector2(scale_factor, scale_factor)
+	
+	# Center the game
+	var scaled_size = BASE_WINDOW_SIZE * scale_factor
+	position = (viewport_size - scaled_size) / 2
 
 func setup_grid():
 	grid.clear()
@@ -230,15 +243,29 @@ func _input(event):
 			move_tiles("down")
 
 func _on_restart_button_pressed():
+	# Stop any ongoing animations
+	is_animating = false
+	
+	# Clear all tweens
+	for tween in get_tree().get_processed_tweens():
+		tween.kill()
+	
+	# Reset game state
 	score = 0
 	game_over = false
 	game_over_label.hide()
 	
+	# Remove all existing tiles from the scene
 	for i in range(GRID_SIZE):
 		for j in range(GRID_SIZE):
 			if tiles[i][j] != null:
 				tiles[i][j].queue_free()
+				tiles[i][j] = null
 	
+	# Wait a frame to ensure tiles are removed
+	await get_tree().process_frame
+	
+	# Setup fresh game
 	setup_grid()
 	spawn_tile()
 	spawn_tile()
