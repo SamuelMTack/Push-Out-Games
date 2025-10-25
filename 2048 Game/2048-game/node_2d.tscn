@@ -1,9 +1,32 @@
-[gd_scene load_steps=2 format=3 uid="uid://c2rury24up0dt"]
+[gd_scene load_steps=6 format=3 uid="uid://c2rury24up0dt"]
 
 [ext_resource type="Script" uid="uid://bwnw4t1sx0wkr" path="res://main.gd" id="1_wtcfe"]
+[ext_resource type="AudioStream" uid="uid://b25nlbkw03far" path="res://Assets/Music/story time.ogg" id="2_epypp"]
+[ext_resource type="Texture2D" uid="uid://cgx4xt1fuwa53" path="res://Assets/Sprites/conppr_brown2.jpg" id="3_0hol4"]
+[ext_resource type="Texture2D" uid="uid://1ehxt7ua1ud1" path="res://Assets/Sprites/conppr_blue.jpg" id="4_q6r6c"]
+[ext_resource type="Texture2D" uid="uid://ctk5h2e22qff2" path="res://Assets/Sprites/conppr_green.jpg" id="5_kdubu"]
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_wtcfe")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_epypp")
+autoplay = true
+parameters/looping = true
+
+[node name="BackGround" type="Sprite2D" parent="."]
+position = Vector2(582, 472)
+texture = ExtResource("3_0hol4")
+
+[node name="BackGroundAccent1" type="Sprite2D" parent="."]
+position = Vector2(396.75, 367.5)
+scale = Vector2(0.2893066, 0.24267578)
+texture = ExtResource("4_q6r6c")
+
+[node name="ConpprGreen" type="Sprite2D" parent="."]
+position = Vector2(94.999985, 51.000004)
+scale = Vector2(0.119628906, 0.04638672)
+texture = ExtResource("5_kdubu")
 
 [node name="UI" type="CanvasLayer" parent="."]
 
