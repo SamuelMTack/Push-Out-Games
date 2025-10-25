@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://chsse77351da3"
-path="res://.godot/imported/PushOutGames Logo.jpg-3cd9944d62dde6d1539a6a6ac73092eb.ctex"
+uid="uid://dpphh6hrsbu34"
+path="res://.godot/imported/PushOutGames Logo.png-960a42757d5d768fdc1256e46929b4e4.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://PushOutGames Logo.jpg"
-dest_files=["res://.godot/imported/PushOutGames Logo.jpg-3cd9944d62dde6d1539a6a6ac73092eb.ctex"]
+source_file="res://PushOutGames Logo.png"
+dest_files=["res://.godot/imported/PushOutGames Logo.png-960a42757d5d768fdc1256e46929b4e4.ctex"]
 
 [params]
 
