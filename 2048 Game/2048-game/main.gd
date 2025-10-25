@@ -1,297 +1,245 @@
 extends Node2D
 
-# Game grid size
+
+
+# Grid settings
 const GRID_SIZE = 4
-const CELL_COUNT = GRID_SIZE * GRID_SIZE
+const TILE_SIZE = 100
+const TILE_SPACING = 10
+const ANIMATION_SPEED = 0.15
 
-# Tile colors (RGB)
-const COLORS = {
-	0: Color(205, 193, 180),
-	2: Color(238, 228, 218),
-	4: Color(237, 224, 200),
-	8: Color(242, 177, 121),
-	16: Color(245, 149, 99),
-	32: Color(246, 124, 95),
-	64: Color(246, 94, 59),
-	128: Color(237, 197, 63),
-	256: Color(237, 197, 63),
-	512: Color(237, 197, 63),
-	1024: Color(237, 197, 63),
-	2048: Color(237, 197, 63)
+# Colors for tiles
+var tile_colors = {
+	2: Color(0.93, 0.89, 0.85),
+	4: Color(0.93, 0.88, 0.78),
+	8: Color(0.95, 0.69, 0.47),
+	16: Color(0.96, 0.58, 0.39),
+	32: Color(0.96, 0.49, 0.37),
+	64: Color(0.96, 0.37, 0.23),
+	128: Color(0.93, 0.81, 0.45),
+	256: Color(0.93, 0.80, 0.38),
+	512: Color(0.93, 0.78, 0.31),
+	1024: Color(0.93, 0.77, 0.25),
+	2048: Color(0.93, 0.76, 0.18),
+	4096: Color(0.24, 0.22, 0.20)
 }
 
-# Tile font sizes
-const FONT_SIZES = {
-	0: 40,
-	2: 40,
-	4: 40,
-	8: 40,
-	16: 40,
-	32: 40,
-	64: 40,
-	128: 35,
-	256: 35,
-	512: 35,
-	1024: 30,
-	2048: 30
-}
-
-# Game state variables
 var grid = []
+var tiles = []
 var score = 0
-var best_score = 0
+var is_animating = false
+var game_over = false
 
-# Node references
-@onready var tile_container = $TileContainer
-@onready var score_label = $ScoreLabel
-@onready var best_label = $BestLabel
-@onready var game_over_label = $GameOverLabel
-@onready var restart_button = $RestartButton
+@onready var score_label = $UI/ScoreLabel
+@onready var game_over_label = $UI/GameOverLabel
+@onready var restart_button = $UI/RestartButton
 
 func _ready():
-	# Load best score from save
-	best_score = load_best_score()
-	update_labels()
-	new_game()
+	setup_grid()
+	spawn_tile()
+	spawn_tile()
+	update_display()
+	game_over_label.hide()
 
-func new_game():
-	grid = []
+func setup_grid():
+	grid.clear()
+	tiles.clear()
+	
 	for i in range(GRID_SIZE):
 		grid.append([])
+		tiles.append([])
 		for j in range(GRID_SIZE):
 			grid[i].append(0)
-	
-	score = 0
-	game_over_label.hide()
-	restart_button.hide()
-	add_random_tile()
-	add_random_tile()
-	update_grid()
+			tiles[i].append(null)
 
-func add_random_tile():
+func get_tile_position(row, col):
+	var offset_x = 150
+	var offset_y = 150
+	return Vector2(
+		offset_x + col * (TILE_SIZE + TILE_SPACING),
+		offset_y + row * (TILE_SIZE + TILE_SPACING)
+	)
+
+func create_tile(row, col, value):
+	var tile = ColorRect.new()
+	tile.size = Vector2(TILE_SIZE, TILE_SIZE)
+	tile.position = get_tile_position(row, col)
+	tile.color = tile_colors.get(value, Color(0.2, 0.2, 0.2))
+	
+	var label = Label.new()
+	label.text = str(value)
+	label.add_theme_font_size_override("font_size", 32 if value < 128 else (28 if value < 1024 else 24))
+	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	label.size = Vector2(TILE_SIZE, TILE_SIZE)
+	label.add_theme_color_override("font_color", Color.WHITE if value > 4 else Color(0.47, 0.43, 0.40))
+	
+	tile.add_child(label)
+	add_child(tile)
+	
+	# Spawn animation
+	tile.scale = Vector2(0.1, 0.1)
+	var tween = create_tween()
+	tween.tween_property(tile, "scale", Vector2(1, 1), 0.2).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	
+	return tile
+
+func spawn_tile():
 	var empty_cells = []
 	for i in range(GRID_SIZE):
 		for j in range(GRID_SIZE):
 			if grid[i][j] == 0:
-				empty_cells.append(Vector2(i, j))
+				empty_cells.append(Vector2i(i, j))
 	
-	if empty_cells.size() > 0:
-		var random_cell = empty_cells[randi() % empty_cells.size()]
-		grid[random_cell.x][random_cell.y] = 2 if randf() < 0.9 else 4
-		update_grid()
-
-func update_grid():
-	# Clear existing tiles
-	for child in tile_container.get_children():
-		child.queue_free()
+	if empty_cells.size() == 0:
+		return false
 	
-	# Create new tiles
-	for i in range(GRID_SIZE):
-		for j in range(GRID_SIZE):
-			if grid[i][j] != 0:
-				var tile = preload("res://Tile.tscn").instantiate()
-				tile.position = Vector2(100 + j * 110, 100 + i * 110)
-				tile.text = str(grid[i][j])
-				tile.modulate = COLORS[grid[i][j]]
-				tile.font_size = FONT_SIZES[grid[i][j]]
-				tile_container.add_child(tile)
+	var cell = empty_cells[randi() % empty_cells.size()]
+	var value = 2 if randf() < 0.9 else 4
+	grid[cell.x][cell.y] = value
+	tiles[cell.x][cell.y] = create_tile(cell.x, cell.y, value)
+	return true
 
-func update_labels():
-	score_label.text = "Score\n" + str(score)
-	best_label.text = "Best\n" + str(best_score)
+func update_display():
+	score_label.text = "Score: " + str(score)
 
-func load_best_score():
-	# Try to load from save, return 0 if not found
-#	if save_data.has("best_score"):
-#		return save_data.best_score
-	return 0
-
-func save_best_score():
-	# Save best score
-#	save_data.best_score = best_score
-	# In Godot, you would typically use File or JSON to save data
-	# For simplicity, we're just using a variable here
-	pass
-
-func move(direction):
+func move_tiles(direction):
+	if is_animating or game_over:
+		return
+	
 	var moved = false
-	var temp_grid = []
+	var new_grid = []
+	var merge_happened = []
 	
-	# Copy grid
 	for i in range(GRID_SIZE):
-		temp_grid.append([])
+		new_grid.append([])
 		for j in range(GRID_SIZE):
-			temp_grid[i].append(grid[i][j])
+			new_grid[i].append(0)
 	
-	# Process based on direction
-	match direction:
-		"up":
-			moved = move_up()
-		"down":
-			moved = move_down()
-		"left":
-			moved = move_left()
-		"right":
-			moved = move_right()
+	# Process movement based on direction
+	if direction == "left" or direction == "right":
+		for i in range(GRID_SIZE):
+			var row = []
+			var range_array = range(GRID_SIZE) if direction == "left" else range(GRID_SIZE - 1, -1, -1)
+			
+			for j in range_array:
+				if grid[i][j] != 0:
+					row.append(grid[i][j])
+			
+			var merged_row = merge_row(row)
+			merge_happened.append_array(merged_row[1])
+			row = merged_row[0]
+			
+			for j in range(row.size()):
+				var target_col = j if direction == "left" else (GRID_SIZE - 1 - j)
+				new_grid[i][target_col] = row[j]
+	else: # up or down
+		for j in range(GRID_SIZE):
+			var col = []
+			var range_array = range(GRID_SIZE) if direction == "up" else range(GRID_SIZE - 1, -1, -1)
+			
+			for i in range_array:
+				if grid[i][j] != 0:
+					col.append(grid[i][j])
+			
+			var merged_col = merge_row(col)
+			merge_happened.append_array(merged_col[1])
+			col = merged_col[0]
+			
+			for i in range(col.size()):
+				var target_row = i if direction == "up" else (GRID_SIZE - 1 - i)
+				new_grid[target_row][j] = col[i]
+	
+	# Check if grid changed
+	for i in range(GRID_SIZE):
+		for j in range(GRID_SIZE):
+			if grid[i][j] != new_grid[i][j]:
+				moved = true
+				break
 	
 	if moved:
-		add_random_tile()
-		update_grid()
-		update_labels()
+		animate_tiles(new_grid)
+		grid = new_grid
+		await get_tree().create_timer(ANIMATION_SPEED + 0.05).timeout
+		spawn_tile()
+		update_display()
 		check_game_over()
-	
-	return moved
 
-func move_up():
-	var moved = false
-	for j in range(GRID_SIZE):
-		var row = []
-		for i in range(GRID_SIZE):
-			if grid[i][j] != 0:
-				row.append(grid[i][j])
-		
-		# Merge
-		for i in range(row.size() - 1):
-			if row[i] == row[i + 1]:
-				row[i] *= 2
-				score += row[i]
-				row.remove_at(i + 1)
-				moved = true
-		
-		# Fill with zeros
-		while row.size() < GRID_SIZE:
-			row.append(0)
-		
-		# Update grid
-		for i in range(GRID_SIZE):
-			if grid[i][j] != row[i]:
-				moved = true
-			grid[i][j] = row[i]
+func merge_row(row):
+	var merged = []
+	var merge_values = []
+	var i = 0
 	
-	return moved
-
-func move_down():
-	var moved = false
-	for j in range(GRID_SIZE):
-		var row = []
-		for i in range(GRID_SIZE - 1, -1, -1):
-			if grid[i][j] != 0:
-				row.append(grid[i][j])
-		
-		# Merge
-		for i in range(row.size() - 1):
-			if row[i] == row[i + 1]:
-				row[i] *= 2
-				score += row[i]
-				row.remove_at(i + 1)
-				moved = true
-		
-		# Fill with zeros
-		while row.size() < GRID_SIZE:
-			row.append(0)
-		
-		# Update grid
-		for i in range(GRID_SIZE - 1, -1, -1):
-			if grid[i][j] != row[GRID_SIZE - 1 - i]:
-				moved = true
-			grid[i][j] = row[GRID_SIZE - 1 - i]
+	while i < row.size():
+		if i + 1 < row.size() and row[i] == row[i + 1]:
+			var new_value = row[i] * 2
+			merged.append(new_value)
+			merge_values.append(new_value)
+			score += new_value
+			i += 2
+		else:
+			merged.append(row[i])
+			i += 1
 	
-	return moved
+	return [merged, merge_values]
 
-func move_left():
-	var moved = false
+func animate_tiles(new_grid):
+	is_animating = true
+	
 	for i in range(GRID_SIZE):
-		var row = []
 		for j in range(GRID_SIZE):
-			if grid[i][j] != 0:
-				row.append(grid[i][j])
-		
-		# Merge
-		for j in range(row.size() - 1):
-			if row[j] == row[j + 1]:
-				row[j] *= 2
-				score += row[j]
-				row.remove_at(j + 1)
-				moved = true
-		
-		# Fill with zeros
-		while row.size() < GRID_SIZE:
-			row.append(0)
-		
-		# Update grid
-		for j in range(GRID_SIZE):
-			if grid[i][j] != row[j]:
-				moved = true
-			grid[i][j] = row[j]
+			if tiles[i][j] != null:
+				tiles[i][j].queue_free()
+				tiles[i][j] = null
 	
-	return moved
-
-func move_right():
-	var moved = false
 	for i in range(GRID_SIZE):
-		var row = []
-		for j in range(GRID_SIZE - 1, -1, -1):
-			if grid[i][j] != 0:
-				row.append(grid[i][j])
-		
-		# Merge
-		for j in range(row.size() - 1):
-			if row[j] == row[j + 1]:
-				row[j] *= 2
-				score += row[j]
-				row.remove_at(j + 1)
-				moved = true
-		
-		# Fill with zeros
-		while row.size() < GRID_SIZE:
-			row.append(0)
-		
-		# Update grid
-		for j in range(GRID_SIZE - 1, -1, -1):
-			if grid[i][j] != row[GRID_SIZE - 1 - j]:
-				moved = true
-			grid[i][j] = row[GRID_SIZE - 1 - j]
+		for j in range(GRID_SIZE):
+			if new_grid[i][j] != 0:
+				tiles[i][j] = create_tile(i, j, new_grid[i][j])
 	
-	return moved
+	await get_tree().create_timer(ANIMATION_SPEED).timeout
+	is_animating = false
 
 func check_game_over():
-	var game_over = true
-	
 	# Check for empty cells
 	for i in range(GRID_SIZE):
 		for j in range(GRID_SIZE):
 			if grid[i][j] == 0:
-				game_over = false
-				break
+				return
 	
-	# If no empty cells, check for possible merges
-	if game_over:
-		for i in range(GRID_SIZE):
-			for j in range(GRID_SIZE):
-				var current = grid[i][j]
-				if (i < GRID_SIZE - 1 and grid[i + 1][j] == current) or \
-				   (j < GRID_SIZE - 1 and grid[i][j + 1] == current):
-					game_over = false
-					break
+	# Check for possible merges
+	for i in range(GRID_SIZE):
+		for j in range(GRID_SIZE):
+			if j < GRID_SIZE - 1 and grid[i][j] == grid[i][j + 1]:
+				return
+			if i < GRID_SIZE - 1 and grid[i][j] == grid[i + 1][j]:
+				return
 	
-	if game_over:
-		game_over_label.show()
-		restart_button.show()
-		if score > best_score:
-			best_score = score
-			save_best_score()
+	game_over = true
+	game_over_label.show()
 
 func _input(event):
-	if event is InputEventKey and event.pressed:
-		match event.keycode:
-			KEY_UP:
-				move("up")
-			KEY_DOWN:
-				move("down")
-			KEY_LEFT:
-				move("left")
-			KEY_RIGHT:
-				move("right")
+	if event is InputEventKey and event.pressed and not event.echo:
+		if event.keycode == KEY_LEFT or event.keycode == KEY_A:
+			move_tiles("left")
+		elif event.keycode == KEY_RIGHT or event.keycode == KEY_D:
+			move_tiles("right")
+		elif event.keycode == KEY_UP or event.keycode == KEY_W:
+			move_tiles("up")
+		elif event.keycode == KEY_DOWN or event.keycode == KEY_S:
+			move_tiles("down")
 
-func _on_RestartButton_pressed():
-	new_game()
+func _on_restart_button_pressed():
+	score = 0
+	game_over = false
+	game_over_label.hide()
+	
+	for i in range(GRID_SIZE):
+		for j in range(GRID_SIZE):
+			if tiles[i][j] != null:
+				tiles[i][j].queue_free()
+	
+	setup_grid()
+	spawn_tile()
+	spawn_tile()
+	update_display()
