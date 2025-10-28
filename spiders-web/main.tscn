@@ -1,6 +1,45 @@
-[gd_scene load_steps=2 format=3 uid="uid://bm5i0aigixh3j"]
+[gd_scene load_steps=6 format=3 uid="uid://bm5i0aigixh3j"]
 
 [ext_resource type="Script" uid="uid://bas2n00rahkpm" path="res://main.gd" id="1_ig7tw"]
+[ext_resource type="Texture2D" uid="uid://crwtckwsnrl4h" path="res://Assets/BrickTiles.png" id="2_1bvp3"]
+[ext_resource type="Texture2D" uid="uid://debyrea3nuwfv" path="res://Assets/webs/cornerweb_bl.png" id="3_lquwl"]
+[ext_resource type="Texture2D" uid="uid://bqpika02606rk" path="res://Assets/webs/cornerweb_tl.png" id="4_7mycd"]
+[ext_resource type="AudioStream" uid="uid://7nc6jbirnkkt" path="res://Assets/c64_uptempo_chiptune.ogg" id="5_lquwl"]
 
 [node name="Main" type="Node2D"]
+z_index = 1
 script = ExtResource("1_ig7tw")
+
+[node name="BrickTiles" type="Sprite2D" parent="."]
+z_index = -5
+position = Vector2(2411, 825.00006)
+scale = Vector2(77.17969, 43.147438)
+texture = ExtResource("2_1bvp3")
+
+[node name="CornerwebBl2" type="Sprite2D" parent="."]
+z_index = -2
+position = Vector2(196, 502)
+texture = ExtResource("3_lquwl")
+
+[node name="CornerwebTl" type="Sprite2D" parent="."]
+z_index = -2
+position = Vector2(136, 129)
+texture = ExtResource("4_7mycd")
+
+[node name="CornerwebTl2" type="Sprite2D" parent="."]
+z_index = -2
+position = Vector2(1015.1154, 518.8939)
+rotation = -3.1415927
+texture = ExtResource("4_7mycd")
+
+[node name="CornerwebBl" type="Sprite2D" parent="."]
+z_index = -2
+position = Vector2(958, 149)
+rotation = -3.1415927
+scale = Vector2(1.0102564, 1)
+texture = ExtResource("3_lquwl")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_lquwl")
+autoplay = true
+parameters/looping = true

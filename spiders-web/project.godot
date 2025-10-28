@@ -13,4 +13,15 @@ config_version=5
 config/name="Spiders Web"
 run/main_scene="uid://bm5i0aigixh3j"
 config/features=PackedStringArray("4.5", "Forward Plus")
+boot_splash/bg_color=Color(1, 1, 1, 1)
+boot_splash/image="uid://2g0eiselw1th"
 config/icon="res://icon.svg"
+boot_splash/minimum_display_time=3000
+
+[display]
+
+mouse_cursor/custom_image="uid://yml0mibpaj6s"
+
+[rendering]
+
+textures/canvas_textures/default_texture_filter=0
