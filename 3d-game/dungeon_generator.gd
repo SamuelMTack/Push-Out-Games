@@ -224,3 +224,28 @@ func spawn_enemies(player_ref):
 			skeleton.position = Vector3(spawn_x, 1, spawn_z)
 			skeleton.player = player_ref
 			add_child(skeleton)
+	
+	# Spawn health potions in some rooms
+	spawn_health_potions(player_ref)
+
+func spawn_health_potions(player_ref):
+	# Spawn 1 health potion in 3-4 random rooms (not the first room)
+	var num_potions = randi() % 2 + 3  # 3-4 potions
+	var available_rooms = range(1, rooms.size())
+	available_rooms.shuffle()
+	
+	for i in range(min(num_potions, available_rooms.size())):
+		var room_idx = available_rooms[i]
+		var room = rooms[room_idx]
+		
+		var potion = preload("res://health_potion.gd").new()
+		
+		# Random position within the room
+		var offset_x = randf() * (room.w - 2) + 1
+		var offset_z = randf() * (room.h - 2) + 1
+		var spawn_x = (room.x + offset_x) * CELL_SIZE
+		var spawn_z = (room.y + offset_z) * CELL_SIZE
+		
+		potion.position = Vector3(spawn_x, 0.5, spawn_z)
+		potion.player = player_ref
+		add_child(potion)

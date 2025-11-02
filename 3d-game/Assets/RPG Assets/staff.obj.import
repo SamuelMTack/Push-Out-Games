@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://dwp5vwdbkh4en"
+path="res://.godot/imported/staff.obj-7c6d6577feeeeedba0427c88d8771456.mesh"
+
+[deps]
+
+files=["res://.godot/imported/staff.obj-7c6d6577feeeeedba0427c88d8771456.mesh"]
+
+source_file="res://Assets/RPG Assets/staff.obj"
+dest_files=["res://.godot/imported/staff.obj-7c6d6577feeeeedba0427c88d8771456.mesh", "res://.godot/imported/staff.obj-7c6d6577feeeeedba0427c88d8771456.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false

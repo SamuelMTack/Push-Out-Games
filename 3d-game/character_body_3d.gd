@@ -26,6 +26,10 @@ func take_damage(amount):
 	if health <= 0:
 		die()
 
+func heal(amount):
+	health = min(health + amount, 100)
+	print("Player healed! Health: ", health)
+
 func die():
 	print("Game Over!")
 	get_tree().reload_current_scene()
