@@ -1,10 +1,14 @@
-[gd_scene load_steps=5 format=3 uid="uid://cug1sygcsigut"]
+[gd_scene load_steps=8 format=3 uid="uid://cug1sygcsigut"]
 
 [ext_resource type="Script" uid="uid://c0h5jyys8qx3f" path="res://main.gd" id="1_h2yge"]
 [ext_resource type="Script" uid="uid://caqoqok8g50ws" path="res://dungeon_generator.gd" id="2_1bvp3"]
 [ext_resource type="Script" uid="uid://cgb41q58gys54" path="res://character_body_3d.gd" id="3_lquwl"]
+[ext_resource type="Script" uid="uid://b7t7a0jvq2xjr" path="res://start_menu.gd" id="4_1bvp3"]
+[ext_resource type="Script" uid="uid://bjyjnoutsf3i8" path="res://skeleton.gd" id="5_lquwl"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_7mycd"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_272bh"]
 
 [node name="Main" type="Node3D"]
 script = ExtResource("1_h2yge")
@@ -21,3 +25,31 @@ script = ExtResource("3_lquwl")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Player"]
 shape = SubResource("CapsuleShape3D_7mycd")
+
+[node name="StartMenu" type="CanvasLayer" parent="."]
+script = ExtResource("4_1bvp3")
+
+[node name="MenuContainer" type="CenterContainer" parent="StartMenu"]
+offset_left = 540.0
+offset_top = 271.0
+offset_right = 636.0
+offset_bottom = 337.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="StartMenu/MenuContainer"]
+layout_mode = 2
+
+[node name="StartButton" type="Button" parent="StartMenu/MenuContainer/VBoxContainer"]
+layout_mode = 2
+text = "Start Game
+"
+
+[node name="QuitButton" type="Button" parent="StartMenu/MenuContainer/VBoxContainer"]
+layout_mode = 2
+text = "Quit
+"
+
+[node name="Skeleton" type="CharacterBody3D" parent="."]
+script = ExtResource("5_lquwl")
+
+[node name="SkeletonCollision" type="CollisionShape3D" parent="Skeleton"]
+shape = SubResource("CapsuleShape3D_272bh")
