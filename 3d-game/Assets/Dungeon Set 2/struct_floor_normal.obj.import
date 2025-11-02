@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://dcyfrde3aw4yl"
+path="res://.godot/imported/struct_floor_normal.obj-3ed71580776cd758e14d6c9c191b9531.mesh"
+
+[deps]
+
+files=["res://.godot/imported/struct_floor_normal.obj-3ed71580776cd758e14d6c9c191b9531.mesh"]
+
+source_file="res://Assets/Dungeon Set 2/struct_floor_normal.obj"
+dest_files=["res://.godot/imported/struct_floor_normal.obj-3ed71580776cd758e14d6c9c191b9531.mesh", "res://.godot/imported/struct_floor_normal.obj-3ed71580776cd758e14d6c9c191b9531.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false

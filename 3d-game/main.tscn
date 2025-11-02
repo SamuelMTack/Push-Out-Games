@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=3 uid="uid://cug1sygcsigut"]
+
+[ext_resource type="Script" uid="uid://c0h5jyys8qx3f" path="res://main.gd" id="1_h2yge"]
+[ext_resource type="Script" uid="uid://caqoqok8g50ws" path="res://dungeon_generator.gd" id="2_1bvp3"]
+[ext_resource type="Script" uid="uid://cgb41q58gys54" path="res://character_body_3d.gd" id="3_lquwl"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_7mycd"]
+
+[node name="Main" type="Node3D"]
+script = ExtResource("1_h2yge")
+
+[node name="DungeonGenerator" type="Node3D" parent="."]
+script = ExtResource("2_1bvp3")
+
+[node name="Player" type="CharacterBody3D" parent="."]
+script = ExtResource("3_lquwl")
+
+[node name="Camera3D" type="Camera3D" parent="Player"]
+
+[node name="InteractRay" type="RayCast3D" parent="Player"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player"]
+shape = SubResource("CapsuleShape3D_7mycd")

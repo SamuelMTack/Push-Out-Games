@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://dr4dgn1fugc8k"
+path="res://.godot/imported/prop_floor_crate.obj-651390cc08ebfe3fcead42588131dccf.mesh"
+
+[deps]
+
+files=["res://.godot/imported/prop_floor_crate.obj-651390cc08ebfe3fcead42588131dccf.mesh"]
+
+source_file="res://Assets/Dungeon Set 2/prop_floor_crate.obj"
+dest_files=["res://.godot/imported/prop_floor_crate.obj-651390cc08ebfe3fcead42588131dccf.mesh", "res://.godot/imported/prop_floor_crate.obj-651390cc08ebfe3fcead42588131dccf.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false
