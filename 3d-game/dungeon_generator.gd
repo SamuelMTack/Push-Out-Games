@@ -1,5 +1,3 @@
-# DungeonGenerator.gd
-# Attach this to a Node3D
 extends Node3D
 
 const CELL_SIZE = 3.0
@@ -178,9 +176,30 @@ func create_floor(pos):
 	mesh_instance.mesh = box_mesh
 	
 	var material = StandardMaterial3D.new()
-	material.albedo_color = Color(0.35, 0.3, 0.28)
-	mesh_instance.material_override = material
 	
+	# Create procedural stone floor texture
+	var img = Image.create(64, 64, false, Image.FORMAT_RGB8)
+	
+	# Base stone colors
+	var base_color = Color(0.35, 0.3, 0.28)
+	var dark_color = Color(0.25, 0.22, 0.2)
+	
+	for py in range(64):
+		for px in range(64):
+			# Create irregular stone pattern
+			var noise = (sin(px * 0.5) + cos(py * 0.3)) * 0.5
+			var stone_variation = randf() * 0.15
+			
+			var final_color = base_color.lerp(dark_color, noise * 0.3 + stone_variation)
+			img.set_pixel(px, py, final_color)
+	
+	var texture = ImageTexture.create_from_image(img)
+	material.albedo_texture = texture
+	material.texture_filter = BaseMaterial3D.TEXTURE_FILTER_NEAREST
+	material.uv1_scale = Vector3(3, 3, 3)
+	material.roughness = 0.8
+	
+	mesh_instance.material_override = material
 	mesh_instance.position = pos + Vector3(0, -0.1, 0)
 	add_child(mesh_instance)
 	

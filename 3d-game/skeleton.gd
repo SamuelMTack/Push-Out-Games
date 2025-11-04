@@ -60,11 +60,23 @@ func setup_skeleton():
 	# Add collision shape
 	var collision = CollisionShape3D.new()
 	var shape = CapsuleShape3D.new()
-	shape.radius = 0.3
-	shape.height = 1.6
+	shape.radius = 0.5  # Increased from 0.3 for easier hits
+	shape.height = 2.0  # Increased from 1.6 for easier hits
 	collision.shape = shape
-	collision.position = Vector3(0, 0.8, 0)
+	collision.position = Vector3(0, 1.0, 0)
 	add_child(collision)
+	
+	# Add Area3D for collision detection with player
+	var damage_area = Area3D.new()
+	damage_area.name = "DamageArea"
+	var area_collision = CollisionShape3D.new()
+	var area_shape = SphereShape3D.new()
+	area_shape.radius = 0.7  # Increased from 0.5 for easier contact
+	area_collision.shape = area_shape
+	area_collision.position = Vector3(0, 1.0, 0)
+	damage_area.add_child(area_collision)
+	damage_area.body_entered.connect(_on_damage_area_entered)
+	add_child(damage_area)
 
 func _physics_process(delta):
 	if not is_on_floor():
@@ -137,3 +149,9 @@ func take_damage(amount):
 
 func die():
 	queue_free()
+
+func _on_damage_area_entered(body):
+	if body == player and not is_attacking:
+		# Deal damage on contact
+		if player.has_method("take_damage"):
+			player.take_damage(5)  # 5 damage on contact
