@@ -18,7 +18,7 @@ func setup_arrow():
 	# Create arrow visual
 	var arrow_mesh = MeshInstance3D.new()
 	
-	# Arrow shaft
+	# Arrow shaft (pointing along X axis)
 	var shaft = CylinderMesh.new()
 	shaft.top_radius = 0.05
 	shaft.bottom_radius = 0.05
@@ -29,10 +29,12 @@ func setup_arrow():
 	material.albedo_color = Color(0.6, 0.4, 0.2)
 	arrow_mesh.material_override = material
 	
-	arrow_mesh.rotation_degrees = Vector3(0, 0, 90)
+	# Rotate shaft to point forward (along Z axis)
+	arrow_mesh.rotation_degrees = Vector3(90, 0, 0)
+	arrow_mesh.position = Vector3(0, 0, -0.4)
 	add_child(arrow_mesh)
 	
-	# Arrow tip
+	# Arrow tip pointing forward
 	var tip = MeshInstance3D.new()
 	var cone = CylinderMesh.new()
 	cone.top_radius = 0
@@ -45,25 +47,38 @@ func setup_arrow():
 	tip_material.metallic = 0.8
 	tip.material_override = tip_material
 	
-	tip.position = Vector3(0.55, 0, 0)
-	tip.rotation_degrees = Vector3(0, 0, -90)
+	tip.position = Vector3(0, 0, -0.85)
+	tip.rotation_degrees = Vector3(90, 0, 0)
 	add_child(tip)
 	
-	# Add collision
+	# Fletching (back feathers)
+	for angle in [0, 120, 240]:
+		var feather = MeshInstance3D.new()
+		var feather_mesh = BoxMesh.new()
+		feather_mesh.size = Vector3(0.02, 0.15, 0.1)
+		feather.mesh = feather_mesh
+		
+		var feather_mat = StandardMaterial3D.new()
+		feather_mat.albedo_color = Color(0.9, 0.1, 0.1)
+		feather.material_override = feather_mat
+		
+		feather.position = Vector3(0, 0, 0.05)
+		feather.rotation_degrees = Vector3(0, angle, 0)
+		add_child(feather)
+	
+	# Add collision (oriented forward along Z axis)
 	var collision = CollisionShape3D.new()
 	var shape = BoxShape3D.new()
-	shape.size = Vector3(1.0, 0.1, 0.1)
+	shape.size = Vector3(0.1, 0.1, 1.2)
 	collision.shape = shape
+	collision.position = Vector3(0, 0, -0.4)
 	add_child(collision)
-	
-	# Orient arrow in direction
-	look_at(global_position + direction)
 
 func _physics_process(delta):
 	time_alive += delta
 	
-	# Move arrow
-	position += direction * SPEED * delta
+	# Move arrow forward in its local Z direction
+	position += -global_transform.basis.z * SPEED * delta
 	
 	# Remove after lifetime expires
 	if time_alive > LIFETIME:

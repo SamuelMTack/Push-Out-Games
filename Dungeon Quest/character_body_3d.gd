@@ -225,10 +225,13 @@ func attack():
 func shoot_arrow():
 	var arrow = preload("res://arrow.gd").new()
 	
-	# Spawn arrow at camera position
-	arrow.position = camera.global_position
+	# Spawn arrow slightly in front of camera to avoid collision
+	arrow.position = camera.global_position + (-camera.global_transform.basis.z * 0.5)
 	arrow.direction = -camera.global_transform.basis.z
 	arrow.shooter = self  # Pass reference to player
+	
+	# Set arrow rotation to face forward
+	arrow.rotation = camera.global_rotation
 	
 	# Add to scene root
 	get_tree().root.add_child(arrow)

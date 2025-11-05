@@ -1,11 +1,13 @@
+# DungeonGenerator.gd
+# Attach this to a Node3D
 extends Node3D
 
 const CELL_SIZE = 3.0
-const DUNGEON_WIDTH = 15
-const DUNGEON_HEIGHT = 15
+const DUNGEON_WIDTH = 25  # Increased from 15
+const DUNGEON_HEIGHT = 25  # Increased from 15
 const MIN_ROOM_SIZE = 3
-const MAX_ROOM_SIZE = 7
-const NUM_ROOMS = 8
+const MAX_ROOM_SIZE = 8  # Increased from 7
+const NUM_ROOMS = 15  # Increased from 8
 
 var dungeon_grid = []
 var rooms = []
@@ -268,3 +270,46 @@ func spawn_health_potions(player_ref):
 		potion.position = Vector3(spawn_x, 0.5, spawn_z)
 		potion.player = player_ref
 		add_child(potion)
+	
+	# Spawn portal in the last room
+	spawn_portal(player_ref)
+
+func spawn_portal(player_ref):
+	if rooms.size() > 0:
+		var last_room = rooms[rooms.size() - 1]
+		
+		var portal = preload("res://portal.gd").new()
+		
+		# Center of the last room
+		var spawn_x = (last_room.x + last_room.w / 2.0) * CELL_SIZE
+		var spawn_z = (last_room.y + last_room.h / 2.0) * CELL_SIZE
+		
+		portal.position = Vector3(spawn_x, 0.5, spawn_z)
+		portal.player = player_ref
+		portal.dungeon_generator = self
+		add_child(portal)
+
+func reset_dungeon(player_ref):
+	# Clear all children (old dungeon, enemies, potions, portal)
+	for child in get_children():
+		child.queue_free()
+	
+	# Wait for children to be freed
+	await get_tree().process_frame
+	
+	# Reset arrays
+	dungeon_grid.clear()
+	rooms.clear()
+	
+	# Generate new dungeon
+	generate_dungeon()
+	
+	# Respawn player in first room
+	if rooms.size() > 0:
+		var first_room = rooms[0]
+		var spawn_x = (first_room.x + first_room.w / 2.0) * CELL_SIZE
+		var spawn_z = (first_room.y + first_room.h / 2.0) * CELL_SIZE
+		player_ref.position = Vector3(spawn_x, 2, spawn_z)
+	
+	# Spawn enemies and items
+	spawn_enemies(player_ref)
