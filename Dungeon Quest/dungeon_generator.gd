@@ -248,6 +248,9 @@ func spawn_enemies(player_ref):
 	
 	# Spawn health potions in some rooms
 	spawn_health_potions(player_ref)
+	
+	# Spawn shop in the first room
+	spawn_shop(player_ref)
 
 func spawn_health_potions(player_ref):
 	# Spawn 1 health potion in 3-4 random rooms (not the first room)
@@ -288,6 +291,20 @@ func spawn_portal(player_ref):
 		portal.player = player_ref
 		portal.dungeon_generator = self
 		add_child(portal)
+
+func spawn_shop(player_ref):
+	if rooms.size() > 0:
+		var first_room = rooms[0]
+		
+		var shop = preload("res://shop.gd").new()
+		
+		# Place shop near the edge of the first room
+		var spawn_x = (first_room.x + 1) * CELL_SIZE
+		var spawn_z = (first_room.y + 1) * CELL_SIZE
+		
+		shop.position = Vector3(spawn_x, 1, spawn_z)
+		shop.player = player_ref
+		add_child(shop)
 
 func reset_dungeon(player_ref):
 	# Clear all children (old dungeon, enemies, potions, portal)

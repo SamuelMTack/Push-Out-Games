@@ -149,6 +149,24 @@ func take_damage(amount):
 
 func die():
 	queue_free()
+	
+	# Drop gold on death
+	drop_gold()
+
+func drop_gold():
+	# 80% chance to drop gold
+	if randf() < 0.8:
+		var gold_drop = preload("res://gold_coin.gd").new()
+		
+		# Drop at skeleton's position
+		gold_drop.position = global_position
+		gold_drop.player = player
+		
+		# Random gold amount (5-15)
+		gold_drop.gold_amount = randi() % 11 + 5
+		
+		# Add to scene
+		get_parent().add_child(gold_drop)
 
 func _on_damage_area_entered(body):
 	if body == player and not is_attacking:

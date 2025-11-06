@@ -16,6 +16,7 @@ var is_attacking = false
 var health = 100
 var max_health = 100
 var health_bar = null
+var gold = 0
 
 func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
@@ -54,6 +55,15 @@ func setup_health_bar():
 		health_text.add_theme_font_size_override("font_size", 16)
 		health_text.text = str(health) + " / " + str(max_health)
 		ui_layer.add_child(health_text)
+		
+		# Create gold display
+		var gold_label = Label.new()
+		gold_label.name = "GoldLabel"
+		gold_label.position = Vector2(10, 50)
+		gold_label.add_theme_font_size_override("font_size", 20)
+		gold_label.add_theme_color_override("font_color", Color(1.0, 0.84, 0.0))
+		gold_label.text = "Gold: " + str(gold)
+		ui_layer.add_child(gold_label)
 
 func update_health_bar():
 	if health_bar:
@@ -86,6 +96,16 @@ func heal(amount):
 	health = min(health + amount, max_health)
 	update_health_bar()
 	print("Player healed! Health: ", health)
+
+func add_gold(amount):
+	gold += amount
+	update_gold_display()
+	print("Gold collected! Total: ", gold)
+
+func update_gold_display():
+	var gold_label = get_node_or_null("HealthBarUI/GoldLabel")
+	if gold_label:
+		gold_label.text = "Gold: " + str(gold)
 
 func die():
 	print("Game Over!")
