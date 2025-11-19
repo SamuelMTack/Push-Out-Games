@@ -14,6 +14,17 @@ var end_screen_scene = preload("res://end_screen.tscn")
 var end_screen_instance
 
 func _ready():
+	# Create background
+	var bg = Sprite2D.new()
+	bg.name = "Background"
+	bg.centered = false
+	# Scale it up to cover a large area or tile it
+	# For now, let's just make it huge
+	bg.scale = Vector2(10, 10) 
+	bg.z_index = -100 # Ensure it's behind everything
+	add_child(bg)
+	move_child(bg, 0)
+	
 	# Connect UI level completed signal
 	ui.level_completed.connect(_on_level_completed)
 	
@@ -22,6 +33,25 @@ func _ready():
 		var game_manager = get_node("/root/GameManager")
 		# You can use game_manager.current_level to adjust difficulty, enemy types, etc.
 		print("Starting Level: ", game_manager.current_level)
+		
+		# Load background for this level
+		var bg_path = "res://Assets/Sprites/Backgrounds/bg_level_" + str(game_manager.current_level) + ".png"
+		if ResourceLoader.exists(bg_path):
+			bg.texture = load(bg_path)
+			# If using a small tile, we might want to enable repeat and use a TextureRect instead, 
+			# but for now a scaled sprite is okay as per request "sprites as backgrounds".
+			# To make it seamless/tiled, we'd use TextureRect with Stretch Mode = Tile.
+			# Let's switch to TextureRect for better tiling.
+			bg.queue_free()
+			var bg_rect = TextureRect.new()
+			bg_rect.name = "BackgroundRect"
+			bg_rect.texture = load(bg_path)
+			bg_rect.stretch_mode = TextureRect.STRETCH_TILE
+			bg_rect.size = Vector2(5000, 5000) # Big enough area
+			bg_rect.position = Vector2(-2500, -2500) # Center it roughly
+			bg_rect.z_index = -100
+			add_child(bg_rect)
+			move_child(bg_rect, 0)
 		
 		# Adjust spawn rate based on level
 		if enemy_spawner:

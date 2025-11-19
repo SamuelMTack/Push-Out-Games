@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://wand_weapon_id"]
+
+[ext_resource type="Script" path="res://weapons/wand.gd" id="1_wand"]
+[ext_resource type="Texture2D" path="res://icon.svg" id="2_wand_tex"]
+
+[node name="Wand" type="Node2D"]
+script = ExtResource("1_wand")
+weapon_name = "Wand"
+icon = ExtResource("2_wand_tex")
+damage = 15.0
+cooldown = 2.0

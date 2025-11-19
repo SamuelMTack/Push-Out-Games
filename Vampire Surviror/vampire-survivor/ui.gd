@@ -10,6 +10,10 @@ extends CanvasLayer
 @onready var upgrade_button3 = %LevelUpPanel/%UpgradeButton3
 @onready var confirm_button = %LevelUpPanel/%ConfirmButton
 
+# Reuse level up panel for special rewards for simplicity, or create a new one if needed.
+# For now, we'll reuse it but change the title/content.
+var is_special_reward = false
+
 var player: CharacterBody2D
 var game_time = 0.0
 var level_duration = 1200.0  # 20 minutes in seconds (1200 for production, can set to 30 for testing)
@@ -32,6 +36,14 @@ var all_upgrades = [
 	{"name": "Pickup Range", "id": "pickup_range"},
 	{"name": "Projectile Pierce", "id": "projectile_pierce"},
 	{"name": "Projectile Size", "id": "projectile_size"}
+]
+
+# Special weapons
+var special_weapons = [
+	{"name": "Sword", "id": "weapon_sword", "scene": "res://weapons/Sword.tscn"},
+	{"name": "Bomb", "id": "weapon_bomb", "scene": "res://weapons/Bomb.tscn"},
+	{"name": "Boomerang", "id": "weapon_boomerang", "scene": "res://weapons/Boomerang.tscn"},
+	{"name": "Orbit Orb", "id": "weapon_orbit", "scene": "res://weapons/OrbitWeapon.tscn"}
 ]
 
 signal level_completed
@@ -103,13 +115,13 @@ func _handle_level_up_input():
 	if Input.is_action_just_pressed("ui_up"):
 		selected_button_index -= 1
 		if selected_button_index < 0:
-			selected_button_index = 2  # Wrap to bottom
+			selected_button_index = available_upgrades.size() - 1  # Wrap to bottom
 		_highlight_selected_button()
 	
 	# Down arrow - move selection down
 	elif Input.is_action_just_pressed("ui_down"):
 		selected_button_index += 1
-		if selected_button_index > 2:
+		if selected_button_index >= available_upgrades.size():
 			selected_button_index = 0  # Wrap to top
 		_highlight_selected_button()
 	
@@ -151,6 +163,23 @@ func _pick_random_upgrades():
 		else:
 			upgrade_buttons[i].visible = false
 
+func _pick_special_rewards():
+	available_upgrades.clear()
+	# Show all special weapons (up to 3 for now, or just pick random 3 if more)
+	var shuffled = special_weapons.duplicate()
+	shuffled.shuffle()
+	
+	for i in range(min(3, shuffled.size())):
+		available_upgrades.append(shuffled[i])
+		
+	# Update button texts
+	for i in range(3):
+		if i < available_upgrades.size():
+			upgrade_buttons[i].text = "NEW WEAPON: " + available_upgrades[i]["name"]
+			upgrade_buttons[i].visible = true
+		else:
+			upgrade_buttons[i].visible = false
+
 func update_health(current: float, maximum: float):
 	health_bar.max_value = maximum
 	health_bar.value = current
@@ -160,12 +189,25 @@ func update_experience(current: float, maximum: float):
 	exp_bar.value = current
 
 func show_level_up_panel():
+	is_special_reward = false
 	current_level += 1
 	level_label.text = "Level: " + str(current_level)
 	
 	# Pick 3 random upgrades
 	_pick_random_upgrades()
 	
+	_show_panel_common()
+
+func show_special_reward_panel():
+	is_special_reward = true
+	current_level += 1 # Still increment level
+	level_label.text = "Level: " + str(current_level) + " - SPECIAL REWARD!"
+	
+	_pick_special_rewards()
+	
+	_show_panel_common()
+
+func _show_panel_common():
 	# Reset selection
 	selected_upgrade = ""
 	selected_button_index = 0  # Start at first button
@@ -181,7 +223,6 @@ func show_level_up_panel():
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	
 	get_tree().paused = true
-	print("Level up panel shown - Use arrow keys to select, space to confirm")
 
 func _on_upgrade_button_pressed(button_index: int):
 	# Store which button was clicked
@@ -210,8 +251,23 @@ func _on_confirm_pressed():
 		return
 	
 	# NOW apply the upgrade (only when confirm is pressed)
-	player.apply_upgrade(selected_upgrade)
-	print("Upgrade applied: ", selected_upgrade)
+	if is_special_reward:
+		# Find the weapon scene path
+		var weapon_scene_path = ""
+		for w in special_weapons:
+			if w["id"] == selected_upgrade:
+				weapon_scene_path = w["scene"]
+				break
+		
+		if weapon_scene_path != "":
+			var weapon_scene = load(weapon_scene_path)
+			if weapon_scene:
+				var weapon = weapon_scene.instantiate()
+				player.add_weapon(weapon)
+				print("Added new weapon: ", selected_upgrade)
+	else:
+		player.apply_upgrade(selected_upgrade)
+		print("Upgrade applied: ", selected_upgrade)
 	
 	# Close the panel and resume the game
 	level_up_panel.hide()
