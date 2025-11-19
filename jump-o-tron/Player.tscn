@@ -1,0 +1,45 @@
+[gd_scene load_steps=4 format=3 uid="uid://ix1qdwygnam2"]
+
+[ext_resource type="Texture2D" uid="uid://df0ub7of4eh2i" path="res://icon.svg" id="1_xhfnw"]
+
+[sub_resource type="GDScript" id="GDScript_xhfnw"]
+script/source = "# Player.gd
+extends KinematicBody2D
+
+var jump_force = -500
+var gravity = 1000
+var max_fall_speed = 800
+
+var velocity = Vector2()
+
+func _ready():
+	set_process(true)
+
+func _process(delta):
+	velocity.y += gravity * delta
+	if velocity.y > max_fall_speed:
+		velocity.y = max_fall_speed
+
+	if is_on_floor():
+		jump()
+	else:
+		move_and_slide(velocity, Vector2.UP)
+
+def jump():
+	velocity.y = jump_force
+"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kpjcp"]
+size = Vector2(42, 42)
+
+[node name="Player" type="CharacterBody2D"]
+script = SubResource("GDScript_xhfnw")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(43, 43)
+scale = Vector2(0.328125, 0.328125)
+texture = ExtResource("1_xhfnw")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(43, 43)
+shape = SubResource("RectangleShape2D_kpjcp")

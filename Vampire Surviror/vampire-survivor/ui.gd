@@ -12,11 +12,13 @@ extends CanvasLayer
 
 var player: CharacterBody2D
 var game_time = 0.0
+var level_duration = 1200.0  # 20 minutes in seconds (1200 for production, can set to 30 for testing)
 var current_level = 1
 var selected_upgrade = ""  # Tracks which upgrade was selected
 var selected_button_index = 0  # 0, 1, or 2 for the three upgrade buttons
 var upgrade_buttons = []  # Array to hold the three upgrade buttons
 var available_upgrades = []  # Currently available upgrade options
+var level_complete = false  # Track if level is complete
 
 # All possible upgrades with display names and internal IDs
 var all_upgrades = [
@@ -31,6 +33,8 @@ var all_upgrades = [
 	{"name": "Projectile Pierce", "id": "projectile_pierce"},
 	{"name": "Projectile Size", "id": "projectile_size"}
 ]
+
+signal level_completed
 
 func _ready():
 	add_to_group("ui")
@@ -58,17 +62,41 @@ func _ready():
 	confirm_button.disabled = true  # Start disabled until upgrade selected
 
 func _process(delta):
-	if not get_tree().paused:
+	if not get_tree().paused and not level_complete:
 		game_time += delta
 		
-		# Update time label
-		var minutes = int(game_time / 60)
-		var seconds = int(game_time) % 60
+		# Calculate remaining time
+		var time_remaining = level_duration - game_time
+		
+		if time_remaining <= 0:
+			# Level complete!
+			time_remaining = 0
+			if not level_complete:
+				level_complete = true
+				_on_level_complete()
+		
+		# Update time label with countdown
+		var minutes = int(time_remaining / 60)
+		var seconds = int(time_remaining) % 60
 		time_label.text = "Time: %02d:%02d" % [minutes, seconds]
+		
+		# Change color when time is running out
+		if time_remaining <= 60:  # Last minute
+			time_label.modulate = Color.RED
+		elif time_remaining <= 300:  # Last 5 minutes
+			time_label.modulate = Color.YELLOW
+		else:
+			time_label.modulate = Color.WHITE
 	
 	# Always handle input when panel is visible (even when paused)
 	if level_up_panel.visible:
 		_handle_level_up_input()
+
+func _on_level_complete():
+	print("Level Complete!")
+	get_tree().paused = true
+	emit_signal("level_completed")
+	# The main scene will handle showing the end screen
 
 func _handle_level_up_input():
 	# Up arrow - move selection up

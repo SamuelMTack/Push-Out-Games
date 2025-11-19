@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://b4gmyxlfplbj7"]
+
+[ext_resource type="Script" uid="uid://wo7xdtlm2xda" path="res://enemy.gd" id="1_7k104"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_4gyqm"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_7xaro"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_qi2p4"]
+radius = 0.6
+height = 2.1
+
+[node name="Enemy" type="CharacterBody3D"]
+script = ExtResource("1_7k104")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("CapsuleMesh_4gyqm")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_7xaro")
+
+[node name="Area3D" type="Area3D" parent="."]
+collision_layer = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("CapsuleShape3D_qi2p4")

@@ -1,0 +1,29 @@
+[gd_scene load_steps=4 format=3 uid="uid://cgqftfqtuu4g1"]
+
+[ext_resource type="Texture2D" uid="uid://df0ub7of4eh2i" path="res://icon.svg" id="2_7gn3u"]
+
+[sub_resource type="GDScript" id="GDScript_ibub6"]
+script/source = "# ----- PLATFORM.GD -----
+# Attach this to a StaticBody2D node
+extends StaticBody2D
+
+# Platform only bounces player when falling down onto it
+func _ready():
+	collision_layer = 1
+	collision_mask = 0
+"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8m85o"]
+size = Vector2(148, 13)
+
+[node name="Platform" type="StaticBody2D"]
+script = SubResource("GDScript_ibub6")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(112.000015, 75)
+scale = Vector2(1.125, 0.109375)
+texture = ExtResource("2_7gn3u")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(110, 74.5)
+shape = SubResource("RectangleShape2D_8m85o")

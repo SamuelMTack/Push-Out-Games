@@ -17,11 +17,11 @@ var projectile_speed = 300.0
 var projectile_pierce = 1  # How many enemies a projectile can hit
 var projectile_size = 1.0  # Scale multiplier for projectiles
 
-
 # Player stats
 var pickup_range = 50.0  # Range for auto-collecting experience
 var health_regen = 0.0  # Health regeneration per second
 
+signal player_died
 
 func _ready():
 	add_to_group("player")
@@ -48,7 +48,6 @@ func _physics_process(delta):
 			health = max_health
 		get_tree().call_group("ui", "update_health", health, max_health)
 	
-	
 	# Auto-shoot timer
 	shoot_timer -= delta
 	if shoot_timer <= 0:
@@ -56,7 +55,6 @@ func _physics_process(delta):
 		shoot_timer = shoot_interval
 
 func shoot_projectiles():
-	
 	if not projectile_scene:
 		print("Error: projectile_scene not assigned!")
 		return
@@ -88,11 +86,14 @@ func shoot_projectiles():
 		
 		# Initialize the projectile with direction and stats
 		projectile.setup(direction, projectile_speed, projectile_damage)
-		
-		print("Projectile fired from ", global_position, " toward enemy at ", target_position)
-		
+
 func add_experience(amount):
 	experience += amount
+	
+	# Track total experience for stats
+	var main = get_tree().current_scene
+	if main and main.has_method("register_experience_gain"):
+		main.register_experience_gain(amount)
 	
 	# Update UI
 	get_tree().call_group("ui", "update_experience", experience, exp_to_next_level)
@@ -124,9 +125,17 @@ func take_damage(amount):
 		die()
 
 func die():
-	# Game over - reload scene
-	get_tree().paused = false
-	get_tree().reload_current_scene()
+	# Emit death signal
+	emit_signal("player_died")
+	
+	# Notify main scene
+	var main = get_tree().current_scene
+	if main and main.has_method("_on_player_died"):
+		main._on_player_died()
+	else:
+		# Fallback: just restart
+		get_tree().paused = false
+		get_tree().reload_current_scene()
 
 func apply_upgrade(upgrade_name: String):
 	match upgrade_name:

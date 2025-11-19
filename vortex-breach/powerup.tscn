@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://fksn824itaj5"]
+
+[ext_resource type="Script" uid="uid://dxv5aimijy83p" path="res://powerup.gd" id="1_vcqqu"]
+
+[node name="Powerup" type="Area3D"]
+script = ExtResource("1_vcqqu")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
