@@ -1,0 +1,15 @@
+63f7b34db8d8cdea90c76aacccf841ec
+::res://::1763627225
+::res://assets/::1763627037
+::res://scenes/::1763627113
+Enemy.tscn::PackedScene::-1::1763627066::0::1::::<><><>0<>0<><>::res://scripts/Enemy.gd
+HUD.tscn::PackedScene::-1::1763627113::0::1::::<><><>0<>0<><>::res://scripts/HUD.gd
+Main.tscn::PackedScene::-1::1763627093::0::1::::<><><>0<>0<><>::res://scenes/Player.tscn<>res://scenes/Enemy.tscn<>res://scenes/Shrine.tscn<>res://scenes/HUD.tscn
+Player.tscn::PackedScene::-1::1763627057::0::1::::<><><>0<>0<><>::res://scripts/Player.gd
+Shrine.tscn::PackedScene::-1::1763627086::0::1::::<><><>0<>0<><>::res://scripts/Shrine.gd
+::res://scripts/::1763627115
+Enemy.gd::GDScript::7442396693269804091::1763627068::0::1::::<>CharacterBody2D<><>0<>0<><>::
+GameManager.gd::GDScript::5954700005687949362::1763627037::0::1::::<>Node<><>0<>0<><>::
+HUD.gd::GDScript::4251882620903773357::1763627115::0::1::::<>Control<><>0<>0<><>::
+Player.gd::GDScript::7078536565669816053::1763627061::0::1::::<>CharacterBody2D<><>0<>0<><>::
+Shrine.gd::GDScript::2299213202322817318::1763627091::0::1::::<>StaticBody2D<><>0<>0<><>::
