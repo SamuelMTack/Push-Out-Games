@@ -49,27 +49,30 @@ func attack():
 	sprite.show()
 	area.monitoring = true
 	
-	# Determine direction (mouse or nearest enemy)
-	var target_angle = 0.0
-	var enemies = get_tree().get_nodes_in_group("enemies")
-	if not enemies.is_empty():
-		# Find nearest
-		var nearest = enemies[0]
-		var min_dist = global_position.distance_to(nearest.global_position)
-		for e in enemies:
-			var d = global_position.distance_to(e.global_position)
-			if d < min_dist:
-				min_dist = d
-				nearest = e
-		target_angle = (nearest.global_position - global_position).angle()
-	else:
-		target_angle = randf() * TAU
+	# Determine direction (side to side relative to player facing)
+	# We'll alternate swing direction
+	var player_facing = Vector2.RIGHT
+	if player and player.velocity.length() > 0:
+		player_facing = player.velocity.normalized()
+	
+	# If player not moving, use last facing or mouse? Let's use current rotation or default right
+	# Actually, let's just swing left-to-right and right-to-left relative to facing
+	
+	var base_angle = player_facing.angle()
+	var start_angle = base_angle - deg_to_rad(swing_arc/2)
+	var end_angle = base_angle + deg_to_rad(swing_arc/2)
+	
+	# Alternate swing
+	if randf() > 0.5:
+		var temp = start_angle
+		start_angle = end_angle
+		end_angle = temp
 		
-	rotation = target_angle
+	rotation = start_angle
 	
 	# Animate swing
 	var tween = create_tween()
-	tween.tween_property(self, "rotation", target_angle + deg_to_rad(swing_arc), swing_speed).from(target_angle - deg_to_rad(swing_arc))
+	tween.tween_property(self, "rotation", end_angle, swing_speed).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 	tween.tween_callback(func():
 		is_swinging = false
 		sprite.hide()

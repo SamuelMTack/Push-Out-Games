@@ -30,3 +30,33 @@ func upgrade():
 	level += 1
 	damage *= 1.2
 	cooldown *= 0.9
+
+func get_nearest_enemy() -> Node2D:
+	var enemies = get_tree().get_nodes_in_group("enemies")
+	if enemies.is_empty():
+		return null
+		
+	var nearest = enemies[0]
+	var min_dist = global_position.distance_to(nearest.global_position)
+	
+	for e in enemies:
+		var d = global_position.distance_to(e.global_position)
+		if d < min_dist:
+			min_dist = d
+			nearest = e
+			
+	return nearest
+
+func apply_upgrade(upgrade_name: String):
+	match upgrade_name:
+		"projectile_damage":
+			damage += 5.0
+			print(weapon_name, " damage increased to ", damage)
+		"attack_speed":
+			cooldown = max(0.1, cooldown * 0.9)
+			print(weapon_name, " cooldown reduced to ", cooldown)
+		"projectile_size":
+			scale *= 1.1
+			print(weapon_name, " size increased")
+
+

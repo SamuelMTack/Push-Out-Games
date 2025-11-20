@@ -32,7 +32,7 @@ func _physics_process(delta):
 			direction = (target - global_position).normalized()
 			position += direction * current_speed * delta
 			
-			if global_position.distance_to(target) < 20:
+			if global_position.distance_to(target) < 40:
 				queue_free()
 		else:
 			queue_free()

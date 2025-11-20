@@ -30,12 +30,9 @@ func attack():
 			proj.setup(dir, projectile_speed, damage)
 
 func apply_upgrade(upgrade_name: String):
+	super.apply_upgrade(upgrade_name)
 	match upgrade_name:
 		"projectile_speed":
 			projectile_speed += 100.0
-		"projectile_damage":
-			damage += 10.0
 		"projectile_count":
 			projectile_count += 1
-		"attack_speed":
-			cooldown = max(0.3, cooldown - 0.3)

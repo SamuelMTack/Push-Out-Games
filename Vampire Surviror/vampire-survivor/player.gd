@@ -46,6 +46,16 @@ func _physics_process(delta):
 	input_vector.x = Input.get_axis("ui_left", "ui_right")
 	input_vector.y = Input.get_axis("ui_up", "ui_down")
 	
+	# Add WASD support
+	if Input.is_key_pressed(KEY_A):
+		input_vector.x -= 1.0
+	if Input.is_key_pressed(KEY_D):
+		input_vector.x += 1.0
+	if Input.is_key_pressed(KEY_W):
+		input_vector.y -= 1.0
+	if Input.is_key_pressed(KEY_S):
+		input_vector.y += 1.0
+	
 	if input_vector.length() > 0:
 		input_vector = input_vector.normalized()
 		velocity = input_vector * speed

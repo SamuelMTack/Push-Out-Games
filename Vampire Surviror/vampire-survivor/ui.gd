@@ -72,6 +72,137 @@ func _ready():
 	# Connect confirm button
 	confirm_button.pressed.connect(_on_confirm_pressed)
 	confirm_button.disabled = true  # Start disabled until upgrade selected
+	
+	_setup_cheat_menu()
+	_setup_pause_menu()
+
+var cheat_menu: PanelContainer
+var pause_menu: PanelContainer
+
+func _setup_pause_menu():
+	pause_menu = PanelContainer.new()
+	pause_menu.name = "PauseMenu"
+	pause_menu.hide()
+	# Ensure it processes input even when game is paused
+	pause_menu.process_mode = Node.PROCESS_MODE_ALWAYS
+	add_child(pause_menu)
+	
+	# Center it
+	pause_menu.anchors_preset = Control.PRESET_CENTER
+	
+	var vbox = VBoxContainer.new()
+	pause_menu.add_child(vbox)
+	
+	var label = Label.new()
+	label.text = "PAUSED"
+	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	vbox.add_child(label)
+	
+	var btn_continue = Button.new()
+	btn_continue.text = "Continue"
+	btn_continue.pressed.connect(_on_pause_continue)
+	vbox.add_child(btn_continue)
+	
+	var btn_level_select = Button.new()
+	btn_level_select.text = "Level Select"
+	btn_level_select.pressed.connect(_on_pause_level_select)
+	vbox.add_child(btn_level_select)
+	
+	var btn_quit = Button.new()
+	btn_quit.text = "Quit to Title"
+	btn_quit.pressed.connect(_on_pause_quit)
+	vbox.add_child(btn_quit)
+
+func _setup_cheat_menu():
+	cheat_menu = PanelContainer.new()
+	cheat_menu.name = "CheatMenu"
+	cheat_menu.hide()
+	# Ensure it processes input even when game is paused
+	cheat_menu.process_mode = Node.PROCESS_MODE_ALWAYS
+	add_child(cheat_menu)
+	
+	# Center it
+	cheat_menu.anchors_preset = Control.PRESET_CENTER
+	# cheat_menu.position = Vector2(get_viewport().size) / 2 # Anchors handle this
+	
+	var vbox = VBoxContainer.new()
+	cheat_menu.add_child(vbox)
+	
+	var label = Label.new()
+	label.text = "CHEAT MENU"
+	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	vbox.add_child(label)
+	
+	var btn_unlock = Button.new()
+	btn_unlock.text = "Unlock All Levels"
+	btn_unlock.pressed.connect(_on_cheat_unlock_levels)
+	vbox.add_child(btn_unlock)
+	
+	var btn_kill = Button.new()
+	btn_kill.text = "Kill All Enemies"
+	btn_kill.pressed.connect(_on_cheat_kill_enemies)
+	vbox.add_child(btn_kill)
+	
+	var btn_levelup = Button.new()
+	btn_levelup.text = "Level Up"
+	btn_levelup.pressed.connect(_on_cheat_level_up)
+	vbox.add_child(btn_levelup)
+	
+	var btn_heal = Button.new()
+	btn_heal.text = "Heal (100%)"
+	btn_heal.pressed.connect(_on_cheat_heal)
+	vbox.add_child(btn_heal)
+
+func _input(event):
+	if event is InputEventKey and event.pressed:
+		if event.keycode == KEY_F1:
+			if cheat_menu.visible:
+				cheat_menu.hide()
+				get_tree().paused = false
+			else:
+				cheat_menu.show()
+				get_tree().paused = true
+		elif event.keycode == KEY_ESCAPE:
+			if pause_menu.visible:
+				_on_pause_continue()
+			else:
+				pause_menu.show()
+				get_tree().paused = true
+
+func _on_pause_continue():
+	pause_menu.hide()
+	get_tree().paused = false
+
+func _on_pause_level_select():
+	get_tree().paused = false
+	get_tree().change_scene_to_file("res://level_select.tscn")
+
+func _on_pause_quit():
+	get_tree().paused = false
+	get_tree().change_scene_to_file("res://title_screen.tscn")
+
+func _on_cheat_unlock_levels():
+	if has_node("/root/GameManager"):
+		var gm = get_node("/root/GameManager")
+		for i in range(1, 7):
+			gm.unlock_level(i)
+		print("Cheats: All levels unlocked!")
+
+func _on_cheat_kill_enemies():
+	get_tree().call_group("enemies", "die")
+	print("Cheats: All enemies killed!")
+
+func _on_cheat_level_up():
+	if player:
+		player.level_up()
+		print("Cheats: Level Up!")
+
+func _on_cheat_heal():
+	if player:
+		player.health = player.max_health
+		update_health(player.health, player.max_health)
+		print("Cheats: Healed!")
+
 
 func _process(delta):
 	if not get_tree().paused and not level_complete:

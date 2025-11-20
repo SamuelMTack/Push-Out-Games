@@ -16,15 +16,18 @@ func attack():
 		
 		# Determine direction (nearest enemy or random)
 		var direction = Vector2.RIGHT.rotated(randf() * TAU)
-		var enemies = get_tree().get_nodes_in_group("enemies")
-		if not enemies.is_empty():
-			var nearest = enemies[0]
-			var min_dist = global_position.distance_to(nearest.global_position)
-			for e in enemies:
-				var d = global_position.distance_to(e.global_position)
-				if d < min_dist:
-					min_dist = d
-					nearest = e
+		var nearest = get_nearest_enemy()
+		if nearest:
 			direction = (nearest.global_position - global_position).normalized()
 			
 		proj.setup(damage, speed, range_distance, return_speed, self)
+
+func apply_upgrade(upgrade_name: String):
+	super.apply_upgrade(upgrade_name)
+	match upgrade_name:
+		"projectile_speed":
+			speed += 100.0
+			return_speed += 100.0
+		"projectile_count":
+			# Maybe add more boomerangs? For now just speed/damage
+			pass
