@@ -3,8 +3,9 @@ extends CharacterBody2D
 @export var speed = 80.0
 @export var max_health = 30.0
 @export var contact_damage = 5.0  # Damage per hit to player
-@export var exp_drop_chance = 1  # 70% chance to drop exp
+@export var exp_drop_chance = 1  # 100% chance to drop exp
 @export var experience_scene: PackedScene = preload("res://Experience.tscn")
+@export var damage_indicator_scene: PackedScene = preload("res://DamageIndicator.tscn")
 
 var health = max_health
 var player: CharacterBody2D
@@ -42,6 +43,12 @@ func _physics_process(delta):
 func take_damage(amount):
 	health -= amount
 	
+	# Show damage number
+	if damage_indicator_scene:
+		var indicator = damage_indicator_scene.instantiate()
+		get_tree().current_scene.add_child(indicator)
+		indicator.setup(amount, global_position)
+	
 	# Visual feedback
 	modulate = Color.RED
 	await get_tree().create_timer(0.1).timeout
@@ -51,10 +58,19 @@ func take_damage(amount):
 		die()
 
 func die():
+	# Notify main scene about enemy defeat
+	var main = get_tree().current_scene
+	if main and main.has_method("register_enemy_defeat"):
+		main.register_enemy_defeat()
+	
 	# Random chance to drop experience
 	if randf() < exp_drop_chance and experience_scene:
 		var exp = experience_scene.instantiate()
 		get_parent().add_child(exp)
 		exp.global_position = global_position
+		
+		# Also notify about experience drop
+		if main and main.has_method("register_experience_gain"):
+			main.register_experience_gain(10)  # Default exp value
 	
 	queue_free()

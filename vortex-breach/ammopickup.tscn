@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://urec2wqlxhe8"]
+
+[ext_resource type="Script" uid="uid://cchqiu3k6rpbe" path="res://ammopickup.gd" id="1_kw57n"]
+
+[node name="AmmoPickup" type="Area3D"]
+script = ExtResource("1_kw57n")

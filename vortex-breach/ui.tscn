@@ -1,0 +1,49 @@
+[gd_scene load_steps=2 format=3 uid="uid://qyaag0r036ne"]
+
+[ext_resource type="Script" uid="uid://dpg6fvglifao4" path="res://ui.gd" id="1_fyqef"]
+
+[node name="UI" type="CanvasLayer"]
+script = ExtResource("1_fyqef")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="HealthBar" type="ProgressBar" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+value = 100.0
+
+[node name="HealthLabel" type="Label" parent="MarginContainer/VBoxContainer/HealthBar"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Health: 100/100"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="StaminaBar" type="ProgressBar" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+value = 100.0
+
+[node name="StaminaLabel" type="Label" parent="MarginContainer/VBoxContainer/StaminaBar"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Stamina: 100/100"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AmmoLabel" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Ammo: 100/100"
+
+[node name="GoldLabel" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Gold: 0"
+
+[node name="PowerupLabel" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Powerup: None"

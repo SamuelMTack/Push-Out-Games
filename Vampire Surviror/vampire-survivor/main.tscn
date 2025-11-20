@@ -1,5 +1,6 @@
-[gd_scene load_steps=11 format=3 uid="uid://20fs7i4d8tk1"]
+[gd_scene load_steps=15 format=3 uid="uid://20fs7i4d8tk1"]
 
+[ext_resource type="Script" uid="uid://bj86rpdk18oqb" path="res://main.gd" id="1_4c57u"]
 [ext_resource type="Script" uid="uid://b2wgt2u1ktxwa" path="res://player.gd" id="1_7mycd"]
 [ext_resource type="Texture2D" uid="uid://beuoswje5bwf1" path="res://Assets/Sprite Assets/crawl-tiles Oct-5-2010/crawl-tiles Oct-5-2010/dc-mon/angel.png" id="2_4c57u"]
 [ext_resource type="Script" uid="uid://b783p6e1ovwil" path="res://enemy_spawner.gd" id="3_5vw27"]
@@ -9,11 +10,15 @@
 [ext_resource type="PackedScene" uid="uid://cemqtsafic18p" path="res://Experience.tscn" id="6_kek77"]
 [ext_resource type="Texture2D" uid="uid://beguhx3bnlvkl" path="res://Assets/Free-Vampires-Locations-Battle-Background-Pack2.jpg" id="8_5vw27"]
 [ext_resource type="Theme" uid="uid://cylymafaxyj0j" path="res://UI_Theme.tres" id="9_kek77"]
+[ext_resource type="PackedScene" uid="uid://cs27t0uwast75" path="res://end_screen.tscn" id="11_ycdy4"]
+[ext_resource type="PackedScene" uid="uid://cv0uq0ks55auy" path="res://level_select.tscn" id="12_w48qg"]
+[ext_resource type="PackedScene" uid="uid://d12lstxneq2hh" path="res://title_screen.tscn" id="13_vivmo"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dg77c"]
 size = Vector2(32.125, 43)
 
 [node name="Main" type="Node2D"]
+script = ExtResource("1_4c57u")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 anchors_preset = 15
@@ -211,3 +216,21 @@ text = "Confirm"
 
 [node name="Experience" parent="." instance=ExtResource("6_kek77")]
 position = Vector2(454, 317)
+
+[node name="end_screen" parent="." instance=ExtResource("11_ycdy4")]
+offset_left = 182.0
+offset_top = -489.0
+offset_right = 182.0
+offset_bottom = -489.0
+
+[node name="level_select" parent="." instance=ExtResource("12_w48qg")]
+offset_left = 574.0
+offset_top = -452.0
+offset_right = 574.0
+offset_bottom = -452.0
+
+[node name="title_screen" parent="." instance=ExtResource("13_vivmo")]
+offset_left = -253.0
+offset_top = -523.0
+offset_right = -253.0
+offset_bottom = -523.0

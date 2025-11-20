@@ -25,6 +25,14 @@ window/size/viewport_height=1080
 window/stretch/mode="viewport"
 window/stretch/aspect="expand"
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/claude_3.5_sonnet_chat_api/plugin.cfg")
+
 [filesystem]
 
 import/blender/enabled=false
+
+[plugins]
+
+claude_api/api_key=""

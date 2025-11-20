@@ -1,0 +1,38 @@
+[gd_scene load_steps=7 format=3 uid="uid://ddu02sq152fo5"]
+
+[ext_resource type="Script" uid="uid://oydmcxsl5nny" path="res://main.gd" id="1_cm0pq"]
+[ext_resource type="Script" uid="uid://dnh5hw6yjeupt" path="res://player.gd" id="1_r0du0"]
+[ext_resource type="Texture2D" uid="uid://df0ub7of4eh2i" path="res://icon.svg" id="1_uu6xs"]
+[ext_resource type="PackedScene" uid="uid://cgqftfqtuu4g1" path="res://Platform.tscn" id="2_r0du0"]
+[ext_resource type="Script" uid="uid://bobnrml74sw7s" path="res://platform.gd" id="5_fos0i"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fos0i"]
+size = Vector2(60, 58)
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_cm0pq")
+
+[node name="Player" type="CharacterBody2D" parent="."]
+script = ExtResource("1_r0du0")
+
+[node name="Sprite2D" type="Sprite2D" parent="Player"]
+position = Vector2(47.000008, 57.999992)
+scale = Vector2(0.46875, 0.4609375)
+texture = ExtResource("1_uu6xs")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+position = Vector2(47, 58)
+shape = SubResource("RectangleShape2D_fos0i")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position_smoothing_enabled = true
+
+[node name="Platforms" parent="." instance=ExtResource("2_r0du0")]
+position = Vector2(-8, 46)
+script = ExtResource("5_fos0i")
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="ScoreLabel" type="Label" parent="UI"]
+offset_right = 40.0
+offset_bottom = 23.0

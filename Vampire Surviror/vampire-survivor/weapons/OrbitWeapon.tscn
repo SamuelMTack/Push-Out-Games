@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://orbit_weapon_id"]
+
+[ext_resource type="Script" path="res://weapons/orbit_weapon.gd" id="1_orbit"]
+[ext_resource type="Texture2D" path="res://Assets/Sprites/Weapons/weapon_orbit.png" id="2_orbit_tex"]
+
+[node name="OrbitWeapon" type="Node2D"]
+script = ExtResource("1_orbit")
+weapon_name = "Orbit"
+icon = ExtResource("2_orbit_tex")
+damage = 10.0
+cooldown = 0.0

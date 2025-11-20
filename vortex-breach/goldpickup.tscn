@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://c3h7nuwfhjftw"]
+
+[ext_resource type="Script" uid="uid://diwc4digonfy2" path="res://goldpickup.gd" id="1_t5ydq"]
+
+[node name="GoldPickup" type="Area3D"]
+script = ExtResource("1_t5ydq")

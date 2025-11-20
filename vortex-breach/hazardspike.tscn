@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://b70mvnkdh57hd"]
+
+[ext_resource type="Script" uid="uid://kufpvp3qrvau" path="res://hazardspike.gd" id="1_hq8bj"]
+
+[node name="HazardSpike" type="Area3D"]
+script = ExtResource("1_hq8bj")

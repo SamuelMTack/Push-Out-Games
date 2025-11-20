@@ -1,6 +1,6 @@
 extends Area2D
 
-@export var experience_value = 10.0
+@export var experience_value = 100.0
 @export var pickup_range = 50.0  # Auto-pickup range
 
 var player: CharacterBody2D

@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://dpva7bmcm8ysw"]
+
+[ext_resource type="Script" uid="uid://cjk2hhfsxa5r1" path="res://enemy.gd" id="1_bat"]
+[ext_resource type="Texture2D" uid="uid://cnou6hq022357" path="res://Assets/Sprites/Enemies/enemy_bat.png" id="2_bat_tex"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bat"]
+radius = 15.0
+
+[node name="EnemyBat" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 3
+script = ExtResource("1_bat")
+speed = 120.0
+max_health = 15.0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(-1, 2)
+scale = Vector2(0.0390625, 0.036621094)
+texture = ExtResource("2_bat_tex")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_bat")

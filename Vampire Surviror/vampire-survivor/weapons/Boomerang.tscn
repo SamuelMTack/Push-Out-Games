@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://boomerang_weapon_id"]
+
+[ext_resource type="Script" path="res://weapons/boomerang.gd" id="1_boom"]
+[ext_resource type="Texture2D" path="res://Assets/Sprites/Weapons/weapon_boomerang.png" id="2_boom_tex"]
+
+[node name="Boomerang" type="Node2D"]
+script = ExtResource("1_boom")
+weapon_name = "Boomerang"
+icon = ExtResource("2_boom_tex")
+damage = 15.0
+cooldown = 1.2

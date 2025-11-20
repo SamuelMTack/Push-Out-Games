@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dyl5dovhbldwk"]
+
+[ext_resource type="Script" uid="uid://fwwh3gv5flnx" path="res://hazardlava.gd" id="1_lx1do"]
+
+[node name="HazardLava" type="Area3D"]
+script = ExtResource("1_lx1do")
