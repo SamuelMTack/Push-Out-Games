@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://weapons/knife.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://Assets/Sprites/Weapons/weapon_knife_evolved.png" id="2_tex"]
+
+[node name="KnifeEvolved" type="Node2D"]
+script = ExtResource("1_script")
+weapon_name = "Thousand Edge"
+icon = ExtResource("2_tex")
+damage = 20.0
+cooldown = 0.1

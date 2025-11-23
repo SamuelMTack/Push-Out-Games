@@ -40,6 +40,10 @@ func _ready():
 		area.monitoring = false
 	else:
 		area = $Area2D
+	
+	if not area.body_entered.is_connected(_on_body_entered):
+		area.body_entered.connect(_on_body_entered)
+	area.monitoring = false
 
 func attack():
 	if is_swinging: return
@@ -80,6 +84,5 @@ func attack():
 	)
 
 func _on_body_entered(body):
-	if body.is_in_group("enemies"):
-		if body.has_method("take_damage"):
-			body.take_damage(damage)
+	if body.has_method("take_damage"):
+		body.take_damage(damage)

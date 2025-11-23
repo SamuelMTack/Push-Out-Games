@@ -10,19 +10,21 @@ func attack():
 	if not projectile_scene: return
 	
 	var enemies = get_tree().get_nodes_in_group("enemies")
-	if enemies.is_empty(): return
+	var breakables = get_tree().get_nodes_in_group("breakables")
+	var targets = enemies + breakables
+	if targets.is_empty(): return
 	
 	# Sort by distance
-	enemies.sort_custom(func(a, b): 
+	targets.sort_custom(func(a, b): 
 		return global_position.distance_to(a.global_position) < global_position.distance_to(b.global_position)
 	)
 	
-	for i in range(min(projectile_count, enemies.size())):
+	for i in range(min(projectile_count, targets.size())):
 		var proj = projectile_scene.instantiate()
 		get_tree().current_scene.add_child(proj)
 		proj.global_position = global_position
 		
-		var target = enemies[i].global_position
+		var target = targets[i].global_position
 		var dir = (target - global_position).normalized()
 		
 		# Assuming Projectile.gd has a setup method

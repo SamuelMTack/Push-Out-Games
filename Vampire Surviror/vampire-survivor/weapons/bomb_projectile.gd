@@ -36,7 +36,7 @@ func explode():
 	# Damage enemies in range
 	var bodies = area.get_overlapping_bodies()
 	for body in bodies:
-		if body.is_in_group("enemies") and body.has_method("take_damage"):
+		if body.has_method("take_damage"):
 			body.take_damage(damage)
 	
 	# Visual effect (simple color flash for now)

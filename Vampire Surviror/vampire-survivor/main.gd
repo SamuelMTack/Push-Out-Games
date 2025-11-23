@@ -35,23 +35,22 @@ func _ready():
 		print("Starting Level: ", game_manager.current_level)
 		
 		# Load background for this level
-		var bg_path = "res://Assets/Sprites/Backgrounds/bg_level_" + str(game_manager.current_level) + ".png"
+		var bg_path = "res://Assets/Backgrounds/battleback" + str(game_manager.current_level) + ".png"
+		if not ResourceLoader.exists(bg_path):
+			# Fallback to level 1 if specific level bg missing
+			bg_path = "res://Assets/Backgrounds/battleback1.png"
+			
 		if ResourceLoader.exists(bg_path):
-			bg.texture = load(bg_path)
-			# If using a small tile, we might want to enable repeat and use a TextureRect instead, 
-			# but for now a scaled sprite is okay as per request "sprites as backgrounds".
-			# To make it seamless/tiled, we'd use TextureRect with Stretch Mode = Tile.
-			# Let's switch to TextureRect for better tiling.
+			# Update the ParallaxLayer Sprite instead of creating a new one
+			var parallax_sprite = $ParallaxBackground/ParallaxLayer/Sprite2D
+			if parallax_sprite:
+				parallax_sprite.texture = load(bg_path)
+				# Ensure region is large enough if needed, or just let it repeat via ParallaxLayer
+				
+			# Remove the temporary bg created above if we are using Parallax
 			bg.queue_free()
-			var bg_rect = TextureRect.new()
-			bg_rect.name = "BackgroundRect"
-			bg_rect.texture = load(bg_path)
-			bg_rect.stretch_mode = TextureRect.STRETCH_TILE
-			bg_rect.size = Vector2(5000, 5000) # Big enough area
-			bg_rect.position = Vector2(-2500, -2500) # Center it roughly
-			bg_rect.z_index = -100
-			add_child(bg_rect)
-			move_child(bg_rect, 0)
+		else:
+			print("Error: Background not found for level ", game_manager.current_level)
 		
 		# Adjust spawn rate based on level
 		if enemy_spawner:

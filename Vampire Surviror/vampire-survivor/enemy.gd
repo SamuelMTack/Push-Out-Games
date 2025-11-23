@@ -6,12 +6,16 @@ extends CharacterBody2D
 @export var exp_drop_chance = 1  # 100% chance to drop exp
 @export var experience_scene: PackedScene = preload("res://Experience.tscn")
 @export var damage_indicator_scene: PackedScene = preload("res://DamageIndicator.tscn")
+@export var death_particles_scene: PackedScene = preload("res://utils/DeathParticles.tscn")
 
 var health = max_health
 var player: CharacterBody2D
 var damage_cooldown = 0.0  # To prevent instant multiple hits
 
+var default_color = Color.WHITE
+
 func _ready():
+	default_color = modulate
 	add_to_group("enemies")
 	
 	# Find player
@@ -52,7 +56,7 @@ func take_damage(amount):
 	# Visual feedback
 	modulate = Color.RED
 	await get_tree().create_timer(0.1).timeout
-	modulate = Color.WHITE
+	modulate = default_color
 	
 	if health <= 0:
 		die()
@@ -63,6 +67,12 @@ func die():
 	if main and main.has_method("register_enemy_defeat"):
 		main.register_enemy_defeat()
 	
+	# Spawn particles
+	if death_particles_scene:
+		var particles = death_particles_scene.instantiate()
+		get_parent().add_child(particles)
+		particles.global_position = global_position
+	
 	# Random chance to drop experience
 	if randf() < exp_drop_chance and experience_scene:
 		var exp = experience_scene.instantiate()
@@ -72,5 +82,15 @@ func die():
 		# Also notify about experience drop
 		if main and main.has_method("register_experience_gain"):
 			main.register_experience_gain(10)  # Default exp value
+			
+	# Random chance to drop Coin (10%)
+	if randf() < 0.1:
+		var pickup_scene = load("res://pickups/Pickup.tscn")
+		if pickup_scene:
+			var coin = pickup_scene.instantiate()
+			coin.type = 1 # PickupType.COIN
+			coin.value = 10 # 10 coins
+			get_parent().add_child(coin)
+			coin.global_position = global_position
 	
 	queue_free()
