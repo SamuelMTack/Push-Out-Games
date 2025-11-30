@@ -16,6 +16,7 @@ var area = 1.0 # Area/Size multiplier
 var speed_mult = 1.0 # Projectile speed multiplier
 var cooldown_mult = 1.0 # Cooldown reduction multiplier (lower is better)
 var amount = 0 # Extra projectiles
+var luck = 1.0 # Luck multiplier for crits/drops
 
 var passives = {} # Dictionary to track owned passives and their levels
 
@@ -271,8 +272,15 @@ func apply_passive(passive_id: String):
 		"passive_pummarola": # Regen
 			health_regen += 0.5
 			print("Health regen increased to ", health_regen)
+		"passive_clover": # Luck
+			luck += 0.1
+			print("Luck increased to ", luck)
 	
 	# Re-apply stats to all weapons
 	for weapon in weapons_container.get_children():
 		if weapon.has_method("update_stats"):
 			weapon.update_stats(self)
+
+func get_luck() -> float:
+	return 1.0 + (passives.get("passive_clover", 0) * 0.1) # Base 1.0 + 10% per clover level
+

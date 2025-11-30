@@ -44,7 +44,8 @@ var all_passives = [
 	{"name": "Candelabrador (Area)", "id": "passive_candelabrador"},
 	{"name": "Bracer (Speed)", "id": "passive_bracer"},
 	{"name": "Duplicator (Amount)", "id": "passive_duplicator"},
-	{"name": "Pummarola (Regen)", "id": "passive_pummarola"}
+	{"name": "Pummarola (Regen)", "id": "passive_pummarola"},
+	{"name": "Clover (Luck)", "id": "passive_clover"}
 ]
 
 # Evolution Recipes: Weapon ID + Passive ID -> Evolved Weapon Scene
@@ -69,7 +70,8 @@ var special_weapons = [
 	{"name": "Knife", "id": "weapon_knife", "scene": "res://weapons/Knife.tscn"},
 	{"name": "Axe", "id": "weapon_axe", "scene": "res://weapons/Axe.tscn"},
 	{"name": "Garlic", "id": "weapon_garlic", "scene": "res://weapons/Garlic.tscn"},
-	{"name": "Lightning", "id": "weapon_lightning", "scene": "res://weapons/Lightning.tscn"}
+	{"name": "Lightning", "id": "weapon_lightning", "scene": "res://weapons/Lightning.tscn"},
+	{"name": "Holy Water", "id": "weapon_holy_water", "scene": "res://weapons/HolyWater.tscn"}
 ]
 
 signal level_completed
@@ -402,6 +404,28 @@ func show_special_reward_panel():
 	
 	_show_panel_common()
 
+func show_chest_reward(coins_amount: int):
+	# For now, just show a popup or print, and give coins
+	# Ideally we'd have a flashy animation
+	if has_node("/root/GameManager"):
+		get_node("/root/GameManager").add_coins(coins_amount)
+	
+	# Reuse level up panel for now but with custom text
+	level_up_panel.show()
+	level_label.text = "TREASURE CHEST FOUND!"
+	
+	# Clear buttons
+	for btn in upgrade_buttons:
+		btn.hide()
+	
+	# Show just one button for "Collect"
+	upgrade_buttons[0].text = "Collect " + str(coins_amount) + " Coins"
+	upgrade_buttons[0].show()
+	
+	available_upgrades = [{"id": "chest_coins", "name": "Coins"}]
+	
+	_show_panel_common()
+
 func _show_panel_common():
 	# Reset selection
 	selected_upgrade = ""
@@ -478,6 +502,9 @@ func _on_confirm_pressed():
 				
 				player.add_weapon(weapon)
 				print("Weapon Evolved!")
+	elif selected_upgrade == "chest_coins":
+		# Already added coins in show_chest_reward, just close
+		print("Collected chest coins")
 	else:
 		player.apply_upgrade(selected_upgrade)
 		print("Upgrade applied: ", selected_upgrade)

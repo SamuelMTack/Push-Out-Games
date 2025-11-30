@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://holywaterweapon"]
+
+[ext_resource type="Script" path="res://weapons/holy_water.gd" id="1_script"]
+
+[node name="HolyWater" type="Node2D"]
+script = ExtResource("1_script")
+weapon_name = "Holy Water"
+damage = 15.0
+cooldown = 3.0

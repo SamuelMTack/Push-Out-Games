@@ -6,6 +6,8 @@ class_name Weapon
 @export var damage: float = 10.0
 @export var cooldown: float = 1.0
 @export var level: int = 1
+@export var crit_chance: float = 0.05
+@export var crit_multiplier: float = 2.0
 
 var current_cooldown: float = 0.0
 var player: CharacterBody2D
@@ -75,3 +77,11 @@ func update_stats(player_ref):
 		if not has_meta("base_speed"):
 			set_meta("base_speed", self.speed)
 		self.speed = get_meta("base_speed") * player_ref.speed_mult
+
+func get_crit_chance() -> float:
+	if player:
+		return crit_chance * player.luck
+	return crit_chance
+
+func get_crit_multiplier() -> float:
+	return crit_multiplier
