@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://enemies/enemy_shooter.gd" id="1_new"]
+[ext_resource type="Texture2D" uid="uid://owcq88r8hgm3" path="res://Assets/Sprite Assets/crawl-tiles Oct-5-2010/crawl-tiles Oct-5-2010/dc-mon/hobgoblin.png" id="2_s7bn3"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2hac7"]
+size = Vector2(21.25, 26.5)
+
+[node name="Enemy_Shooter" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 3
+script = ExtResource("1_new")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(5.9999976, 7.4999976)
+scale = Vector2(0.68750036, 0.8437502)
+texture = ExtResource("2_s7bn3")
+modulate = Color(0.5, 0.5, 1.0, 1.0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(6.375, 7.75)
+shape = SubResource("RectangleShape2D_2hac7")

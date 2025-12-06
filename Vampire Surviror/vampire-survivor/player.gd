@@ -11,9 +11,19 @@ var current_level = 1
 # Player stats
 var pickup_range = 50.0  # Range for auto-collecting experience
 var health_regen = 0.0  # Health regeneration per second
+var might = 1.0 # Damage multiplier
+var area = 1.0 # Area/Size multiplier
+var speed_mult = 1.0 # Projectile speed multiplier
+var cooldown_mult = 1.0 # Cooldown reduction multiplier (lower is better)
+var amount = 0 # Extra projectiles
+var luck = 1.0 # Luck multiplier for crits/drops
+
+var passives = {} # Dictionary to track owned passives and their levels
 
 # Weapon container
 var weapons_container: Node2D
+var camera_shake
+
 
 signal player_died
 
@@ -25,20 +35,80 @@ func _ready():
 	weapons_container.name = "Weapons"
 	add_child(weapons_container)
 	
-	# Add default weapon (Projectile/Wand - we need to keep the original one or make a new one)
-	# For now, let's give them the Orbit weapon as a starter since we have it, 
-	# OR we can wrap the old projectile logic into a "Wand" weapon.
-	# Let's give them the Orbit weapon for now to test the new system.
-	# Actually, the user asked for "new levels... make new levels unlockable... make more unique enemys... Add different attacks that can be earned every 10 levels".
-	# It implies the base game still exists. I should probably keep the base shooting logic OR convert it to a "Wand" weapon.
-	# Converting to Wand weapon is cleaner but might break things if I don't do it right.
-	# Let's keep the base shooting logic for now as a "default attack" and add the new ones as extras.
-	# Wait, the plan said "Remove hardcoded shooting logic". I should stick to the plan.
-	# I'll create a simple "Wand" weapon that does what the old code did.
+	# Add camera shake
+	if has_node("Camera2D"):
+		var cam = get_node("Camera2D")
+		var shake_script = load("res://utils/camera_shake.gd")
+		camera_shake = shake_script.new()
+		cam.add_child(camera_shake)
 	
-	# Add a default Wand weapon
-	var wand = preload("res://weapons/Wand.tscn").instantiate()
-	add_weapon(wand)
+	# Load Character Data
+	if has_node("/root/GameManager"):
+		var gm = get_node("/root/GameManager")
+		if "selected_character" in gm and "characters" in gm:
+			var char_data = gm.characters[gm.selected_character]
+			
+			# Apply Stats
+			max_health = char_data["stats"]["max_health"]
+			health = max_health
+			speed = char_data["stats"]["speed"]
+			might = char_data["stats"]["might"]
+			cooldown_mult = char_data["stats"]["cooldown_mult"]
+			
+			# Add Starting Weapon
+			var weapon_path = char_data["weapon"]
+			if ResourceLoader.exists(weapon_path):
+				var weapon_scene = load(weapon_path)
+				var weapon = weapon_scene.instantiate()
+				add_weapon(weapon)
+			else:
+				# Fallback
+				var wand = preload("res://weapons/Wand.tscn").instantiate()
+				add_weapon(wand)
+	else:
+		# Fallback if no GameManager (e.g. testing scene directly)
+		var wand = preload("res://weapons/Wand.tscn").instantiate()
+		add_weapon(wand)
+
+	# Apply Permanent Upgrades from Shop
+	if has_node("/root/GameManager"):
+		var gm = get_node("/root/GameManager")
+		
+		# Might
+		var might_level = gm.get_upgrade_level("might")
+		if might_level > 0:
+			might += might_level * 0.1 # +10% per level
+			
+		# Speed
+		var speed_level = gm.get_upgrade_level("speed")
+		if speed_level > 0:
+			speed += speed_level * 10.0 # +10 speed per level
+			
+		# Max Health
+		var health_level = gm.get_upgrade_level("max_health")
+		if health_level > 0:
+			max_health += health_level * 10.0 # +10 health per level
+			health = max_health # Heal to new max
+			
+		# Cooldown
+		var cooldown_level = gm.get_upgrade_level("cooldown")
+		if cooldown_level > 0:
+			cooldown_mult *= pow(0.95, cooldown_level) # -5% per level (multiplicative)
+			
+		# Amount
+		var amount_level = gm.get_upgrade_level("amount")
+		if amount_level > 0:
+			amount += amount_level # +1 projectile per level
+			
+		# Magnet
+		var magnet_level = gm.get_upgrade_level("magnet")
+		if magnet_level > 0:
+			pickup_range += magnet_level * 10.0 # +10 range per level
+			
+		# Regen
+		var regen_level = gm.get_upgrade_level("regen")
+		if regen_level > 0:
+			health_regen += regen_level * 0.2 # +0.2 regen per level
 
 func _physics_process(delta):
 	# Movement
@@ -73,7 +143,14 @@ func _physics_process(delta):
 
 func add_weapon(weapon_instance):
 	weapons_container.add_child(weapon_instance)
-	# Apply player stats to weapon if needed
+	# Apply player stats to weapon
+	if weapon_instance.has_method("update_stats"):
+		weapon_instance.update_stats(self)
+	elif weapon_instance is Weapon:
+		# Manual application if update_stats missing
+		weapon_instance.damage *= might
+		weapon_instance.scale *= area
+		weapon_instance.cooldown *= cooldown_mult
 
 func add_experience(amount):
 	experience += amount
@@ -108,9 +185,14 @@ func level_up():
 		get_tree().call_group("ui", "show_level_up_panel")
 
 func take_damage(amount):
+	# Apply armor reduction
+	# amount = max(1, amount - armor) # If armor implemented
+	
 	health -= amount
-	if health < 0:
-		health = 0
+	
+	# Shake camera
+	if camera_shake:
+		camera_shake.add_trauma(0.5)
 	
 	# Update UI
 	get_tree().call_group("ui", "update_health", health, max_health)
@@ -132,6 +214,11 @@ func die():
 		get_tree().reload_current_scene()
 
 func apply_upgrade(upgrade_name: String):
+	# Check if it's a passive item upgrade
+	if upgrade_name in ["passive_spinach", "passive_empty_tome", "passive_armor", "passive_candelabrador", "passive_bracer", "passive_duplicator"]:
+		apply_passive(upgrade_name)
+		return
+
 	match upgrade_name:
 		"player_speed":
 			speed += 30.0
@@ -141,7 +228,7 @@ func apply_upgrade(upgrade_name: String):
 			health += 20.0  # Also heal for the increase
 			print("Max health increased to ", max_health)
 		"health_regen":
-			health_regen += 2.0
+			health_regen += 1.0
 			print("Health regen increased to ", health_regen, "/sec")
 		"pickup_range":
 			pickup_range += 20.0
@@ -157,3 +244,43 @@ func apply_upgrade(upgrade_name: String):
 						weapon.damage += 5.0
 					elif upgrade_name == "attack_speed":
 						weapon.cooldown *= 0.9
+
+func apply_passive(passive_id: String):
+	if passive_id not in passives:
+		passives[passive_id] = 0
+	passives[passive_id] += 1
+	
+	match passive_id:
+		"passive_spinach": # Might
+			might += 0.1
+			print("Might increased to ", might)
+		"passive_empty_tome": # Cooldown
+			cooldown_mult *= 0.9
+			print("Cooldown mult reduced to ", cooldown_mult)
+		"passive_armor": # Defense (not implemented yet, but good to have)
+			# damage_reduction += 1
+			pass
+		"passive_candelabrador": # Area
+			area += 0.1
+			print("Area increased to ", area)
+		"passive_bracer": # Projectile Speed
+			speed_mult += 0.1
+			print("Projectile Speed mult increased to ", speed_mult)
+		"passive_duplicator": # Amount
+			amount += 1
+			print("Amount increased to ", amount)
+		"passive_pummarola": # Regen
+			health_regen += 0.5
+			print("Health regen increased to ", health_regen)
+		"passive_clover": # Luck
+			luck += 0.1
+			print("Luck increased to ", luck)
+	
+	# Re-apply stats to all weapons
+	for weapon in weapons_container.get_children():
+		if weapon.has_method("update_stats"):
+			weapon.update_stats(self)
+
+func get_luck() -> float:
+	return 1.0 + (passives.get("passive_clover", 0) * 0.1) # Base 1.0 + 10% per clover level
+

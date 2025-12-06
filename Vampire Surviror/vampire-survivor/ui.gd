@@ -3,6 +3,7 @@ extends CanvasLayer
 @onready var health_bar = %HealthBar
 @onready var exp_bar = %ExperienceBar
 @onready var level_label = %LevelLabel
+@onready var coin_label = %CoinLabel
 @onready var time_label = %TimeLabel
 @onready var level_up_panel = %LevelUpPanel
 @onready var upgrade_button1 = %LevelUpPanel/%UpgradeButton1
@@ -33,17 +34,44 @@ var all_upgrades = [
 	{"name": "Move Speed", "id": "player_speed"},
 	{"name": "Max Health", "id": "max_health"},
 	{"name": "Health Regen", "id": "health_regen"},
-	{"name": "Pickup Range", "id": "pickup_range"},
-	{"name": "Projectile Pierce", "id": "projectile_pierce"},
-	{"name": "Projectile Size", "id": "projectile_size"}
+	{"name": "Pickup Range", "id": "pickup_range"}
 ]
+
+var all_passives = [
+	{"name": "Spinach (Might)", "id": "passive_spinach"},
+	{"name": "Empty Tome (Cooldown)", "id": "passive_empty_tome"},
+	{"name": "Armor", "id": "passive_armor"},
+	{"name": "Candelabrador (Area)", "id": "passive_candelabrador"},
+	{"name": "Bracer (Speed)", "id": "passive_bracer"},
+	{"name": "Duplicator (Amount)", "id": "passive_duplicator"},
+	{"name": "Pummarola (Regen)", "id": "passive_pummarola"},
+	{"name": "Clover (Luck)", "id": "passive_clover"}
+]
+
+# Evolution Recipes: Weapon ID + Passive ID -> Evolved Weapon Scene
+var evolutions = {
+	"weapon_wand": {"passive": "passive_empty_tome", "result": "res://weapons/WandEvolved.tscn", "name": "Holy Wand"},
+	"weapon_sword": {"passive": "passive_armor", "result": "res://weapons/SwordEvolved.tscn", "name": "Heaven Sword"},
+	"weapon_bomb": {"passive": "passive_bracer", "result": "res://weapons/BombEvolved.tscn", "name": "Nuke"},
+	"weapon_boomerang": {"passive": "passive_candelabrador", "result": "res://weapons/BoomerangEvolved.tscn", "name": "Death Spiral"},
+	"weapon_orbit": {"passive": "passive_spinach", "result": "res://weapons/OrbitEvolved.tscn", "name": "Vesper"},
+	"weapon_knife": {"passive": "passive_bracer", "result": "res://weapons/KnifeEvolved.tscn", "name": "Thousand Edge"},
+	"weapon_axe": {"passive": "passive_candelabrador", "result": "res://weapons/AxeEvolved.tscn", "name": "Death Scythe"},
+	"weapon_garlic": {"passive": "passive_pummarola", "result": "res://weapons/GarlicEvolved.tscn", "name": "Soul Eater"},
+	"weapon_lightning": {"passive": "passive_duplicator", "result": "res://weapons/LightningEvolved.tscn", "name": "Thunder Loop"}
+}
 
 # Special weapons
 var special_weapons = [
 	{"name": "Sword", "id": "weapon_sword", "scene": "res://weapons/Sword.tscn"},
 	{"name": "Bomb", "id": "weapon_bomb", "scene": "res://weapons/Bomb.tscn"},
 	{"name": "Boomerang", "id": "weapon_boomerang", "scene": "res://weapons/Boomerang.tscn"},
-	{"name": "Orbit Orb", "id": "weapon_orbit", "scene": "res://weapons/OrbitWeapon.tscn"}
+	{"name": "Orbit Orb", "id": "weapon_orbit", "scene": "res://weapons/OrbitWeapon.tscn"},
+	{"name": "Knife", "id": "weapon_knife", "scene": "res://weapons/Knife.tscn"},
+	{"name": "Axe", "id": "weapon_axe", "scene": "res://weapons/Axe.tscn"},
+	{"name": "Garlic", "id": "weapon_garlic", "scene": "res://weapons/Garlic.tscn"},
+	{"name": "Lightning", "id": "weapon_lightning", "scene": "res://weapons/Lightning.tscn"},
+	{"name": "Holy Water", "id": "weapon_holy_water", "scene": "res://weapons/HolyWater.tscn"}
 ]
 
 signal level_completed
@@ -58,6 +86,12 @@ func _ready():
 		# Initialize bars
 		health_bar.max_value = player.max_health
 		health_bar.value = player.health
+	
+	# Connect to GameManager for coins
+	if has_node("/root/GameManager"):
+		var gm = get_node("/root/GameManager")
+		gm.coins_updated.connect(_on_coins_updated)
+		_on_coins_updated(gm.coins) # Set initial value
 	
 	level_up_panel.hide()
 	
@@ -108,6 +142,11 @@ func _setup_pause_menu():
 	btn_level_select.pressed.connect(_on_pause_level_select)
 	vbox.add_child(btn_level_select)
 	
+	var btn_char_select = Button.new()
+	btn_char_select.text = "Character Select"
+	btn_char_select.pressed.connect(_on_pause_char_select)
+	vbox.add_child(btn_char_select)
+	
 	var btn_quit = Button.new()
 	btn_quit.text = "Quit to Title"
 	btn_quit.pressed.connect(_on_pause_quit)
@@ -153,6 +192,11 @@ func _setup_cheat_menu():
 	btn_heal.pressed.connect(_on_cheat_heal)
 	vbox.add_child(btn_heal)
 
+	var btn_coins = Button.new()
+	btn_coins.text = "Add 9999 Coins"
+	btn_coins.pressed.connect(_on_cheat_add_coins)
+	vbox.add_child(btn_coins)
+
 func _input(event):
 	if event is InputEventKey and event.pressed:
 		if event.keycode == KEY_F1:
@@ -176,6 +220,10 @@ func _on_pause_continue():
 func _on_pause_level_select():
 	get_tree().paused = false
 	get_tree().change_scene_to_file("res://level_select.tscn")
+
+func _on_pause_char_select():
+	get_tree().paused = false
+	get_tree().change_scene_to_file("res://character_select.tscn")
 
 func _on_pause_quit():
 	get_tree().paused = false
@@ -202,6 +250,11 @@ func _on_cheat_heal():
 		player.health = player.max_health
 		update_health(player.health, player.max_health)
 		print("Cheats: Healed!")
+
+func _on_cheat_add_coins():
+	if has_node("/root/GameManager"):
+		get_node("/root/GameManager").add_coins(9999)
+		print("Cheats: Added 9999 Coins!")
 
 
 func _process(delta):
@@ -277,14 +330,23 @@ func _select_current_upgrade():
 		print("Upgrade selected: ", selected_upgrade)
 
 func _pick_random_upgrades():
-	# Shuffle and pick 3 random upgrades
-	available_upgrades.clear()
-	var shuffled = all_upgrades.duplicate()
-	shuffled.shuffle()
-	
-	# Take first 3
-	for i in range(min(3, shuffled.size())):
-		available_upgrades.append(shuffled[i])
+	# Check for evolutions first!
+	var evolution_option = _check_for_evolution()
+	if evolution_option:
+		available_upgrades = [evolution_option]
+		# Fill the rest with random upgrades
+		var shuffled = all_upgrades + all_passives
+		shuffled.shuffle()
+		for i in range(2):
+			available_upgrades.append(shuffled[i])
+	else:
+		available_upgrades.clear()
+		var shuffled = all_upgrades + all_passives
+		shuffled.shuffle()
+		
+		# Take first 3
+		for i in range(min(3, shuffled.size())):
+			available_upgrades.append(shuffled[i])
 	
 	# Update button texts
 	for i in range(3):
@@ -319,6 +381,10 @@ func update_experience(current: float, maximum: float):
 	exp_bar.max_value = maximum
 	exp_bar.value = current
 
+func _on_coins_updated(amount: int):
+	if coin_label:
+		coin_label.text = "Coins: " + str(amount)
+
 func show_level_up_panel():
 	is_special_reward = false
 	current_level += 1
@@ -335,6 +401,28 @@ func show_special_reward_panel():
 	level_label.text = "Level: " + str(current_level) + " - SPECIAL REWARD!"
 	
 	_pick_special_rewards()
+	
+	_show_panel_common()
+
+func show_chest_reward(coins_amount: int):
+	# For now, just show a popup or print, and give coins
+	# Ideally we'd have a flashy animation
+	if has_node("/root/GameManager"):
+		get_node("/root/GameManager").add_coins(coins_amount)
+	
+	# Reuse level up panel for now but with custom text
+	level_up_panel.show()
+	level_label.text = "TREASURE CHEST FOUND!"
+	
+	# Clear buttons
+	for btn in upgrade_buttons:
+		btn.hide()
+	
+	# Show just one button for "Collect"
+	upgrade_buttons[0].text = "Collect " + str(coins_amount) + " Coins"
+	upgrade_buttons[0].show()
+	
+	available_upgrades = [{"id": "chest_coins", "name": "Coins"}]
 	
 	_show_panel_common()
 
@@ -396,6 +484,27 @@ func _on_confirm_pressed():
 				var weapon = weapon_scene.instantiate()
 				player.add_weapon(weapon)
 				print("Added new weapon: ", selected_upgrade)
+	elif selected_upgrade.begins_with("EVO_"):
+		# Handle evolution
+		var evo_data = available_upgrades[selected_button_index] # This is a bit risky if index changed, but usually safe in this flow
+		if evo_data["id"] == selected_upgrade:
+			var weapon_scene = load(evo_data["scene"])
+			if weapon_scene:
+				var weapon = weapon_scene.instantiate()
+				# Remove old weapon? Or just add new one? 
+				# Usually evolution replaces. For simplicity, let's just add it for now
+				# Ideally we should find the old weapon and queue_free() it.
+				# Let's try to find and remove the base weapon
+				for child in player.weapons_container.get_children():
+					if child.weapon_name == evo_data["base_weapon_name"]: # We need to ensure weapon_name matches
+						child.queue_free()
+						break
+				
+				player.add_weapon(weapon)
+				print("Weapon Evolved!")
+	elif selected_upgrade == "chest_coins":
+		# Already added coins in show_chest_reward, just close
+		print("Collected chest coins")
 	else:
 		player.apply_upgrade(selected_upgrade)
 		print("Upgrade applied: ", selected_upgrade)
@@ -411,3 +520,40 @@ func _on_confirm_pressed():
 	
 	# Reset for next level up
 	selected_upgrade = ""
+
+func _check_for_evolution():
+	if not player: return null
+	
+	for weapon in player.weapons_container.get_children():
+		if not weapon is Weapon: continue
+		
+		# Check if weapon is max level (assuming 8 is max)
+		if weapon.level >= 8:
+			# Check if we have a recipe for this weapon
+			# We need a way to map weapon instance to ID. 
+			# Let's assume weapon.name or a new property 'id'
+			# For now, let's use a simple mapping based on weapon_name or script path
+			var weapon_id = ""
+			if "Wand" in weapon.name: weapon_id = "weapon_wand"
+			elif "Sword" in weapon.name: weapon_id = "weapon_sword"
+			elif "Bomb" in weapon.name: weapon_id = "weapon_bomb"
+			elif "Boomerang" in weapon.name: weapon_id = "weapon_boomerang"
+			elif "Orbit" in weapon.name: weapon_id = "weapon_orbit"
+			elif "Knife" in weapon.name: weapon_id = "weapon_knife"
+			elif "Axe" in weapon.name: weapon_id = "weapon_axe"
+			elif "Garlic" in weapon.name: weapon_id = "weapon_garlic"
+			elif "Lightning" in weapon.name: weapon_id = "weapon_lightning"
+			
+			if weapon_id in evolutions:
+				var recipe = evolutions[weapon_id]
+				var required_passive = recipe["passive"]
+				
+				# Check if player has the passive
+				if required_passive in player.passives:
+					return {
+						"name": "EVOLVE: " + recipe["name"], 
+						"id": "EVO_" + weapon_id, 
+						"scene": recipe["result"],
+						"base_weapon_name": weapon.weapon_name # Store this to remove old one
+					}
+	return null

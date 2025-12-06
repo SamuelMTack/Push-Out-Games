@@ -6,6 +6,8 @@ class_name Weapon
 @export var damage: float = 10.0
 @export var cooldown: float = 1.0
 @export var level: int = 1
+@export var crit_chance: float = 0.05
+@export var crit_multiplier: float = 2.0
 
 var current_cooldown: float = 0.0
 var player: CharacterBody2D
@@ -55,8 +57,31 @@ func apply_upgrade(upgrade_name: String):
 		"attack_speed":
 			cooldown = max(0.1, cooldown * 0.9)
 			print(weapon_name, " cooldown reduced to ", cooldown)
-		"projectile_size":
 			scale *= 1.1
 			print(weapon_name, " size increased")
 
+func update_stats(player_ref):
+	# Apply player stats to this weapon
+	# Store base stats in metadata to avoid compounding multiplication
+	if not has_meta("base_damage"):
+		set_meta("base_damage", damage)
+		set_meta("base_cooldown", cooldown)
+		set_meta("base_scale", scale)
+	
+	damage = get_meta("base_damage") * player_ref.might
+	cooldown = get_meta("base_cooldown") * player_ref.cooldown_mult
+	scale = get_meta("base_scale") * player_ref.area
+	
+	# Speed?
+	if "speed" in self:
+		if not has_meta("base_speed"):
+			set_meta("base_speed", self.speed)
+		self.speed = get_meta("base_speed") * player_ref.speed_mult
 
+func get_crit_chance() -> float:
+	if player:
+		return crit_chance * player.luck
+	return crit_chance
+
+func get_crit_multiplier() -> float:
+	return crit_multiplier

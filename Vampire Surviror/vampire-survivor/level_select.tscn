@@ -81,6 +81,34 @@ layout_mode = 2
 theme = ExtResource("2_theme")
 text = "Level 6"
 
+[node name="Level7Button" type="Button" parent="VBoxContainer/LevelGrid"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(130, 50)
+layout_mode = 2
+theme = ExtResource("2_theme")
+text = "Level 7"
+
+[node name="Level8Button" type="Button" parent="VBoxContainer/LevelGrid"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(130, 50)
+layout_mode = 2
+theme = ExtResource("2_theme")
+text = "Level 8"
+
+[node name="Level9Button" type="Button" parent="VBoxContainer/LevelGrid"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(130, 50)
+layout_mode = 2
+theme = ExtResource("2_theme")
+text = "Level 9"
+
+[node name="Level10Button" type="Button" parent="VBoxContainer/LevelGrid"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(130, 50)
+layout_mode = 2
+theme = ExtResource("2_theme")
+text = "Level 10"
+
 [node name="BackButton" type="Button" parent="VBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(200, 50)

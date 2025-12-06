@@ -20,17 +20,16 @@ size = Vector2(32.125, 43)
 [node name="Main" type="Node2D"]
 script = ExtResource("1_4c57u")
 
-[node name="TextureRect" type="TextureRect" parent="."]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -324.0
-offset_top = -276.0
-offset_right = 1476.0
-offset_bottom = 924.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_mirroring = Vector2(1800, 1200)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
 texture = ExtResource("8_5vw27")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 1800, 1200)
 
 [node name="Player" type="CharacterBody2D" parent="."]
 position = Vector2(581, 329)
@@ -135,6 +134,13 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(130, 0)
 layout_mode = 2
 text = "Level: 1"
+vertical_alignment = 1
+
+[node name="CoinLabel" type="Label" parent="UI/MarginContainer/MarginContainer/MarginContainer/GridContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(130, 0)
+layout_mode = 2
+text = "Coins: 0"
 vertical_alignment = 1
 
 [node name="TimeLabel" type="Label" parent="UI/MarginContainer"]
