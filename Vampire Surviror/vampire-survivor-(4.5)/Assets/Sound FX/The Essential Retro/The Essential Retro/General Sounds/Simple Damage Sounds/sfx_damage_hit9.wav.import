@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://vdfr544f5sk3"
+path="res://.godot/imported/sfx_damage_hit9.wav-f3038b5fb7a3a2ba2d7a4d8d5a5bfdd7.sample"
+
+[deps]
+
+source_file="res://Assets/Sound FX/The Essential Retro/The Essential Retro/General Sounds/Simple Damage Sounds/sfx_damage_hit9.wav"
+dest_files=["res://.godot/imported/sfx_damage_hit9.wav-f3038b5fb7a3a2ba2d7a4d8d5a5bfdd7.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

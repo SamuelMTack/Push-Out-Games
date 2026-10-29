@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://8wmb5ts65ps8"
+path="res://.godot/imported/06 - Rebels Be.ogg-77b5a43658f9cc700f33494755c3041c.oggvorbisstr"
+
+[deps]
+
+source_file="res://Assets/Music/JRPG OST (Rev 2)/06 - Rebels Be.ogg"
+dest_files=["res://.godot/imported/06 - Rebels Be.ogg-77b5a43658f9cc700f33494755c3041c.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

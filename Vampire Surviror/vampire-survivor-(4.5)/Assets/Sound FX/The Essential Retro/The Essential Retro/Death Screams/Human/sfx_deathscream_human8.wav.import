@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://is2me7errcca"
+path="res://.godot/imported/sfx_deathscream_human8.wav-6107e4c940f288a3be2c934771c732f3.sample"
+
+[deps]
+
+source_file="res://Assets/Sound FX/The Essential Retro/The Essential Retro/Death Screams/Human/sfx_deathscream_human8.wav"
+dest_files=["res://.godot/imported/sfx_deathscream_human8.wav-6107e4c940f288a3be2c934771c732f3.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

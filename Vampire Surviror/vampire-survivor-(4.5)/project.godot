@@ -1,0 +1,24 @@
+config_version=5
+
+[application]
+
+config/name="Vampire Survivor (4.5)"
+run/main_scene="uid://d12lstxneq2hh"
+config/features=PackedStringArray("4.5", "GL Compatibility")
+boot_splash/bg_color=Color(1, 1, 1, 1)
+boot_splash/image="uid://cxs2i70kdsqac"
+config/icon="uid://djbmy5mty5com"
+boot_splash/minimum_display_time=2000
+
+[autoload]
+
+GameManager="*res://game_manager.gd"
+
+[display]
+
+mouse_cursor/custom_image="uid://b24pmv2plrdsb"
+
+[rendering]
+
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"

@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://exe4pgo3eptv"
+path="res://.godot/imported/sfx_wpn_machinegun_loop4.wav-cfc51fa8078eb04ecdc9d5ac93e37c3e.sample"
+
+[deps]
+
+source_file="res://Assets/Sound FX/The Essential Retro/The Essential Retro/Weapons/Machinegun/sfx_wpn_machinegun_loop4.wav"
+dest_files=["res://.godot/imported/sfx_wpn_machinegun_loop4.wav-cfc51fa8078eb04ecdc9d5ac93e37c3e.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

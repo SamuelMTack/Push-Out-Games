@@ -1,0 +1,178 @@
+[gd_scene load_steps=18 format=3 uid="uid://bn7bcymv1b1dm"]
+
+[ext_resource type="Script" uid="uid://11o42lhqb5tm" path="res://Scripts/main_ui.gd" id="1_4uoxc"]
+[ext_resource type="Texture2D" uid="uid://dyaktjn5d1c7p" path="res://Sprites/Falling_Egg_Sprite.png" id="2_4uoxc"]
+[ext_resource type="Script" uid="uid://b4s8j5r0tjtj4" path="res://Scripts/button_click_me.gd" id="2_llbac"]
+[ext_resource type="Theme" uid="uid://b26pfekpoe4fs" path="res://Themes/UI_Theme.tres" id="2_n1q3t"]
+[ext_resource type="Texture2D" uid="uid://cvqltc5pc1mn5" path="res://Sprites/Chicken_Sprite.png" id="3_llbac"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n1q3t"]
+atlas = ExtResource("2_4uoxc")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_il2or"]
+atlas = ExtResource("2_4uoxc")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1v8me"]
+atlas = ExtResource("2_4uoxc")
+region = Rect2(256, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b7t0n"]
+atlas = ExtResource("2_4uoxc")
+region = Rect2(384, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_im5q1"]
+atlas = ExtResource("2_4uoxc")
+region = Rect2(512, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8yam0"]
+atlas = ExtResource("2_4uoxc")
+region = Rect2(640, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_81ket"]
+atlas = ExtResource("2_4uoxc")
+region = Rect2(768, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mcdcf"]
+atlas = ExtResource("2_4uoxc")
+region = Rect2(896, 0, 128, 128)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_sd2ej"]
+animations = [{
+"frames": [{
+"duration": 0.01,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n1q3t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_il2or")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1v8me")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b7t0n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_im5q1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8yam0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_81ket")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mcdcf")
+}],
+"loop": false,
+"name": &"Falling_eggs",
+"speed": 11.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dnsp1"]
+atlas = ExtResource("3_llbac")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ilgax"]
+atlas = ExtResource("3_llbac")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_yubjs"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dnsp1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ilgax")
+}],
+"loop": false,
+"name": &"Chicken_poop",
+"speed": 7.0
+}]
+
+[node name="Main_UI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_4uoxc")
+
+[node name="TextureRect" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_n1q3t")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+custom_minimum_size = Vector2(400, 400)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -90.0
+offset_right = 200.0
+offset_bottom = 90.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 24
+
+[node name="Button_Start" type="Button" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("2_n1q3t")
+text = "Start Game"
+script = ExtResource("2_llbac")
+
+[node name="Button_Options" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("2_n1q3t")
+text = "Options"
+
+[node name="Button_Exit" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("2_n1q3t")
+text = "Exit"
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 1.5
+
+[node name="Eggs" type="AnimatedSprite2D" parent="."]
+position = Vector2(942.56, 498.56)
+scale = Vector2(2.29, 2.29)
+sprite_frames = SubResource("SpriteFrames_sd2ej")
+animation = &"Falling_eggs"
+frame = 8
+frame_progress = 1.0
+
+[node name="Chicken" type="AnimatedSprite2D" parent="."]
+position = Vector2(935, 466)
+scale = Vector2(2.29, 2.29)
+sprite_frames = SubResource("SpriteFrames_yubjs")
+animation = &"Chicken_poop"
+
+[connection signal="button_down" from="VBoxContainer/Button_Start" to="VBoxContainer/Button_Start" method="_on_button_down"]
+[connection signal="button_up" from="VBoxContainer/Button_Start" to="VBoxContainer/Button_Start" method="_on_button_up"]
+[connection signal="pressed" from="VBoxContainer/Button_Start" to="." method="_on_button_start_pressed"]
+[connection signal="pressed" from="VBoxContainer/Button_Start" to="VBoxContainer/Button_Start" method="_on_pressed"]
+[connection signal="pressed" from="VBoxContainer/Button_Options" to="." method="_on_button_options_pressed"]
+[connection signal="pressed" from="VBoxContainer/Button_Exit" to="." method="_on_button_exit_pressed"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="animation_finished" from="Eggs" to="VBoxContainer/Button_Start" method="_on_eggs_animation_finished"]

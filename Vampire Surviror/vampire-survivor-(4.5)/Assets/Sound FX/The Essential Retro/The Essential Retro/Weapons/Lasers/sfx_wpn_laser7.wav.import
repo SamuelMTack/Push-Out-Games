@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://jqmg7on0o6fy"
+path="res://.godot/imported/sfx_wpn_laser7.wav-2fdeb07bb49d6878f94b1a57630adbd6.sample"
+
+[deps]
+
+source_file="res://Assets/Sound FX/The Essential Retro/The Essential Retro/Weapons/Lasers/sfx_wpn_laser7.wav"
+dest_files=["res://.godot/imported/sfx_wpn_laser7.wav-2fdeb07bb49d6878f94b1a57630adbd6.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

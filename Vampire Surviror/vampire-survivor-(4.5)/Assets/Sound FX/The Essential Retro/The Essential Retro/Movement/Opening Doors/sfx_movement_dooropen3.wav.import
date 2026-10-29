@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bldro65072txg"
+path="res://.godot/imported/sfx_movement_dooropen3.wav-83179c03b2cd9413f67552f715601e1b.sample"
+
+[deps]
+
+source_file="res://Assets/Sound FX/The Essential Retro/The Essential Retro/Movement/Opening Doors/sfx_movement_dooropen3.wav"
+dest_files=["res://.godot/imported/sfx_movement_dooropen3.wav-83179c03b2cd9413f67552f715601e1b.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

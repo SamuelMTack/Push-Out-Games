@@ -1,0 +1,55 @@
+[gd_resource type="Theme" load_steps=10 format=3 uid="uid://b26pfekpoe4fs"]
+
+[ext_resource type="Texture2D" uid="uid://bwovvyebaplcc" path="res://Themes/Input/boxNormal.png" id="1_3l8vs"]
+[ext_resource type="Texture2D" uid="uid://djrxh5r5us4wu" path="res://Themes/Input/boxSelect.png" id="2_nt3vr"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_vjnto"]
+texture = ExtResource("1_3l8vs")
+texture_margin_left = 32.0
+texture_margin_top = 37.0
+texture_margin_right = 32.0
+texture_margin_bottom = 37.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_hixn6"]
+texture = ExtResource("2_nt3vr")
+texture_margin_left = 32.0
+texture_margin_top = 37.0
+texture_margin_right = 32.0
+texture_margin_bottom = 37.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_nt3vr"]
+texture = ExtResource("1_3l8vs")
+texture_margin_left = 32.0
+texture_margin_top = 37.0
+texture_margin_right = 32.0
+texture_margin_bottom = 37.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_cqiu8"]
+texture = ExtResource("2_nt3vr")
+texture_margin_left = 32.0
+texture_margin_top = 37.0
+texture_margin_right = 32.0
+texture_margin_bottom = 37.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_o7y8o"]
+texture = ExtResource("2_nt3vr")
+texture_margin_left = 34.89476
+texture_margin_top = 44.644768
+texture_margin_right = 40.539505
+texture_margin_bottom = 39.00003
+region_rect = Rect2(4.000107, -2.7236633, 124.18431, 127.263245)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nt3vr"]
+bg_color = Color(0.18647465, 0.13286501, 0.12467372, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vjnto"]
+bg_color = Color(0.23231286, 0.29282802, 0.13829187, 1)
+
+[resource]
+Button/styles/disabled = SubResource("StyleBoxTexture_vjnto")
+Button/styles/hover = SubResource("StyleBoxTexture_hixn6")
+Button/styles/normal = SubResource("StyleBoxTexture_nt3vr")
+Button/styles/pressed = SubResource("StyleBoxTexture_cqiu8")
+Panel/styles/panel = SubResource("StyleBoxTexture_o7y8o")
+Window/styles/embedded_border = SubResource("StyleBoxFlat_nt3vr")
+Window/styles/embedded_unfocused_border = SubResource("StyleBoxFlat_vjnto")

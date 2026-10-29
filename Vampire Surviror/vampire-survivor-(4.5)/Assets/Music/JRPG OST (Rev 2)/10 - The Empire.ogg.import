@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://cbhga8efph460"
+path="res://.godot/imported/10 - The Empire.ogg-07eeb0054b65bf149a69c65e593624cf.oggvorbisstr"
+
+[deps]
+
+source_file="res://Assets/Music/JRPG OST (Rev 2)/10 - The Empire.ogg"
+dest_files=["res://.godot/imported/10 - The Empire.ogg-07eeb0054b65bf149a69c65e593624cf.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

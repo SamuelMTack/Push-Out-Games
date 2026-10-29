@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://weapons/wand.gd" id="1_wand"]
+[ext_resource type="Texture2D" path="res://icon.svg" id="2_wand_tex"]
+
+[node name="WandEvolved" type="Node2D"]
+script = ExtResource("1_wand")
+weapon_name = "Holy Wand"
+icon = ExtResource("2_wand_tex")
+damage = 30.0
+cooldown = 0.5

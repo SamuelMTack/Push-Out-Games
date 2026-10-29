@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bpboxqqxnx6tb"
+path="res://.godot/imported/sfx_sounds_error6.wav-b6eb32fc0b779ecd45e77a4b8ccc823c.sample"
+
+[deps]
+
+source_file="res://Assets/Sound FX/The Essential Retro/The Essential Retro/General Sounds/Negative Sounds/sfx_sounds_error6.wav"
+dest_files=["res://.godot/imported/sfx_sounds_error6.wav-b6eb32fc0b779ecd45e77a4b8ccc823c.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

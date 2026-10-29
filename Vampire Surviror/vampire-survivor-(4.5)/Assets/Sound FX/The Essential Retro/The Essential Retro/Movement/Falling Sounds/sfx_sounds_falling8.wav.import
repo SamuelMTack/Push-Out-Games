@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://emucura2f4s"
+path="res://.godot/imported/sfx_sounds_falling8.wav-51ca7638237b978c4e2641e88432664a.sample"
+
+[deps]
+
+source_file="res://Assets/Sound FX/The Essential Retro/The Essential Retro/Movement/Falling Sounds/sfx_sounds_falling8.wav"
+dest_files=["res://.godot/imported/sfx_sounds_falling8.wav-51ca7638237b978c4e2641e88432664a.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

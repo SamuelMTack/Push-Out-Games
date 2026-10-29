@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://chllkiiquppv8"
+path="res://.godot/imported/08 - Overworld.ogg-a461cdef1359bcd9ce15b924704e2f62.oggvorbisstr"
+
+[deps]
+
+source_file="res://Assets/Music/JRPG OST (Rev 2)/08 - Overworld.ogg"
+dest_files=["res://.godot/imported/08 - Overworld.ogg-a461cdef1359bcd9ce15b924704e2f62.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

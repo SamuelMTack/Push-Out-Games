@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://d2ew8k6ich81h"
+path="res://.godot/imported/sfx_sounds_high5.wav-e21d2166499d1c0a2f71cd87aef71522.sample"
+
+[deps]
+
+source_file="res://Assets/Sound FX/The Essential Retro/The Essential Retro/General Sounds/High Pitched Sounds/sfx_sounds_high5.wav"
+dest_files=["res://.godot/imported/sfx_sounds_high5.wav-e21d2166499d1c0a2f71cd87aef71522.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://c5pfo7bhg036d"
+path="res://.godot/imported/sfx_movement_jump20.wav-db845e16cd72ceb9d9c19f2f258a0c33.sample"
+
+[deps]
+
+source_file="res://Assets/Sound FX/The Essential Retro/The Essential Retro/Movement/Jumping and Landing/sfx_movement_jump20.wav"
+dest_files=["res://.godot/imported/sfx_movement_jump20.wav-db845e16cd72ceb9d9c19f2f258a0c33.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://cedddybvjxlps"
+path="res://.godot/imported/17 - Victory.ogg-4debc2ff4c4731ce55aedec211a58367.oggvorbisstr"
+
+[deps]
+
+source_file="res://Assets/Music/JRPG OST (Rev 2)/17 - Victory.ogg"
+dest_files=["res://.godot/imported/17 - Victory.ogg-4debc2ff4c4731ce55aedec211a58367.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
